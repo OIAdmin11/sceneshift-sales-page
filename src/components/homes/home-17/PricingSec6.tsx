@@ -15,8 +15,8 @@ const offerCards = [
       "24/7 Web Concierge—AI webchat on your site: instant FAQs, capture, and booking; feeds the same CRM with reporting and light analysis so inbound is not a black box",
       "The Invisible Admin—automated text and email reminders on your rules (confirmations, prep, nudges, follow-ups), sent through your preferred SMS and email tools and logged to CRM",
     ],
-    priceHeadline: "$479",
-    priceDetailLines: ["/month", "+ $4,000 one-time setup"],
+    priceHeadline: "$449",
+    priceDetailLines: ["/month", "+ $3,000 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-outline",
   },
   {
