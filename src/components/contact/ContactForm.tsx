@@ -57,8 +57,6 @@ async function loadTurnstileScript(): Promise<void> {
       const script = document.createElement("script");
       script.id = turnstileScriptId;
       script.src = turnstileScriptSrc;
-      script.async = true;
-      script.defer = true;
       script.addEventListener("load", handleLoad, { once: true });
       script.addEventListener("error", handleError, { once: true });
       document.head.appendChild(script);
@@ -104,47 +102,36 @@ export default function ContactForm() {
           return;
         }
 
-        window.turnstile.ready(() => {
-          if (
-            isCancelled ||
-            !window.turnstile ||
-            !turnstileContainerRef.current ||
-            turnstileWidgetIdRef.current
-          ) {
-            return;
-          }
-
-          turnstileWidgetIdRef.current = window.turnstile.render(
-            turnstileContainerRef.current,
-            {
-              sitekey: turnstileSiteKey,
-              action: "contact_form",
-              theme: "auto",
-              callback: (token: string) => {
-                setTurnstileToken(token);
-                setTurnstileError("");
-              },
-              "expired-callback": () => {
-                setTurnstileToken("");
-                setTurnstileError(
-                  "Spam protection expired. Please confirm again.",
-                );
-              },
-              "timeout-callback": () => {
-                setTurnstileToken("");
-                setTurnstileError(
-                  "Spam protection timed out. Please confirm again.",
-                );
-              },
-              "error-callback": () => {
-                setTurnstileToken("");
-                setTurnstileError(
-                  "Spam protection failed to load. Please refresh and try again.",
-                );
-              },
+        turnstileWidgetIdRef.current = window.turnstile.render(
+          turnstileContainerRef.current,
+          {
+            sitekey: turnstileSiteKey,
+            action: "contact_form",
+            theme: "auto",
+            callback: (token: string) => {
+              setTurnstileToken(token);
+              setTurnstileError("");
             },
-          );
-        });
+            "expired-callback": () => {
+              setTurnstileToken("");
+              setTurnstileError(
+                "Spam protection expired. Please confirm again.",
+              );
+            },
+            "timeout-callback": () => {
+              setTurnstileToken("");
+              setTurnstileError(
+                "Spam protection timed out. Please confirm again.",
+              );
+            },
+            "error-callback": () => {
+              setTurnstileToken("");
+              setTurnstileError(
+                "Spam protection failed to load. Please refresh and try again.",
+              );
+            },
+          },
+        );
       })
       .catch((error) => {
         if (!isCancelled) {
