@@ -12,7 +12,7 @@ export default function MainSec9() {
       <div className="hero-style18">
         <div className="container">
           <div className="hero-content18">
-            <h1 className="title" style={{ whiteSpace: "nowrap" }}>
+            <h1 className="title main-sec9__hero-title">
               Intelligent CRM and AI for small businesses.
             </h1>
             <p
