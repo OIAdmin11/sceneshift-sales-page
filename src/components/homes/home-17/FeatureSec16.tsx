@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import TitleSplitWrapper from "@/components/common/TitleSplitWrapper";
 
+/** Second-row icons (distinct from the three PNGs used above). */
+const SPEED_TO_LEAD_ICON = "/assets/images/feature/feature5.svg";
+const AI_OPTIMIZED_CONVERSION_ICON = "/assets/images/feature/feature6.svg";
+const SURVEYOR_ICON = "/assets/images/feature/feature8.svg";
+
 export default function FeatureSec16() {
   return (
     <section id="some-of-our-services" className="feature-sec16">
@@ -70,9 +75,9 @@ export default function FeatureSec16() {
             <div className="feature-block16">
               <img
                 alt=""
-                src="/assets/images/feature/fea16-1.png"
-                width={60}
-                height={46}
+                src={SPEED_TO_LEAD_ICON}
+                width={50}
+                height={52}
               />
               <h4 className="title">Speed-to-Lead Outbound Engine</h4>
               <p>
@@ -88,9 +93,9 @@ export default function FeatureSec16() {
             <div className="feature-block16">
               <img
                 alt=""
-                src="/assets/images/feature/fea16-2.png"
-                width={44}
-                height={52}
+                src={AI_OPTIMIZED_CONVERSION_ICON}
+                width={48}
+                height={48}
               />
               <h4 className="title">AI-Optimized Conversion</h4>
               <p>
@@ -107,8 +112,8 @@ export default function FeatureSec16() {
             <div className="feature-block16">
               <img
                 alt=""
-                src="/assets/images/feature/fea16-3.png"
-                width={61}
+                src={SURVEYOR_ICON}
+                width={50}
                 height={50}
               />
               <h4 className="title">The Surveyor</h4>
