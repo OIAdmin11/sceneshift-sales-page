@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# SceneShift Sales Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing site for SceneShift, built with React, TypeScript, and Vite. The site is configured for AWS Amplify Gen 2 branch deployments and includes an SES-backed contact form workflow.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Install dependencies and start the site:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The contact form can call a locally supplied API URL by creating a `.env.local` file from `.env.example`:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+VITE_CONTACT_FORM_API_URL=https://your-api-id.execute-api.us-east-1.amazonaws.com/contact
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+If that variable is not present, the frontend will look for `/amplify_outputs.json` at runtime.
+
+## Amplify backend
+
+The Amplify Gen 2 backend lives in `amplify/` and provisions:
+
+- a public HTTP endpoint at `/contact`
+- a Lambda function that validates the payload
+- Amazon SES delivery for:
+  - internal notifications to `contact@sceneshift.org`
+  - confirmation emails back to the submitter
+
+Useful commands:
+
+```bash
+npm run amplify:sandbox
+npm run amplify:generate-outputs -- --branch <branch> --app-id <app-id>
+npm run amplify:pipeline-deploy -- --branch <branch> --app-id <app-id>
+```
+
+## Amplify hosting
+
+`amplify.yml` is set up for fullstack branch builds in Amplify Hosting:
+
+1. install dependencies
+2. deploy backend changes with `ampx pipeline-deploy`
+3. generate `amplify_outputs.json`
+4. build the Vite app and publish `dist/`
+
+The build also copies `amplify_outputs.json` into `public/` so the frontend can discover the deployed contact API during the same branch build.
+
+## Required Amplify branch environment variables
+
+Configure these in the Amplify console for the deployed branch:
+
+- `CONTACT_FORM_FROM_EMAIL`
+  Required. Must be a verified SES sender identity in the same AWS region as the backend.
+- `CONTACT_FORM_TO_EMAIL`
+  Optional. Defaults to `contact@sceneshift.org`.
+- `CONTACT_FORM_ALLOWED_ORIGIN`
+  Recommended. Set this to the deployed site origin such as `https://sceneshift.org`.
+
+Amplify provides `AWS_APP_ID` and `AWS_BRANCH` during the branch build, which are used by `amplify.yml`.
+
+## SES checklist
+
+Before the contact form can send email successfully:
+
+1. Verify the sender identity used by `CONTACT_FORM_FROM_EMAIL` in Amazon SES.
+2. If you want to send to arbitrary recipients in production, move the SES account out of sandbox.
+3. Confirm DNS records for SPF, DKIM, and DMARC on the sending domain.
+
+## Validation
+
+Run the project checks locally:
+
+```bash
+npm run lint
+npm run build
 ```

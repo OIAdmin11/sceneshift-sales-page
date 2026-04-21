@@ -5,12 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "node scripts/prepare-amplify-outputs.mjs && tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "amplify:sandbox": "npx ampx sandbox",
+    "amplify:generate-outputs": "npx ampx generate outputs",
+    "amplify:pipeline-deploy": "npx ampx pipeline-deploy"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.1033.0",
     "@fortawesome/fontawesome-free": "^7.2.0",
+    "aws-amplify": "^6.16.4",
     "gsap": "^3.14.2",
     "hover-effect": "^1.2.1",
     "imagesloaded": "^5.0.0",
@@ -28,11 +33,16 @@
     "swiper": "^12.1.2"
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.22.0",
+    "@aws-amplify/backend-cli": "^1.8.2",
     "@eslint/js": "^9.39.4",
+    "@types/aws-lambda": "^8.10.161",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.0",
+    "aws-cdk-lib": "^2.250.0",
+    "constructs": "^10.6.0",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",

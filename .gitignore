@@ -10,6 +10,11 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.amplify
+amplify_outputs.json
+build
+.env*
+public/amplify_outputs.json
 *.local
 
 # Editor directories and files

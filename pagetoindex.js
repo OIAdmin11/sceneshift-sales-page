@@ -18,7 +18,6 @@ const IGNORED_DIRS = new Set([
   "build",
   "coverage",
   ".turbo",
-  ".vercel",
 ]);
 
 const exts = [".js", ".jsx", ".ts", ".tsx"];
