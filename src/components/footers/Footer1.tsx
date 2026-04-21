@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-import { footerNavItems, legalNavItems, siteConfig } from "@/data/site";
+import {
+  footerNavItems,
+  isExternalNavHref,
+  legalNavItems,
+  siteConfig,
+} from "@/data/site";
 
 export default function Footer1() {
   return (
@@ -22,7 +27,7 @@ export default function Footer1() {
                 <div className="footer-logo">
                   <img
                     alt={`${siteConfig.name} logo`}
-                    src="/assets/images/logo2.svg"
+                    src="/assets/images/logo.svg"
                     width={110}
                     height={20}
                   />
@@ -104,9 +109,15 @@ export default function Footer1() {
                   <ul>
                     {legalNavItems.map((item) => (
                       <li key={item.label}>
-                        <Link to={item.href ?? "/"} title="">
-                          {item.label}
-                        </Link>
+                        {isExternalNavHref(item.href) ? (
+                          <a href={item.href} rel="noopener noreferrer">
+                            {item.label}
+                          </a>
+                        ) : (
+                          <Link to={item.href ?? "/"} title="">
+                            {item.label}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>
@@ -124,8 +135,12 @@ export default function Footer1() {
               {new Date().getFullYear()}. All rights reserved.
             </p>
             <span>
-              <Link to="/terms-of-service">Terms of Service</Link>{" "}
-              <Link to="/privacy-policy">Privacy Policy</Link>
+              <a href={siteConfig.legalTermsUrl} rel="noopener noreferrer">
+                Terms of Service
+              </a>{" "}
+              <a href={siteConfig.legalPrivacyUrl} rel="noopener noreferrer">
+                Privacy Policy
+              </a>
             </span>
           </div>
         </div>

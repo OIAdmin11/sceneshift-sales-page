@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import {
   footerNavItems,
+  isExternalNavHref,
   legalNavItems,
   siteConfig,
 } from "@/data/site";
@@ -40,7 +41,7 @@ export default function Footer3({
                 <div className="footer-logo">
                   <img
                     alt={`${siteConfig.name} logo`}
-                    src="/assets/images/logo2.svg"
+                    src="/assets/images/logo.svg"
                     width={110}
                     height={20}
                   />
@@ -113,7 +114,13 @@ export default function Footer3({
                   <ul>
                     {legalNavItems.map((item) => (
                       <li key={item.label}>
-                        <Link to={item.href ?? "/"}>{item.label}</Link>
+                        {isExternalNavHref(item.href) ? (
+                          <a href={item.href} rel="noopener noreferrer">
+                            {item.label}
+                          </a>
+                        ) : (
+                          <Link to={item.href ?? "/"}>{item.label}</Link>
+                        )}
                       </li>
                     ))}
                   </ul>

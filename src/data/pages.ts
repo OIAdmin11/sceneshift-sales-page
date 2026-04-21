@@ -24,8 +24,6 @@ type HomeMetaKey = `home${HomeNum}`;
 type PageMetaKey =
   | "preview"
   | "about-us"
-  | "terms-of-service"
-  | "privacy-policy"
   | "team"
   | "team-single"
   | "project"
@@ -73,16 +71,6 @@ const pageMetaMap: Record<PageMetaKey, { title: string; description: string }> =
       title: `About Us | ${BASE_TITLE}`,
       description:
         "Learn how SceneShift helps independent businesses answer faster, follow up better, and stay easy to choose from Ames, Iowa.",
-    },
-    "terms-of-service": {
-      title: `Terms of Service | ${BASE_TITLE}`,
-      description:
-        "Review the placeholder SceneShift terms of service for website use, accounts, and service engagement.",
-    },
-    "privacy-policy": {
-      title: `Privacy Policy | ${BASE_TITLE}`,
-      description:
-        "Read the Scene Shift Customer Portal privacy policy covering data collection, use, disclosures, retention, and U.S. state privacy rights.",
     },
     team: {
       title: `Creative Team | ${BASE_TITLE}`,

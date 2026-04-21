@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { footerLinkGroupsAlt } from "@/data/footer";
+import { siteConfig } from "@/data/site";
 import FooterSubscribeForm from "@/components/footers/FooterSubscribeForm";
 
 export default function Footer4() {
@@ -26,7 +27,7 @@ export default function Footer4() {
                 <div className="footer-logo">
                   <img
                     alt="AI Agency & Technology HTML Template"
-                    src="/assets/images/logo2.svg"
+                    src="/assets/images/logo.svg"
                     width={110}
                     height={20}
                   />
@@ -99,7 +100,14 @@ export default function Footer4() {
               reserved.
             </p>
             <span>
-              <a href="#">Terms</a> of use Privacy Environmental Policy
+              <a href={siteConfig.legalTermsUrl} rel="noopener noreferrer">
+                Terms
+              </a>{" "}
+              of use{" "}
+              <a href={siteConfig.legalPrivacyUrl} rel="noopener noreferrer">
+                Privacy
+              </a>{" "}
+              Environmental Policy
             </span>
           </div>
         </div>

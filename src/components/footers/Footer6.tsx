@@ -5,7 +5,7 @@ export default function Footer6() {
         <div className="logo-box6">
           <img
             alt="AI Agency & Technology HTML Template"
-            src="/assets/images/logo2.svg"
+            src="/assets/images/logo.svg"
             width="110"
             height="20"
           />

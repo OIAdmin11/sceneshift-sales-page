@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useCart } from "@/context/CartContext";
 
+import { siteConfig } from "@/data/site";
+
 function formatPrice(value: number): string {
   return value.toFixed(2);
 }
@@ -286,7 +288,11 @@ export default function CheckoutSection() {
                 <p className="para">
                   Your personal data will be used to process your order, support
                   your experience throughout this website, and for other
-                  purposes described in our privacy policy.
+                  purposes described in our{" "}
+                  <a href={siteConfig.legalPrivacyUrl} rel="noopener noreferrer">
+                    privacy policy
+                  </a>
+                  .
                 </p>
                 <form onSubmit={handleSubmit}>
                   <input
@@ -296,7 +302,11 @@ export default function CheckoutSection() {
                     defaultValue="Bike2"
                   />
                   <label htmlFor="vehicle2">
-                    I have read and agree to the website terms and conditions *
+                    I have read and agree to the website{" "}
+                    <a href={siteConfig.legalTermsUrl} rel="noopener noreferrer">
+                      terms and conditions
+                    </a>{" "}
+                    *
                   </label>
                   <br />
                   <button className="ibt-btn ibt-btn-dark">

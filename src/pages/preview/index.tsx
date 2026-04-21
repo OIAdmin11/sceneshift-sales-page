@@ -101,7 +101,7 @@ export default function Page() {
             <div className="logo-box6">
               <img
                 alt="AI Agency & Technology ReactJs  Template"
-                src="/assets/images/logo2.svg"
+                src="/assets/images/logo.svg"
                 width="110"
                 height="20"
               />

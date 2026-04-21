@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import { footerLinkGroups } from "@/data/footer";
+import { siteConfig } from "@/data/site";
 
 export default function Footer2() {
   return (
@@ -13,7 +14,7 @@ export default function Footer2() {
                 <div className="footer-logo">
                   <img
                     alt="AI Agency & Technology HTML Template"
-                    src="/assets/images/logo2.svg"
+                    src="/assets/images/logo.svg"
                     width={110}
                     height={20}
                   />
@@ -94,7 +95,12 @@ export default function Footer2() {
               reserved.
             </p>
             <span>
-              Terms of use <a href="#">Privacy Policy</a>
+              <a href={siteConfig.legalTermsUrl} rel="noopener noreferrer">
+                Terms of use
+              </a>{" "}
+              <a href={siteConfig.legalPrivacyUrl} rel="noopener noreferrer">
+                Privacy Policy
+              </a>
             </span>
           </div>
         </div>

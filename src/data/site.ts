@@ -5,6 +5,9 @@ export const siteConfig = {
   domain: "sceneshift.org",
   url: "https://sceneshift.org",
   loginUrl: "https://login.sceneshift.org",
+  /** Canonical Terms and Privacy on the Customer Portal (login app). */
+  legalTermsUrl: "https://login.sceneshift.org/terms",
+  legalPrivacyUrl: "https://login.sceneshift.org/privacy",
   primaryEmail: "contact@sceneshift.org",
   supportEmail: "contact@sceneshift.org",
   primaryPhoneLabel: "(515) 579-5378",
@@ -26,9 +29,14 @@ export const footerNavItems: MobileMenuItem[] = [
 ];
 
 export const legalNavItems: MobileMenuItem[] = [
-  { label: "Terms of Service", href: "/terms-of-service" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: siteConfig.legalTermsUrl },
+  { label: "Privacy Policy", href: siteConfig.legalPrivacyUrl },
 ];
+
+export function isExternalNavHref(href: string | undefined): boolean {
+  return href != null && /^https?:\/\//i.test(href);
+}
+
 
 export const placeholderServiceHighlights = [
   {
