@@ -27,7 +27,7 @@ export default function Header5() {
                 <Link to={`/`}>
                   <img
                     alt="logo"
-                    src="/assets/images/logo2.svg"
+                    src="/assets/images/logo.svg"
                     width="110"
                     height="20"
                   />

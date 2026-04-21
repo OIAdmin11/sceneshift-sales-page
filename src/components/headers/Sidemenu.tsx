@@ -19,7 +19,7 @@ export default function Sidemenu() {
         <Link to={`/`} className="logo">
           <img
             alt={`${siteConfig.name} logo`}
-            src="/assets/images/logo2.svg"
+            src="/assets/images/logo.svg"
             width={110}
             height={20}
           />

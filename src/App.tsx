@@ -11,7 +11,8 @@ import Preloader from "@/components/common/Preloader";
 import InnerPagesLayout from "@/pages/layouts/inner-pages/InnerPagesLayout";
 import BlogLayout from "@/pages/layouts/blog/BlogLayout";
 import ShopLayout from "@/pages/layouts/shop/ShopLayout";
-import { servicesSectionHref } from "@/data/site";
+import ExternalRedirect from "@/components/common/ExternalRedirect";
+import { servicesSectionHref, siteConfig } from "@/data/site";
 
 const Home = lazy(() => import("@/pages"));
 const PricingPage = lazy(() => import("@/pages/inner-pages/pricing"));
@@ -38,12 +39,6 @@ const GalleryMasonryPage = lazy(
 const FaqPage = lazy(() => import("@/pages/inner-pages/faq"));
 const TypographyPage = lazy(() => import("@/pages/inner-pages/typography"));
 const ContactPage = lazy(() => import("@/pages/inner-pages/contact"));
-const TermsOfServicePage = lazy(
-  () => import("@/pages/legal/terms-of-service"),
-);
-const PrivacyPolicyPage = lazy(
-  () => import("@/pages/legal/privacy-policy"),
-);
 const Index1Page = lazy(() => import("@/pages/homes/index1"));
 const Index2Page = lazy(() => import("@/pages/homes/index2"));
 const Index3Page = lazy(() => import("@/pages/homes/index3"));
@@ -127,11 +122,17 @@ function App() {
                             <Route path="contact" element={<ContactPage />} />
                             <Route
                               path="terms-of-service"
-                              element={<TermsOfServicePage />}
+                              element={
+                                <ExternalRedirect url={siteConfig.legalTermsUrl} />
+                              }
                             />
                             <Route
                               path="privacy-policy"
-                              element={<PrivacyPolicyPage />}
+                              element={
+                                <ExternalRedirect
+                                  url={siteConfig.legalPrivacyUrl}
+                                />
+                              }
                             />
                           </Route>
 

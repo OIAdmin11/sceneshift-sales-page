@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import { siteConfig } from "@/data/site";
+
 export default function AccountSection() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +35,10 @@ export default function AccountSection() {
                 throughout this website, to manage access to your account, and
                 for other purposes described in our
               </p>
-              <Link to={`/404`}>privacy policy.</Link>
+              <a href={siteConfig.legalPrivacyUrl} rel="noopener noreferrer">
+                privacy policy
+              </a>
+              .
             </div>
             <div className="form-group password-section">
               <input

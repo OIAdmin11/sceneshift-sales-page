@@ -32,7 +32,7 @@ export default function Footer5() {
                 <div className="footer-logo">
                   <img
                     alt="AI Agency & Technology HTML Template"
-                    src="/assets/images/logo2.svg"
+                    src="/assets/images/logo.svg"
                     width={110}
                     height={20}
                   />
