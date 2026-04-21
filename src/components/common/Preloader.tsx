@@ -21,7 +21,7 @@ export default function Preloader({
       <div className="loader">
         <img
           alt="Loading..."
-          src="/assets/images/preloader-dark.png"
+          src="/assets/images/logo.svg"
           width={100}
           height={100}
         />
