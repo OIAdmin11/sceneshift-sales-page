@@ -797,8 +797,13 @@
     background-color: #1a1a1a;
     .custom-form2 {
       input,
+      select,
       textarea {
         border-color: #434343;
+        color: var(--color-content-white);
+        &::placeholder {
+          color: #9b9b9b;
+        }
       }
     }
   }
@@ -1424,5 +1429,21 @@
   input[type="date"],
   textarea {
     color: var(--color-content-white);
+  }
+
+  /* Contact card stays light in dark mode; undo blanket white input text */
+  .contact-form .custom-form {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      color: var(--color-content-black);
+    }
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:focus {
+      -webkit-text-fill-color: var(--color-content-black);
+    }
   }
 }

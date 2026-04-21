@@ -7,6 +7,14 @@ type ContactRequest = {
   phone: string;
   subject: string;
   message: string;
+  turnstileToken: string;
+};
+
+type TurnstileVerificationResponse = {
+  success: boolean;
+  hostname?: string;
+  action?: string;
+  "error-codes"?: string[];
 };
 
 const sesClient = new SESClient({});
@@ -15,7 +23,11 @@ const allowedOrigins = new Set([
   "https://sceneshift.org",
   "https://www.sceneshift.org",
 ]);
+const allowedTurnstileHostnames = new Set(["sceneshift.org", "www.sceneshift.org"]);
 const defaultOrigin = "https://sceneshift.org";
+const turnstileVerifyUrl =
+  "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+const turnstileAction = "contact_form";
 
 const resolveOrigin = (requestOrigin?: string) =>
   requestOrigin && allowedOrigins.has(requestOrigin)
@@ -39,6 +51,21 @@ const response = (statusCode: number, origin: string, body: object) => ({
 const sanitize = (value: unknown, maxLength: number) =>
   typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 
+const resolveTurnstileErrorMessage = (errorCodes: string[] = []) => {
+  if (
+    errorCodes.includes("timeout-or-duplicate") ||
+    errorCodes.includes("invalid-input-response") ||
+    errorCodes.includes("missing-input-response")
+  ) {
+    return "Please complete the spam check again and resubmit the form.";
+  }
+
+  return "Spam protection could not be verified. Please try again.";
+};
+
+const normalizeHostname = (value?: string) =>
+  value?.trim().toLowerCase().replace(/\.$/, "");
+
 const validate = (payload: ContactRequest) => {
   if (!payload.name || !payload.subject || !payload.message) {
     return "Please complete all required fields.";
@@ -52,7 +79,98 @@ const validate = (payload: ContactRequest) => {
     return "Please provide a phone number.";
   }
 
+  if (!payload.turnstileToken) {
+    return "Please complete the spam check before submitting.";
+  }
+
   return null;
+};
+
+const verifyTurnstile = async (
+  token: string,
+  remoteIp: string | undefined,
+): Promise<{ success: true } | { success: false; message: string }> => {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+
+  if (!secret) {
+    console.error("TURNSTILE_SECRET_KEY is not configured.");
+    return {
+      success: false,
+      message: "Spam protection is not configured yet.",
+    };
+  }
+
+  let verificationResponse: globalThis.Response;
+
+  try {
+    verificationResponse = await fetch(turnstileVerifyUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        secret,
+        response: token,
+        remoteip: remoteIp,
+      }),
+    });
+  } catch (error) {
+    console.error("Turnstile verification request failed", error);
+    return {
+      success: false,
+      message: "Spam protection could not be verified. Please try again.",
+    };
+  }
+
+  let verificationBody: TurnstileVerificationResponse | null = null;
+
+  try {
+    verificationBody =
+      (await verificationResponse.json()) as TurnstileVerificationResponse;
+  } catch (error) {
+    console.error("Turnstile verification returned invalid JSON", error);
+  }
+
+  if (!verificationResponse.ok || !verificationBody) {
+    console.error("Turnstile verification did not return a usable response.", {
+      status: verificationResponse.status,
+      verificationBody,
+    });
+    return {
+      success: false,
+      message: "Spam protection could not be verified. Please try again.",
+    };
+  }
+
+  if (!verificationBody.success) {
+    console.warn("Turnstile verification failed", verificationBody["error-codes"]);
+    return {
+      success: false,
+      message: resolveTurnstileErrorMessage(verificationBody["error-codes"]),
+    };
+  }
+
+  const hostname = normalizeHostname(verificationBody.hostname);
+  if (hostname && !allowedTurnstileHostnames.has(hostname)) {
+    console.error("Turnstile hostname mismatch", verificationBody.hostname);
+    return {
+      success: false,
+      message: "Spam protection could not be verified. Please try again.",
+    };
+  }
+
+  if (
+    verificationBody.action &&
+    verificationBody.action !== turnstileAction
+  ) {
+    console.error("Turnstile action mismatch", verificationBody.action);
+    return {
+      success: false,
+      message: "Spam protection could not be verified. Please try again.",
+    };
+  }
+
+  return { success: true };
 };
 
 export const handler: APIGatewayProxyHandlerV2 = async (event) => {
@@ -94,11 +212,21 @@ export const handler: APIGatewayProxyHandlerV2 = async (event) => {
     phone: sanitize(parsedBody.phone, 40),
     subject: sanitize(parsedBody.subject, 160),
     message: sanitize(parsedBody.message, 4000),
+    turnstileToken: sanitize(parsedBody.turnstileToken, 2048),
   };
 
   const validationError = validate(payload);
   if (validationError) {
     return response(400, origin, { message: validationError });
+  }
+
+  const turnstileVerification = await verifyTurnstile(
+    payload.turnstileToken,
+    event.requestContext.http.sourceIp,
+  );
+
+  if (!turnstileVerification.success) {
+    return response(400, origin, { message: turnstileVerification.message });
   }
 
   const internalText = [

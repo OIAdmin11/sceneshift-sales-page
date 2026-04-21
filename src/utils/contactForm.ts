@@ -4,6 +4,7 @@ export type ContactFormPayload = {
   phone: string;
   subject: string;
   message: string;
+  turnstileToken: string;
 };
 
 type ContactFormResponse = {

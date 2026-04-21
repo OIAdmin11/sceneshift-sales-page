@@ -857,7 +857,7 @@
     height: 50px;
     margin-bottom: 20px;
     font-size: 14px;
-    color: #898989;
+    color: var(--color-content-black);
     padding: 18px;
     &::placeholder {
       color: #898989;

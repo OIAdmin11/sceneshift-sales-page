@@ -15,6 +15,7 @@ The contact form can call a locally supplied API URL by creating a `.env.local` 
 
 ```bash
 VITE_CONTACT_FORM_API_URL=https://your-api-id.execute-api.us-east-1.amazonaws.com/contact
+VITE_TURNSTILE_SITE_KEY=your-turnstile-site-key
 ```
 
 If that variable is not present, the frontend will look for `/amplify_outputs.json` at runtime.
@@ -56,6 +57,10 @@ Configure these in the Amplify console for the deployed branch:
   Required. Must be a verified SES sender identity in the same AWS region as the backend.
 - `CONTACT_FORM_TO_EMAIL`
   Optional. Defaults to `contact@sceneshift.org`.
+- `TURNSTILE_SECRET_KEY`
+  Required. Secret key for the Cloudflare Turnstile widget used by the contact form.
+- `VITE_TURNSTILE_SITE_KEY`
+  Required for the frontend build. Public site key for the Cloudflare Turnstile widget.
 
 Amplify provides `AWS_APP_ID` and `AWS_BRANCH` during the branch build, which are used by `amplify.yml`.
 
@@ -68,6 +73,7 @@ Before the contact form can send email successfully:
 1. Verify the sender identity used by `CONTACT_FORM_FROM_EMAIL` in Amazon SES.
 2. If you want to send to arbitrary recipients in production, move the SES account out of sandbox.
 3. Confirm DNS records for SPF, DKIM, and DMARC on the sending domain.
+4. Create a Cloudflare Turnstile widget for `sceneshift.org`, then add its site key and secret key to the environment variables above.
 
 ## Validation
 

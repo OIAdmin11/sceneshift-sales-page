@@ -455,3 +455,22 @@
     transform: none;
   }
 }
+
+.contact-form-turnstile {
+  margin-top: 24px;
+}
+
+.contact-form-turnstile__feedback {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.contact-form-turnstile__feedback.error,
+.contact-form-feedback.error {
+  color: #cf4242;
+}
+
+.contact-form-feedback.success {
+  color: #1b8a5a;
+}
