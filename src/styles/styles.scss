@@ -188,6 +188,37 @@
   margin-bottom: 0;
 }
 
+// Index17 feature tabs: keep the product artwork inside the viewport at every breakpoint
+.feature-sec14.v2 .row {
+  align-items: center;
+}
+
+.feature-sec14.v2 .feature-img14 {
+  margin-left: 0;
+  margin-right: auto;
+  width: min(100%, 847px);
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: 847 / 602;
+}
+
+.feature-sec14.v2 .feature-img14 img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 991px) {
+  .feature-sec14.v2 .feature-img14 {
+    margin-right: 0;
+  }
+}
+
 // Video block directly under hero (replaces former service-sec27 cards)
 .main-sec9 .main-sec9-after-hero-video {
   padding-block: 28px 56px;
