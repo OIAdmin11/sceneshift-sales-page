@@ -11,6 +11,14 @@ import {
   type ContactFormPayload,
 } from "@/utils/contactForm";
 
+const CONTACT_SUBJECT_OPTIONS = [
+  "Always-On Capture",
+  "The Autonomous Sales Floor",
+  "Chief AI Officers",
+  "Customer Support",
+  "Other",
+] as const;
+
 const initialFormState: ContactFormPayload = {
   name: "",
   email: "",
@@ -163,7 +171,9 @@ export default function ContactForm() {
   };
 
   const handleChange = (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = event.target;
     setFormData((current) => ({
@@ -255,15 +265,23 @@ export default function ContactForm() {
         onChange={handleChange}
         required
       />
-      <input
-        type="text"
+      <select
         id="subject"
         name="subject"
-        placeholder="Subject"
         value={formData.subject}
         onChange={handleChange}
         required
-      />
+        aria-label="Topic"
+      >
+        <option value="" disabled>
+          Select a topic…
+        </option>
+        {CONTACT_SUBJECT_OPTIONS.map((label) => (
+          <option key={label} value={label}>
+            {label}
+          </option>
+        ))}
+      </select>
       <textarea
         id="message"
         name="message"
