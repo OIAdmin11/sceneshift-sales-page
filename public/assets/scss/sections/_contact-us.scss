@@ -164,6 +164,14 @@
       color: #898989;
     }
   }
+  select {
+    box-sizing: border-box;
+    line-height: 1.4;
+    padding: 0 44px 0 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   textarea {
     height: 175px;
     margin-bottom: 30px;
