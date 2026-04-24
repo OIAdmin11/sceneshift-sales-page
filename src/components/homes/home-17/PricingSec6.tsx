@@ -32,7 +32,7 @@ const offerCards = [
       "Full-funnel leverage: inbound and outbound, CRM intelligence, analysis, text and email reminders, and client listening—integrated into the software your team already chose, not a separate stack",
     ],
     priceHeadline: "$649",
-    priceDetailLines: ["/month", "+ $6,000 one-time setup"],
+    priceDetailLines: ["/month", "+ $5,400 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-dark",
   },
   {
