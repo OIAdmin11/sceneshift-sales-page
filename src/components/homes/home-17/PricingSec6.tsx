@@ -3,55 +3,76 @@ import { Link } from "react-router-dom";
 import TitleSplitWrapper from "@/components/common/TitleSplitWrapper";
 import SubTitleWrapper from "@/components/common/SubTitleWrapper";
 
-const offerCards = [
+const pricedOfferCards = [
+  {
+    id: "lead-saver-engine",
+    cardClassName: "price-card3",
+    title: 'The "Lead Saver" Engine',
+    subtitle:
+      "Perfect for businesses tired of losing deals to the guy down the street just because they were on the other line.",
+    features: [
+      "Instant Missed-Call Text Back: the second you miss a call, our system texts them back so you save the lead instantly.",
+      'The "God-Mode" Unified Inbox: Facebook Messages, Instagram DMs, SMS, Webchat, and Google Business Chats in one single screen.',
+      "Auto-Review Generation: automatically text happy customers a 1-click link to leave a 5-star Google review when a job is marked done.",
+    ],
+    priceHeadline: "$299",
+    priceDetailLines: ["/month", "+ $499 one-time setup"],
+    buttonClassName: "ibt-btn ibt-btn-outline",
+  },
   {
     id: "always-on-capture",
-    cardClassName: "price-card3",
+    cardClassName: "price-card3 v2",
+    badge: "Most Popular",
     title: "Always-On Capture",
     subtitle:
-      "Inbound AI on phone and web, with intelligent CRM structure and practical analysis so you see what is converting—integrated into the calendars, CRM, and messaging tools you already prefer.",
+      "Perfect for growing businesses overwhelmed by inbound calls, basic scheduling, and repetitive FAQs.",
     features: [
-      "No Sleep Receptionist—inbound AI phone: intercept missed volume, pre-qualify on your rules, FAQs, book appointments; writes to your preferred calendar and CRM with usable context",
-      "24/7 Web Concierge—AI webchat on your site: instant FAQs, capture, and booking; feeds the same CRM with reporting and light analysis so inbound is not a black box",
-      "The Invisible Admin—automated text and email reminders on your rules (confirmations, prep, nudges, follow-ups), sent through your preferred SMS and email tools and logged to CRM",
+      "No Sleep Receptionist: inbound AI voice intercepts missed calls, pre-qualifies callers, answers FAQs, and books appointments.",
+      "24/7 Web Concierge: an intelligent webchat agent captures leads and schedules bookings while you sleep.",
+      "The Invisible Admin: automated text and email reminders for confirmations, prep, nudges, and follow-ups.",
+      "Intelligent CRM Sync: every conversation writes directly to the tools you already use with complete context.",
     ],
     priceHeadline: "$749",
     priceDetailLines: ["/month", "+ $999 one-time setup"],
-    buttonClassName: "ibt-btn ibt-btn-outline",
-  },
-  {
-    id: "autonomous-sales-floor",
-    cardClassName: "price-card3 v2",
-    badge: "Popular",
-    title: "The Autonomous Sales Floor",
-    subtitle:
-      "Everything in Always-On Capture—phone, webchat, intelligent CRM, analysis, and automated reminders—plus speed-to-lead outbound and The Surveyor, orchestrated through your preferred calendars, CRM, and messaging stack.",
-    features: [
-      "Speed-to-Lead Outbound Engine—automation triggers an outbound AI call in about sixty seconds after a form hits your site; outcomes, notes, and next steps land in your CRM and the same reminder flows as inbound",
-      "The Surveyor—AI feedback, follow-up, and survey calls with responses captured in your CRM and reports—not a parallel list your team retypes",
-      "Full-funnel leverage: inbound and outbound, CRM intelligence, analysis, text and email reminders, and client listening—integrated into the software your team already chose, not a separate stack",
-    ],
-    priceHeadline: "$1,499",
-    priceDetailLines: ["/month", "+ $2,999 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-dark",
   },
   {
-    id: "chief-ai-officers",
+    id: "autonomous-sales-floor",
     cardClassName: "price-card3 v3",
-    title: "Chief AI Officers",
+    title: "The Autonomous Sales Floor",
     subtitle:
-      "Your custom AI engineers—AI you can afford—with AI-Optimized Conversion sites, custom Zapier and n8n tooling for your business, on-demand priority support, and a roadmap for what to automate next.",
+      "Perfect for high-volume operations that need aggressive speed-to-lead and continuous customer feedback without adding expensive payroll.",
     features: [
-      "AI-Optimized Conversion—fast, SEO-first site that feeds your AI; insight on what competitors publish; show up when prospects ask an AI who to call",
-      "Bespoke AI plus custom Zapier and n8n workflows and tooling so automations and handoffs match how your team works, with integrations into the systems you already run",
-      "On-demand priority support when you need fixes, tuning, or the next automation shipped without waiting in a general queue",
-      "Custom scope and pricing: discovery call, written terms, and build plan before engineering starts",
+      "Everything in the Always-On Capture Package, plus outbound speed-to-lead and automated feedback loops.",
+      "Speed-to-Lead Outbound Engine: AI automatically dials fresh leads within about 60 seconds of a form submission.",
+      "The Surveyor: AI feedback and survey calls capture real customer insight directly in your CRM.",
+      "Full-Funnel Leverage: orchestrated inbound and outbound intelligence inside the software your team already chose.",
     ],
-    priceHeadline: "Custom",
-    priceDetailLines: ["scope & pricing"],
+    priceHeadline: "$1,499",
+    priceDetailLines: ["/month", "+ $2,999 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-outline",
   },
 ];
+
+const customOfferCard = {
+  id: "chief-ai-officers",
+  cardClassName: "price-card3 v2",
+  title: "Chief AI Officers",
+  subtitle:
+    "Perfect for enterprise, high-margin, or complex businesses needing bespoke AI automation tailored to their exact SOPs.",
+  features: [
+    "Bespoke AI & Tooling: custom workflows and complex handoffs built to match your exact Standard Operating Procedures.",
+    "AI-Optimized Conversion Sites: fast, SEO-first websites built to feed your AI and help prospects find who to call.",
+    "On-Demand Priority Support: skip the queue for fixes, tuning, or the next automation you need shipped.",
+    "Your Automation Roadmap: a strategic blueprint for what to automate next so you can scale revenue without scaling payroll.",
+  ],
+  priceHeadline: "Custom",
+  priceDetailLines: [
+    "scope & pricing",
+    "Requires discovery call, written terms, and a build plan",
+  ],
+  buttonClassName: "ibt-btn ibt-btn-dark",
+};
 
 export default function PricingSec6() {
   return (
@@ -60,11 +81,16 @@ export default function PricingSec6() {
         <div className="sec-title white">
           <SubTitleWrapper>services</SubTitleWrapper>
           <TitleSplitWrapper tag="h2" className="title animated-heading">
-            Three packages to fit your growth stage
+            Stop Bleeding Leads. Start Scaling Effortlessly.
           </TitleSplitWrapper>
+          <p>
+            Don&apos;t lose another $5,000 job because you were too busy to
+            answer the phone. Choose the automated growth engine that fits your
+            business, and let our AI do the heavy lifting.
+          </p>
         </div>
         <div className="row g-4">
-          {offerCards.map((plan) => (
+          {pricedOfferCards.map((plan) => (
             <div key={plan.id} className="col-xl-4 col-lg-6 col-md-6 d-flex">
               <div className="price-content3 price-content3--solo w-100">
                 <div className={plan.cardClassName}>
@@ -98,6 +124,37 @@ export default function PricingSec6() {
               </div>
             </div>
           ))}
+        </div>
+        <div className="row g-4 mt-4">
+          <div className="col-xl-8 col-lg-10 mx-auto d-flex">
+            <div className="price-content3 price-content3--solo w-100">
+              <div className={customOfferCard.cardClassName}>
+                <div className="price-heade3">
+                  <h4 className="title">{customOfferCard.title}</h4>
+                  <span>{customOfferCard.subtitle}</span>
+                </div>
+                <ul className="price-item2">
+                  {customOfferCard.features.map((feature) => (
+                    <li key={feature}>{feature}</li>
+                  ))}
+                </ul>
+                <div className="price-item-price3">
+                  <h4 className="price">{customOfferCard.priceHeadline}</h4>
+                  <div className="price-detail-sub">
+                    {customOfferCard.priceDetailLines.map((line) => (
+                      <span key={line} className="price-detail-line">
+                        {line}
+                      </span>
+                    ))}
+                  </div>
+                  <Link to="/contact" className={customOfferCard.buttonClassName}>
+                    <span>Book a call</span>
+                    <i className="icon-arrow-top" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
