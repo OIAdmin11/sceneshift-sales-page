@@ -12,6 +12,7 @@ frontend:
     build:
       commands:
         - npm run build
+        - npm run seo:indexnow
   artifacts:
     baseDirectory: dist
     files:

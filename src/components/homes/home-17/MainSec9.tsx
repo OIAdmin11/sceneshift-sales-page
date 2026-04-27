@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { servicesSectionHref } from "@/data/site";
+import { trackConversionEvent } from "@/utils/analytics";
 
 /** Replace with your SceneShift marketing video embed URL when ready. */
 const IOWA_SUPPORT_VIDEO_EMBED =
@@ -23,11 +24,27 @@ export default function MainSec9() {
               hours a week or make you money in 30 days, you don’t pay.
             </p>
             <div className="hero-btn18">
-              <Link to={`/contact`} className="ibt-btn ibt-btn-secondary">
+              <Link
+                to={`/contact`}
+                className="ibt-btn ibt-btn-secondary"
+                onClick={() =>
+                  trackConversionEvent("hero_book_call_click", {
+                    location: "homepage_hero",
+                  })
+                }
+              >
                 <span>Book a 15-minute call</span>
                 <i className="icon-arrow-top" />
               </Link>
-              <Link to={servicesSectionHref} className="ibt-btn ibt-btn-outline">
+              <Link
+                to={servicesSectionHref}
+                className="ibt-btn ibt-btn-outline"
+                onClick={() =>
+                  trackConversionEvent("services_cta_click", {
+                    location: "homepage_hero",
+                  })
+                }
+              >
                 <span>View our services</span>
                 <i className="icon-arrow-top" />
               </Link>

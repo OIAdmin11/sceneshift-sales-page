@@ -5,9 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/prepare-amplify-outputs.mjs && tsc -b && vite build",
+    "build": "node scripts/prepare-amplify-outputs.mjs && node scripts/generate-sitemap.mjs && tsc -b && vite build && node scripts/prerender-seo-pages.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
+    "seo:generate": "node scripts/generate-sitemap.mjs",
+    "seo:indexnow": "node scripts/submit-indexnow.mjs --urls-from-sitemap --all-engines",
+    "seo:indexnow:all": "node scripts/submit-indexnow.mjs --urls-from-sitemap --all-engines",
+    "seo:indexnow:bing": "node scripts/submit-indexnow.mjs --urls-from-sitemap --engine=bing",
+    "seo:indexnow:dry-run": "node scripts/submit-indexnow.mjs --urls-from-sitemap --all-engines --dry-run",
+    "seo:prerender": "node scripts/prerender-seo-pages.mjs",
     "amplify:sandbox": "npx ampx sandbox",
     "amplify:generate-outputs": "npx ampx generate outputs",
     "amplify:pipeline-deploy": "npx ampx pipeline-deploy"

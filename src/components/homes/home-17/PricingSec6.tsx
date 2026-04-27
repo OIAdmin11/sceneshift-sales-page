@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import TitleSplitWrapper from "@/components/common/TitleSplitWrapper";
 import SubTitleWrapper from "@/components/common/SubTitleWrapper";
+import { trackConversionEvent } from "@/utils/analytics";
 
 const pricedOfferCards = [
   {
@@ -115,7 +116,15 @@ export default function PricingSec6() {
                         </span>
                       ))}
                     </div>
-                    <Link to="/contact" className={plan.buttonClassName}>
+                  <Link
+                    to="/contact"
+                    className={plan.buttonClassName}
+                    onClick={() =>
+                      trackConversionEvent("pricing_book_call_click", {
+                        plan: plan.id,
+                      })
+                    }
+                  >
                       <span>Book a call</span>
                       <i className="icon-arrow-top" />
                     </Link>
@@ -147,7 +156,15 @@ export default function PricingSec6() {
                       </span>
                     ))}
                   </div>
-                  <Link to="/contact" className={customOfferCard.buttonClassName}>
+                  <Link
+                    to="/contact"
+                    className={customOfferCard.buttonClassName}
+                    onClick={() =>
+                      trackConversionEvent("pricing_book_call_click", {
+                        plan: customOfferCard.id,
+                      })
+                    }
+                  >
                     <span>Book a call</span>
                     <i className="icon-arrow-top" />
                   </Link>

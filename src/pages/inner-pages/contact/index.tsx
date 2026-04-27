@@ -5,6 +5,7 @@ import SubTitleWrapper from "@/components/common/SubTitleWrapper";
 import TitleSplitWrapper from "@/components/common/TitleSplitWrapper";
 import { getPageMetadata } from "@/data/pages";
 import { siteConfig } from "@/data/site";
+import { trackConversionEvent } from "@/utils/analytics";
 
 export default function Page() {
   getPageMetadata("contact");
@@ -53,6 +54,11 @@ export default function Page() {
                         <a
                           href={`tel:${siteConfig.primaryPhoneHref}`}
                           className="nmbr"
+                          onClick={() =>
+                            trackConversionEvent("phone_click", {
+                              location: "contact_page",
+                            })
+                          }
                         >
                           {siteConfig.primaryPhoneLabel}
                         </a>
@@ -62,6 +68,11 @@ export default function Page() {
                         <a
                           href={`mailto:${siteConfig.primaryEmail}`}
                           className="gmail"
+                          onClick={() =>
+                            trackConversionEvent("email_click", {
+                              location: "contact_page",
+                            })
+                          }
                         >
                           {siteConfig.primaryEmail}
                         </a>
