@@ -143,12 +143,19 @@ async function submitToEndpoint(label, endpoint, urlList) {
   const body = {
     host: site.host,
     key,
-    keyLocation: absoluteUrl(`/${key}.txt`),
     urlList,
   };
+  if (args().includes("--key-location")) {
+    body.keyLocation = absoluteUrl(`/${key}.txt`);
+  }
 
   if (args().includes("--dry-run")) {
-    console.log(`[dry-run] ${label}: would submit ${urlList.length} URL(s) to ${endpoint}.`);
+    const verification = body.keyLocation
+      ? ` with keyLocation ${body.keyLocation}`
+      : " with root key verification";
+    console.log(
+      `[dry-run] ${label}: would submit ${urlList.length} URL(s) to ${endpoint}${verification}.`,
+    );
     return { label, endpoint, status: "dry-run" };
   }
 
@@ -165,7 +172,9 @@ async function submitToEndpoint(label, endpoint, urlList) {
     return { label, endpoint, status: response.status };
   }
 
-  const message = `${label}: IndexNow returned ${response.status} ${response.statusText} for ${urlList.length} URL(s).`;
+  const responseBody = await response.text();
+  const responseDetails = responseBody.trim() ? ` Response: ${responseBody.trim()}` : "";
+  const message = `${label}: IndexNow returned ${response.status} ${response.statusText} for ${urlList.length} URL(s).${responseDetails}`;
   if (strict) {
     throw new Error(message);
   }
