@@ -12,7 +12,7 @@ const pricedOfferCards = [
       "Perfect for businesses tired of losing deals to the guy down the street just because they were on the other line.",
     features: [
       "Instant Missed-Call Text Back: the second you miss a call, our system texts them back so you save the lead instantly.",
-      'The "God-Mode" Unified Inbox: Facebook Messages, Instagram DMs, SMS, Webchat, and Google Business Chats in one single screen.',
+      'The "Command Center" Unified Inbox: Facebook messages, Instagram direct messages, text messages, webchat, and Google Business chats in one single screen.',
       "Auto-Review Generation: automatically text happy customers a 1-click link to leave a 5-star Google review when a job is marked done.",
     ],
     priceHeadline: "$299",
@@ -25,12 +25,12 @@ const pricedOfferCards = [
     badge: "Most Popular",
     title: "Always-On Capture",
     subtitle:
-      "Perfect for growing businesses overwhelmed by inbound calls, basic scheduling, and repetitive FAQs.",
+      "Perfect for growing businesses overwhelmed by inbound calls, basic scheduling, and repetitive questions.",
     features: [
-      "No Sleep Receptionist: inbound AI voice intercepts missed calls, pre-qualifies callers, answers FAQs, and books appointments.",
+      "No Sleep Receptionist: inbound AI voice intercepts missed calls, pre-qualifies callers, answers common questions, and books appointments.",
       "24/7 Web Concierge: an intelligent webchat agent captures leads and schedules bookings while you sleep.",
       "The Invisible Admin: automated text and email reminders for confirmations, prep, nudges, and follow-ups.",
-      "Intelligent CRM Sync: every conversation writes directly to the tools you already use with complete context.",
+      "Intelligent Customer System Sync: every conversation writes directly to the tools you already use with complete context.",
     ],
     priceHeadline: "$749",
     priceDetailLines: ["/month", "+ $999 one-time setup"],
@@ -45,7 +45,7 @@ const pricedOfferCards = [
     features: [
       "Everything in the Always-On Capture Package, plus outbound speed-to-lead and automated feedback loops.",
       "Speed-to-Lead Outbound Engine: AI automatically dials fresh leads within about 60 seconds of a form submission.",
-      "The Surveyor: AI feedback and survey calls capture real customer insight directly in your CRM.",
+      "The Surveyor: AI feedback and survey calls capture real customer insight directly in your customer system.",
       "Full-Funnel Leverage: orchestrated inbound and outbound intelligence inside the software your team already chose.",
     ],
     priceHeadline: "$1,499",
@@ -56,13 +56,13 @@ const pricedOfferCards = [
 
 const customOfferCard = {
   id: "chief-ai-officers",
-  cardClassName: "price-card3 v2",
+  cardClassName: "price-card3 v2 price-card3--no-tab",
   title: "Chief AI Officers",
   subtitle:
-    "Perfect for enterprise, high-margin, or complex businesses needing bespoke AI automation tailored to their exact SOPs.",
+    "Perfect for enterprise, high-margin, or complex businesses needing custom AI automation tailored to the way their team actually works.",
   features: [
-    "Bespoke AI & Tooling: custom workflows and complex handoffs built to match your exact Standard Operating Procedures.",
-    "AI-Optimized Conversion Sites: fast, SEO-first websites built to feed your AI and help prospects find who to call.",
+    "Bespoke AI & Tooling: custom workflows and complex handoffs built to match your exact day-to-day process.",
+    "AI-Optimized Conversion Sites: fast, search-friendly websites built to feed your AI and help prospects find who to call.",
     "On-Demand Priority Support: skip the queue for fixes, tuning, or the next automation you need shipped.",
     "Your Automation Roadmap: a strategic blueprint for what to automate next so you can scale revenue without scaling payroll.",
   ],
@@ -126,7 +126,7 @@ export default function PricingSec6() {
           ))}
         </div>
         <div className="row g-4 mt-4">
-          <div className="col-xl-8 col-lg-10 mx-auto d-flex">
+          <div className="col-12 d-flex">
             <div className="price-content3 price-content3--solo w-100">
               <div className={customOfferCard.cardClassName}>
                 <div className="price-heade3">
