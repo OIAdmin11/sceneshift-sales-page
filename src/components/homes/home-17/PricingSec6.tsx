@@ -15,8 +15,8 @@ const offerCards = [
       "24/7 Web Concierge—AI webchat on your site: instant FAQs, capture, and booking; feeds the same CRM with reporting and light analysis so inbound is not a black box",
       "The Invisible Admin—automated text and email reminders on your rules (confirmations, prep, nudges, follow-ups), sent through your preferred SMS and email tools and logged to CRM",
     ],
-    priceHeadline: "$449",
-    priceDetailLines: ["/month", "+ $3,000 one-time setup"],
+    priceHeadline: "$749",
+    priceDetailLines: ["/month", "+ $999 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-outline",
   },
   {
@@ -31,8 +31,8 @@ const offerCards = [
       "The Surveyor—AI feedback, follow-up, and survey calls with responses captured in your CRM and reports—not a parallel list your team retypes",
       "Full-funnel leverage: inbound and outbound, CRM intelligence, analysis, text and email reminders, and client listening—integrated into the software your team already chose, not a separate stack",
     ],
-    priceHeadline: "$649",
-    priceDetailLines: ["/month", "+ $5,400 one-time setup"],
+    priceHeadline: "$1,499",
+    priceDetailLines: ["/month", "+ $2,999 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-dark",
   },
   {
