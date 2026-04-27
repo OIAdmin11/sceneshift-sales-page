@@ -1,4 +1,5 @@
 import { demoCards } from "./demo";
+import { siteConfig } from "./site";
 
 type HomeNum =
   | 1
@@ -46,137 +47,219 @@ type PageMetaKey =
   | "not-found"
   | HomeMetaKey;
 
-const BASE_TITLE = "SceneShift | sceneshift.org";
+const BASE_TITLE = "SceneShift";
+
+type PageMeta = {
+  title: string;
+  description: string;
+  path: string;
+  index?: boolean;
+  changefreq?: "weekly" | "monthly" | "yearly";
+  priority?: number;
+  schemaType?:
+    | "AboutPage"
+    | "CollectionPage"
+    | "ContactPage"
+    | "FAQPage"
+    | "Product"
+    | "ProfessionalService"
+    | "Service"
+    | "WebPage";
+};
+
+export type { PageMetaKey, PageMeta };
 
 const homepageMetaMap = demoCards.reduce(
   (acc, card) => {
     const key = `home${card.id}` as HomeMetaKey;
     acc[key] = {
-      title: `${card.demoTitle} — ${card.demoNum} | ${BASE_TITLE}`,
-      description: `${card.demoTitle} homepage (${card.demoNum}) — ${BASE_TITLE}: AI agency and technology template demo.`,
+      title: `${card.demoTitle} ${card.demoNum} | ${BASE_TITLE}`,
+      description:
+        "Template demonstration route retained for internal design comparison. This route is not intended for search indexing.",
+      path: `/index${card.id}`,
+      index: false,
+      schemaType: "WebPage",
     };
     return acc;
   },
-  {} as Record<HomeMetaKey, { title: string; description: string }>,
+  {} as Record<HomeMetaKey, PageMeta>,
 );
 
-const pageMetaMap: Record<PageMetaKey, { title: string; description: string }> =
-  {
+const pageMetaMap: Record<PageMetaKey, PageMeta> = {
     preview: {
       title: `SceneShift Preview | ${BASE_TITLE}`,
       description:
         "Internal preview route for the SceneShift placeholder website.",
+      path: "/preview",
+      index: false,
     },
     "about-us": {
-      title: `About Us | ${BASE_TITLE}`,
+      title: `About SceneShift | Small Business AI Automation in Iowa`,
       description:
-        "Learn how SceneShift helps independent businesses answer faster, follow up better, and stay easy to choose from Ames, Iowa.",
+        "Learn how SceneShift helps independent businesses in Ames and across Iowa respond faster, follow up consistently, and stay easy to choose.",
+      path: "/about-us",
+      index: true,
+      changefreq: "monthly",
+      priority: 0.8,
+      schemaType: "AboutPage",
     },
     team: {
-      title: `Creative Team | ${BASE_TITLE}`,
+      title: `Team | ${BASE_TITLE}`,
       description:
-        "Meet the creative team behind Aiero AI Agency & Technology, including AI specialists, designers and engineers.",
+        "Internal team template route retained for design reference.",
+      path: "/team",
+      index: false,
     },
     "team-single": {
       title: `Team Member Details | ${BASE_TITLE}`,
       description:
-        "Detailed profile of a single Aiero team member, including role, social links, and professional background.",
+        "Internal team detail template route retained for design reference.",
+      path: "/team-single",
+      index: false,
     },
     project: {
       title: `Projects Grid | ${BASE_TITLE}`,
       description:
-        "Explore Aiero AI Agency & Technology projects showcasing AI products, research and client case studies.",
+        "Internal project grid template route retained for design reference.",
+      path: "/project",
+      index: false,
     },
     project2: {
       title: `Projects List | ${BASE_TITLE}`,
       description:
-        "Browse an alternative view of Aiero AI projects, including AI platforms, apps and experiments.",
+        "Internal project list template route retained for design reference.",
+      path: "/project2",
+      index: false,
     },
     "project-single": {
       title: `Project Details | ${BASE_TITLE}`,
       description:
-        "In-depth case study page for a single Aiero AI project, including overview, process and results.",
+        "Internal project detail template route retained for design reference.",
+      path: "/project-single",
+      index: false,
     },
     "gallery-grid": {
       title: `Gallery Grid | ${BASE_TITLE}`,
       description:
-        "Visual gallery grid of Aiero AI Agency & Technology shots, UI layouts and creative assets.",
+        "Internal gallery template route retained for design reference.",
+      path: "/gallery-grid",
+      index: false,
     },
     "gallery-masonry": {
       title: `Gallery Masonry | ${BASE_TITLE}`,
       description:
-        "Masonry-style gallery of Aiero visuals and project screenshots in an organic layout.",
+        "Internal gallery template route retained for design reference.",
+      path: "/gallery-masonry",
+      index: false,
     },
     faq: {
-      title: `FAQ | ${BASE_TITLE}`,
+      title: `Small Business AI Automation FAQ | ${BASE_TITLE}`,
       description:
-        "Frequently asked questions about Aiero AI Agency & Technology, licensing and template features.",
+        "Frequently asked questions about SceneShift lead response, CRM follow-up, AI reception, and small business automation.",
+      path: "/faq",
+      index: false,
+      schemaType: "FAQPage",
     },
     pricing: {
-      title: `Pricing | ${BASE_TITLE}`,
+      title: `AI Automation Pricing for Small Businesses | ${BASE_TITLE}`,
       description:
-        "Compare Aiero AI Agency & Technology pricing plans and choose the right option for your project.",
+        "Compare SceneShift packages for missed-call text back, unified inboxes, AI reception, web chat, review generation, and sales follow-up automation.",
+      path: "/pricing",
+      index: true,
+      changefreq: "weekly",
+      priority: 0.8,
+      schemaType: "Service",
     },
     typography: {
       title: `Typography | ${BASE_TITLE}`,
       description:
-        "Typography and UI elements reference page for the Aiero AI Agency & Technology Next.js template.",
+        "Internal typography template route retained for design reference.",
+      path: "/typography",
+      index: false,
     },
     contact: {
-      title: `Contact | ${BASE_TITLE}`,
+      title: `Contact SceneShift | Book an AI Automation Call`,
       description:
-        "Contact SceneShift to discuss lead flow, follow-up, and go-to-market systems for your business. Call, email, or send a message.",
+        "Contact SceneShift to discuss lead capture, AI reception, CRM follow-up, missed-call text back, review generation, and growth automation.",
+      path: "/contact",
+      index: true,
+      changefreq: "monthly",
+      priority: 0.7,
+      schemaType: "ContactPage",
     },
     shop: {
       title: `Shop | ${BASE_TITLE}`,
       description:
-        "Aiero AI Agency & Technology shop listing AI-related products, digital items and subscriptions.",
+        "Internal shop template route retained for design reference.",
+      path: "/shop",
+      index: false,
     },
     "shop-single": {
       title: `Product Details | ${BASE_TITLE}`,
       description:
-        "Single product page with details, gallery, pricing and related AI items in the Aiero shop.",
+        "Internal product template route retained for design reference.",
+      path: "/shop-single",
+      index: false,
     },
     cart: {
       title: `Shopping Cart | ${BASE_TITLE}`,
       description:
-        "Review items in your Aiero AI Agency & Technology shopping cart before checkout.",
+        "Cart route for active customer sessions.",
+      path: "/cart",
+      index: false,
     },
     checkout: {
       title: `Checkout | ${BASE_TITLE}`,
       description:
-        "Checkout page for completing your order in the Aiero AI Agency & Technology shop demo.",
+        "Checkout route for active customer sessions.",
+      path: "/checkout",
+      index: false,
     },
     account: {
       title: `My Account | ${BASE_TITLE}`,
       description:
-        "Account dashboard for managing profile details and orders in the Aiero shop demo.",
+        "Account route for active customer sessions.",
+      path: "/account",
+      index: false,
     },
     blog: {
       title: `Blog | ${BASE_TITLE}`,
       description:
-        "Aiero AI Agency & Technology blog listing articles on AI, design and technology.",
+        "Internal blog template route retained until SceneShift publishes original articles.",
+      path: "/blog",
+      index: false,
     },
     blog2: {
       title: `Blog Classic | ${BASE_TITLE}`,
       description:
-        "Alternative blog layout showcasing Aiero AI Agency & Technology articles and news.",
+        "Internal blog template route retained until SceneShift publishes original articles.",
+      path: "/blog2",
+      index: false,
     },
     "blog-single": {
       title: `Blog Details | ${BASE_TITLE}`,
       description:
-        "Single blog article page for Aiero AI Agency & Technology with full content and comments area.",
+        "Internal blog detail template route retained until SceneShift publishes original articles.",
+      path: "/blog-single",
+      index: false,
     },
     "not-found": {
       title: `404 | ${BASE_TITLE}`,
       description:
         "The page you requested does not exist or has been moved.",
+      path: "/404",
+      index: false,
     },
     ...homepageMetaMap,
     home17: {
-      title: `SceneShift | ${BASE_TITLE}`,
+      title: `AI CRM Automation for Small Businesses | ${BASE_TITLE}`,
       description:
-        "SceneShift homepage built from the template's index17 demo and customized for sceneshift.org.",
+        "SceneShift helps Iowa small businesses capture more leads, answer faster, automate follow-up, and build practical AI-powered CRM workflows.",
+      path: "/",
+      index: true,
+      changefreq: "weekly",
+      priority: 1,
+      schemaType: "ProfessionalService",
     },
   };
 
@@ -217,14 +300,119 @@ function setMetaProperty(property: string, content: string): void {
   );
 }
 
-/** Applies page title, description, and Open Graph meta tags in the document head (SPA). */
+function setLinkRel(rel: string, href: string): void {
+  let el = document.head.querySelector(
+    `link[rel="${rel}"]`,
+  ) as HTMLLinkElement | null;
+  if (!el) {
+    el = document.createElement("link");
+    el.rel = rel;
+    document.head.appendChild(el);
+  }
+  el.href = href;
+}
+
+function setJsonLd(id: string, value: unknown): void {
+  let el = document.getElementById(id) as HTMLScriptElement | null;
+  if (!el) {
+    el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.id = id;
+    document.head.appendChild(el);
+  }
+  el.text = JSON.stringify(value);
+}
+
+function absoluteUrl(path: string): string {
+  return new URL(path, siteConfig.url).toString();
+}
+
+function normalizePath(pathname: string): string {
+  if (pathname === "") return "/";
+  if (pathname !== "/" && pathname.endsWith("/")) return pathname.slice(0, -1);
+  return pathname;
+}
+
+function buildJsonLd(meta: PageMeta, canonicalUrl: string): unknown {
+  const organizationId = `${siteConfig.url}/#organization`;
+  const websiteId = `${siteConfig.url}/#website`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": organizationId,
+        name: siteConfig.name,
+        url: siteConfig.url,
+        email: siteConfig.primaryEmail,
+        telephone: siteConfig.primaryPhoneHref,
+        areaServed: siteConfig.areaServed,
+        serviceType: [
+          "AI CRM automation",
+          "Lead response automation",
+          "Sales follow-up systems",
+          "Small business workflow automation",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+        name: siteConfig.name,
+        url: siteConfig.url,
+        publisher: { "@id": organizationId },
+      },
+      {
+        "@type": meta.schemaType ?? "WebPage",
+        "@id": `${canonicalUrl}#webpage`,
+        url: canonicalUrl,
+        name: meta.title,
+        description: meta.description,
+        isPartOf: { "@id": websiteId },
+        about: { "@id": organizationId },
+        provider: { "@id": organizationId },
+      },
+    ],
+  };
+}
+
+export function getPageMeta(key: PageMetaKey): PageMeta {
+  return pageMetaMap[key];
+}
+
+export const indexedPageMeta = Object.values(pageMetaMap).filter(
+  (meta) => meta.index === true,
+);
+
+/** Applies page title, canonical, robots, social meta tags, and JSON-LD in the document head (SPA). */
 export function getPageMetadata(key: PageMetaKey): void {
   if (typeof document === "undefined") return;
 
-  const { title, description } = pageMetaMap[key];
+  const meta = pageMetaMap[key];
+  const canonicalUrl = absoluteUrl(meta.path);
+  const ogImageUrl = absoluteUrl(siteConfig.ogImagePath);
+  const currentPath = normalizePath(window.location.pathname);
+  const canonicalPath = normalizePath(new URL(canonicalUrl).pathname);
+  const shouldIndex = meta.index === true && currentPath === canonicalPath;
 
-  document.title = title;
-  setMetaName("description", description);
-  setMetaProperty("og:title", title);
-  setMetaProperty("og:description", description);
+  document.title = meta.title;
+  setMetaName("description", meta.description);
+  setMetaName(
+    "robots",
+    shouldIndex ? "index, follow, max-image-preview:large" : "noindex, nofollow",
+  );
+  setLinkRel("canonical", canonicalUrl);
+  setMetaProperty("og:type", "website");
+  setMetaProperty("og:site_name", siteConfig.name);
+  setMetaProperty("og:title", meta.title);
+  setMetaProperty("og:description", meta.description);
+  setMetaProperty("og:url", canonicalUrl);
+  setMetaProperty("og:image", ogImageUrl);
+  setMetaName("twitter:card", "summary_large_image");
+  setMetaName("twitter:title", meta.title);
+  setMetaName("twitter:description", meta.description);
+
+  if (shouldIndex) {
+    setJsonLd("seo-json-ld", buildJsonLd(meta, canonicalUrl));
+  }
 }

@@ -12,6 +12,11 @@ export const siteConfig = {
   supportEmail: "contact@sceneshift.org",
   primaryPhoneLabel: "(515) 579-5378",
   primaryPhoneHref: "+15155795378",
+  region: "Ames, Iowa",
+  areaServed: ["Ames, Iowa", "Iowa", "United States"],
+  indexNowKey: "b44f0c99429d41d9896cfd3cfc07933e",
+  ogImagePath:
+    "/assets/images/page-title/des-moines-iowa-usa-capitol-building-on-a-misty-2026-03-24-11-27-15-utc.jpg",
 } as const;
 
 export const servicesSectionHref = "/#some-of-our-services";

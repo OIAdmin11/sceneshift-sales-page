@@ -10,6 +10,7 @@ import {
   submitContactForm,
   type ContactFormPayload,
 } from "@/utils/contactForm";
+import { trackConversionEvent } from "@/utils/analytics";
 
 const CONTACT_SUBJECT_OPTIONS = [
   "Always-On Capture",
@@ -91,6 +92,10 @@ export default function ContactForm() {
   const turnstileStatusMessage =
     turnstileError ||
     (!turnstileSiteKey ? "Spam protection is not configured yet." : "");
+
+  useEffect(() => {
+    trackConversionEvent("contact_form_view", { page: window.location.pathname });
+  }, []);
 
   useEffect(() => {
     if (!turnstileSiteKey) {
@@ -214,6 +219,10 @@ export default function ContactForm() {
       setFormData(initialFormState);
       resetTurnstile();
       setSubmitState({ kind: "success", message });
+      trackConversionEvent("contact_form_submit", {
+        page: window.location.pathname,
+        subject: formData.subject,
+      });
     } catch (error) {
       resetTurnstile();
       setSubmitState({
