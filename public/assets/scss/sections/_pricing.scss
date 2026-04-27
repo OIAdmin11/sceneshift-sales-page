@@ -820,6 +820,11 @@
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    &.price-card3--no-tab {
+      &::before {
+        display: none;
+      }
+    }
     .price-item2 {
       flex: 1 1 auto;
     }
