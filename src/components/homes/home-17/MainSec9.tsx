@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { servicesSectionHref } from "@/data/site";
 import { trackConversionEvent } from "@/utils/analytics";
 
-/** Replace with your SceneShift marketing video embed URL when ready. */
+/** Homepage hero video section (YouTube embed). */
 const IOWA_SUPPORT_VIDEO_EMBED =
-  "https://www.youtube.com/embed/aircAruvnKk";
+  "https://www.youtube.com/embed/WUfJUGK9q9Q";
 
 export default function MainSec9() {
   return (
