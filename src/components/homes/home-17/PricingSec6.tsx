@@ -6,35 +6,36 @@ import { trackConversionEvent } from "@/utils/analytics";
 
 const pricedOfferCards = [
   {
-    id: "lead-saver-engine",
+    id: "main-street-startup",
     cardClassName: "price-card3",
-    title: 'The "Lead Saver" Engine',
+    title: "The Main Street Startup",
     subtitle:
-      "Perfect for businesses tired of losing deals to the guy down the street just because they were on the other line.",
+      "The starter AI front office for small businesses that need every web chat, call, appointment, and customer update handled without extra payroll.",
     features: [
-      "Instant Missed-Call Text Back: the second you miss a call, our system texts them back so you save the lead instantly.",
-      'The "Command Center" Unified Inbox: Facebook messages, Instagram direct messages, text messages, webchat, and Google Business chats in one single screen.',
-      "Auto-Review Generation: automatically text happy customers a 1-click link to leave a 5-star Google review when a job is marked done.",
+      "24/7 Web Concierge: AI webchat on your current site answers FAQs, captures contact info, and helps set appointments.",
+      "The Always on Receptionist: inbound AI phone support intercepts missed calls, pre-qualifies buyers, answers FAQs, and books appointments.",
+      "The Invisible Admin: CRM updates, phone/email alerts, appointment reminders, and prep details are sent automatically.",
+      "The Invisible Personal Assistant: our AI agent fills your calendar with appointments on your calendar of choice.",
+      "Easy CRM: a complementary web portal to track customers and revenue with ease.",
     ],
     priceHeadline: "$299",
-    priceDetailLines: ["/month", "+ $499 one-time setup"],
+    priceDetailLines: ["/month", "+ $500 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-outline",
   },
   {
     id: "always-on-capture",
     cardClassName: "price-card3 v2",
     badge: "Most Popular",
-    title: "Always-On Capture",
+    title: "Always on Capture",
     subtitle:
-      "Perfect for growing businesses overwhelmed by inbound calls, basic scheduling, and repetitive questions.",
+      "Adds instant outbound follow-up and automated review collection to everything in The Main Street Startup package.",
     features: [
-      "No Sleep Receptionist: inbound AI voice intercepts missed calls, pre-qualifies callers, answers common questions, and books appointments.",
-      "24/7 Web Concierge: an intelligent webchat agent captures leads and schedules bookings while you sleep.",
-      "The Invisible Admin: automated text and email reminders for confirmations, prep, nudges, and follow-ups.",
-      "Intelligent Customer System Sync: every conversation writes directly to the tools you already use with complete context.",
+      "All services in Package 1: web concierge, always-on receptionist, invisible admin, personal assistant, and Easy CRM.",
+      "Speed-to-Lead Outbound: when a customer fills out a website form, the Lead Qualification AI Agent immediately calls while they are still hot.",
+      "Hands-Off Reviews: after service completion, an AI agent calls your client and captures an explicit review.",
     ],
-    priceHeadline: "$749",
-    priceDetailLines: ["/month", "+ $999 one-time setup"],
+    priceHeadline: "$599",
+    priceDetailLines: ["/month", "+ $1,000 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-dark",
   },
   {
@@ -42,15 +43,13 @@ const pricedOfferCards = [
     cardClassName: "price-card3 v3",
     title: "The Autonomous Sales Floor",
     subtitle:
-      "Perfect for high-volume operations that need aggressive speed-to-lead and continuous customer feedback without adding expensive payroll.",
+      "The complete AI sales package for teams that want outbound lead qualification, follow-up, and booking handled automatically.",
     features: [
-      "Everything in the Always-On Capture Package, plus outbound speed-to-lead and automated feedback loops.",
-      "Speed-to-Lead Outbound Engine: AI automatically dials fresh leads within about 60 seconds of a form submission.",
-      "The Surveyor: AI feedback and survey calls capture real customer insight directly in your customer system.",
-      "Full-Funnel Leverage: orchestrated inbound and outbound intelligence inside the software your team already chose.",
+      "All services in Package 2: everything from Package 1 plus Speed-to-Lead Outbound and Hands-Off Reviews.",
+      "The Autonomous Salesman: give the AI Lead Qualifier a list of phone numbers and client context, and it reaches out, follows up, and books appointments for you.",
     ],
-    priceHeadline: "$1,499",
-    priceDetailLines: ["/month", "+ $2,999 one-time setup"],
+    priceHeadline: "$999",
+    priceDetailLines: ["/month", "+ $1,500 one-time setup"],
     buttonClassName: "ibt-btn ibt-btn-outline",
   },
 ];
@@ -85,9 +84,9 @@ export default function PricingSec6() {
             Stop Bleeding Leads. Start Scaling Effortlessly.
           </TitleSplitWrapper>
           <p>
-            Don&apos;t lose another $5,000 job because you were too busy to
-            answer the phone. Choose the automated growth engine that fits your
-            business, and let our AI do the heavy lifting.
+            Choose the AI growth package that fits your business today, from a
+            complete front-office starter system to an autonomous sales floor
+            that follows up, books appointments, and keeps revenue moving.
           </p>
         </div>
         <div className="row g-4">
