@@ -42,9 +42,10 @@ export default function Page() {
               <p>
                 Small business AI automation should be priced around the value of
                 recovered leads, saved admin time, and faster follow-up. SceneShift
-                packages start with missed-call text back and unified inboxes, then
-                expand into AI reception, web chat, speed-to-lead, review requests,
-                and custom automation roadmaps.
+                packages start with web chat, AI reception, CRM updates, calendar
+                booking, and Easy CRM, then expand into speed-to-lead calls,
+                hands-off reviews, autonomous outbound sales, and custom
+                automation roadmaps.
               </p>
               <p>
                 The right package depends on call volume, lead value, existing

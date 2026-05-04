@@ -163,7 +163,7 @@ const pageMetaMap: Record<PageMetaKey, PageMeta> = {
     pricing: {
       title: `AI Automation Pricing for Small Businesses | ${BASE_TITLE}`,
       description:
-        "Compare SceneShift packages for missed-call text back, unified inboxes, AI reception, web chat, review generation, and sales follow-up automation.",
+        "Compare SceneShift packages for AI web chat, AI reception, CRM updates, calendar booking, Easy CRM, review generation, and autonomous sales follow-up.",
       path: "/pricing",
       index: true,
       changefreq: "weekly",
