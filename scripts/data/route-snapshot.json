@@ -16692,9 +16692,9 @@
     "path": "/iowa/cities/des-moines",
     "title": "Small Business AI Automation in Des Moines, Iowa |...",
     "description": "Des Moines small businesses use SceneShift to capture missed calls and respond faster to web leads. Iowa's capital and largest city, anchored by the Iowa...",
-    "index": false,
+    "index": true,
     "changefreq": "monthly",
-    "priority": 0.3,
+    "priority": 0.5,
     "jsonLd": {
       "@context": "https://schema.org",
       "@graph": [
@@ -16824,9 +16824,9 @@
     "path": "/iowa/cities/cedar-rapids",
     "title": "Small Business AI Automation in Cedar Rapids, Iowa |...",
     "description": "Cedar Rapids small businesses use SceneShift to capture missed calls and respond faster to web leads. Iowa's second-largest city, often called the City of...",
-    "index": false,
+    "index": true,
     "changefreq": "monthly",
-    "priority": 0.3,
+    "priority": 0.5,
     "jsonLd": {
       "@context": "https://schema.org",
       "@graph": [
@@ -16956,9 +16956,9 @@
     "path": "/iowa/cities/davenport",
     "title": "Small Business AI Automation in Davenport, Iowa | SceneShift",
     "description": "Davenport small businesses use SceneShift to capture missed calls and respond faster to web leads. The largest of the Quad Cities along the Mississippi...",
-    "index": false,
+    "index": true,
     "changefreq": "monthly",
-    "priority": 0.3,
+    "priority": 0.5,
     "jsonLd": {
       "@context": "https://schema.org",
       "@graph": [
@@ -17484,9 +17484,9 @@
     "path": "/iowa/cities/ames",
     "title": "Small Business AI Automation in Ames, Iowa | SceneShift",
     "description": "Ames small businesses use SceneShift to capture missed calls and respond faster to web leads. Home of Iowa State University and SceneShift's headquarters —...",
-    "index": false,
+    "index": true,
     "changefreq": "monthly",
-    "priority": 0.3,
+    "priority": 0.5,
     "jsonLd": {
       "@context": "https://schema.org",
       "@graph": [
@@ -18012,9 +18012,9 @@
     "path": "/iowa/cities/ankeny",
     "title": "Small Business AI Automation in Ankeny, Iowa | SceneShift",
     "description": "Ankeny small businesses use SceneShift to capture missed calls and respond faster to web leads. One of Iowa's fastest-growing suburbs, just north of Des...",
-    "index": false,
+    "index": true,
     "changefreq": "monthly",
-    "priority": 0.3,
+    "priority": 0.5,
     "jsonLd": {
       "@context": "https://schema.org",
       "@graph": [

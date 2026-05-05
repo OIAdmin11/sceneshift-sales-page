@@ -29,7 +29,14 @@ export const FEATURED_SMALL_TOWNS = ["huxley"] as const;
  * Search Console shows real impressions per the kill-criteria policy), add
  * its slug to `MANUALLY_PROMOTED_CITIES` below.
  */
-const MANUALLY_PROMOTED_CITIES: readonly string[] = [];
+const MANUALLY_PROMOTED_CITIES: readonly string[] = [
+  "des-moines",
+  "ames",
+  "ankeny",
+  "cedar-rapids",
+  "davenport",
+  "huxley",
+];
 
 const AUTO_PROMOTION_START_DATE =
   import.meta.env.VITE_SEO_CITY_PROMOTION_START_DATE;

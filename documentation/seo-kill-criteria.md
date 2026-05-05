@@ -30,6 +30,15 @@ This kill-criteria policy addresses (2) over time.
 | Tier 4 | City pages (non-featured) | `noindex, follow` | 0.3 |
 | Tier 4 (featured) | `featuredSmallTowns` (e.g. Huxley) | `index, follow` | 0.5 |
 
+Default promoted city pages at launch:
+
+- Ames
+- Ankeny
+- Cedar Rapids
+- Davenport
+- Des Moines
+- Huxley
+
 ## Review cadence
 
 - **Day 0**: Page ships to production.

@@ -3945,7 +3945,14 @@ var FEATURED_SMALL_TOWNS = ["huxley"];
 * Search Console shows real impressions per the kill-criteria policy), add
 * its slug to `MANUALLY_PROMOTED_CITIES` below.
 */
-var MANUALLY_PROMOTED_CITIES = [];
+var MANUALLY_PROMOTED_CITIES = [
+	"des-moines",
+	"ames",
+	"ankeny",
+	"cedar-rapids",
+	"davenport",
+	"huxley"
+];
 var AUTO_PROMOTION_START_DATE = void 0;
 var AUTO_PROMOTION_BATCH_SIZE = parsePositiveInt(void 0, 3);
 var AUTO_PROMOTION_AS_OF_DATE = void 0;
