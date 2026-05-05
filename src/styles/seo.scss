@@ -1,0 +1,484 @@
+/**
+ * Stylesheet for the SceneShift SEO/AIO content network (lite layout).
+ *
+ * Minimal, fast-loading, no heavy framework dependencies. Targets:
+ *  - LCP < 2.0s
+ *  - INP < 150ms
+ *  - CLS < 0.05
+ */
+
+// CSS custom properties (resolves cleanly with the existing dark/light theme)
+:root {
+  --seo-bg: #ffffff;
+  --seo-fg: #0f172a;
+  --seo-fg-muted: #475569;
+  --seo-accent: #d18f3a;
+  --seo-border: #e2e8f0;
+  --seo-card-bg: #f8fafc;
+  --seo-link: #d18f3a;
+  --seo-link-hover: #b07321;
+  --seo-radius: 10px;
+  --seo-max: 1200px;
+}
+
+body.dark-mode {
+  --seo-bg: #0b0d11;
+  --seo-fg: #f1f5f9;
+  --seo-fg-muted: #94a3b8;
+  --seo-border: #1e293b;
+  --seo-card-bg: #11161d;
+}
+
+.seo-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--seo-bg);
+  color: var(--seo-fg);
+  font-family: "Manrope", system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+
+  &__main {
+    flex: 1 1 auto;
+    padding: 32px 0;
+  }
+
+  .container {
+    max-width: var(--seo-max);
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  a {
+    color: var(--seo-link);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    &:hover { color: var(--seo-link-hover); text-decoration: underline; }
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Sora", system-ui, sans-serif;
+    color: var(--seo-fg);
+    line-height: 1.2;
+    margin: 0 0 16px;
+  }
+  h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 700; }
+  h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 600; margin-top: 32px; }
+  h3 { font-size: clamp(18px, 2.4vw, 22px); font-weight: 600; }
+  p { margin: 0 0 16px; color: var(--seo-fg-muted); }
+}
+
+// ============== HEADER ==============
+.seo-header {
+  background: var(--seo-bg);
+  border-bottom: 1px solid var(--seo-border);
+
+  &__top {
+    background: var(--seo-card-bg);
+    font-size: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--seo-border);
+  }
+  &__contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      display: flex;
+      gap: 6px;
+      color: var(--seo-fg-muted);
+      a { color: var(--seo-fg); }
+    }
+  }
+  &__contact-label {
+    font-weight: 600;
+  }
+
+  &__main { padding: 16px 0; }
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  &__logo img { display: block; }
+  &__nav {
+    flex: 1 1 auto;
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      justify-content: center;
+    }
+    a {
+      color: var(--seo-fg);
+      font-weight: 500;
+      &:hover { color: var(--seo-accent); }
+    }
+  }
+  &__login {
+    background: var(--seo-fg);
+    color: var(--seo-bg) !important;
+    padding: 8px 18px;
+    border-radius: var(--seo-radius);
+    font-weight: 600;
+    &:hover { text-decoration: none !important; opacity: 0.9; }
+  }
+}
+
+// ============== FOOTER ==============
+.seo-footer {
+  background: var(--seo-card-bg);
+  border-top: 1px solid var(--seo-border);
+  padding: 48px 0 16px;
+  margin-top: 48px;
+
+  &__cta h2 {
+    font-size: clamp(24px, 3.5vw, 38px);
+    margin-bottom: 32px;
+    text-wrap: balance;
+  }
+
+  &__grid {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    @media (max-width: 1024px) { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 600px) { grid-template-columns: 1fr; }
+  }
+
+  &__brand img { margin-bottom: 16px; }
+  &__nap {
+    font-style: normal;
+    p { margin: 4px 0; }
+  }
+
+  &__column {
+    h3 { font-size: 16px; margin-bottom: 12px; }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li { margin: 6px 0; }
+    }
+  }
+
+  &__bottom {
+    border-top: 1px solid var(--seo-border);
+    margin-top: 32px;
+    padding-top: 16px;
+    text-align: center;
+    font-size: 14px;
+  }
+}
+
+// ============== ANSWER-FIRST BLOCK ==============
+.seo-answer-first {
+  background: var(--seo-card-bg);
+  border-left: 4px solid var(--seo-accent);
+  padding: 24px 28px;
+  border-radius: var(--seo-radius);
+  margin: 16px 0 32px;
+
+  &__question { margin-bottom: 12px; }
+  &__answer {
+    font-size: 18px;
+    color: var(--seo-fg);
+    margin: 0;
+    line-height: 1.55;
+  }
+}
+
+// ============== BREADCRUMBS ==============
+.seo-breadcrumbs {
+  font-size: 14px;
+  margin-bottom: 16px;
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+  }
+  &__item span[aria-current="page"] { color: var(--seo-fg-muted); }
+  &__sep {
+    color: var(--seo-fg-muted);
+    margin: 0 4px;
+  }
+}
+
+// ============== BYLINE ==============
+.seo-byline {
+  font-size: 14px;
+  color: var(--seo-fg-muted);
+  margin: 24px 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--seo-border);
+  border-bottom: 1px solid var(--seo-border);
+
+  &__author { font-weight: 600; color: var(--seo-fg); }
+  &__title { color: var(--seo-fg-muted); }
+}
+
+// ============== PAIN-MECHANISM-OUTCOME ==============
+.seo-pmo {
+  margin: 32px 0;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    @media (max-width: 900px) { grid-template-columns: 1fr; }
+  }
+
+  &__col {
+    background: var(--seo-card-bg);
+    padding: 20px;
+    border-radius: var(--seo-radius);
+    border: 1px solid var(--seo-border);
+  }
+
+  &__heading { font-size: 20px; margin-bottom: 16px; }
+  &__list, &__steps {
+    margin: 0;
+    padding-left: 20px;
+    li { margin-bottom: 12px; color: var(--seo-fg); }
+  }
+}
+
+// ============== COMPARISON TABLE ==============
+.seo-compare {
+  margin: 32px 0;
+
+  &__title { margin-bottom: 16px; }
+  &__scroll { overflow-x: auto; }
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--seo-border);
+      vertical-align: top;
+    }
+    thead th {
+      background: var(--seo-card-bg);
+      font-weight: 700;
+    }
+    tbody th {
+      font-weight: 600;
+      width: 35%;
+    }
+  }
+}
+
+// ============== FAQ ==============
+.seo-faq {
+  margin: 48px 0;
+
+  &__heading { margin-bottom: 16px; }
+  &__list { display: flex; flex-direction: column; gap: 8px; }
+  &__item {
+    background: var(--seo-card-bg);
+    padding: 16px 20px;
+    border-radius: var(--seo-radius);
+    border: 1px solid var(--seo-border);
+
+    &[open] { background: var(--seo-bg); }
+  }
+  &__question {
+    font-weight: 600;
+    color: var(--seo-fg);
+    cursor: pointer;
+    list-style: none;
+    &::-webkit-details-marker { display: none; }
+    &::before {
+      content: "+";
+      display: inline-block;
+      margin-right: 12px;
+      font-weight: 700;
+      color: var(--seo-accent);
+    }
+  }
+  &__item[open] &__question::before { content: "−"; }
+  &__answer { padding-top: 12px; }
+}
+
+// ============== INTERLINK GRID ==============
+.seo-interlink {
+  margin: 48px 0;
+  padding: 32px 0;
+  border-top: 2px solid var(--seo-border);
+  border-bottom: 2px solid var(--seo-border);
+
+  &__rails {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  &__rail {
+    h3 { font-size: 16px; margin-bottom: 12px; }
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item { margin-bottom: 8px; }
+
+  &__link {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--seo-card-bg);
+    border: 1px solid var(--seo-border);
+    transition: border-color 0.15s ease;
+    &:hover { border-color: var(--seo-accent); text-decoration: none; }
+  }
+
+  &__label {
+    display: block;
+    font-weight: 600;
+    color: var(--seo-fg);
+  }
+  &__hook {
+    display: block;
+    font-size: 13px;
+    color: var(--seo-fg-muted);
+    margin-top: 2px;
+  }
+
+  &__cta {
+    text-align: center;
+  }
+}
+
+// ============== PRIMARY SOURCES ==============
+.seo-sources {
+  margin: 32px 0;
+  font-size: 14px;
+  color: var(--seo-fg-muted);
+
+  &__heading {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  &__list {
+    list-style: disc inside;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+// ============== HUB / DETAIL PAGE LAYOUT HELPERS ==============
+.seo-page {
+  &__intro {
+    font-size: 18px;
+    margin: 16px 0 24px;
+    max-width: 70ch;
+  }
+
+  &__grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 24px 0;
+  }
+
+  &__card {
+    background: var(--seo-card-bg);
+    border: 1px solid var(--seo-border);
+    border-radius: var(--seo-radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    h3 { font-size: 18px; margin-bottom: 8px; }
+    p { font-size: 15px; flex: 1; }
+    a {
+      margin-top: 12px;
+      font-weight: 600;
+    }
+  }
+
+  &__regions {
+    margin: 32px 0;
+    h2 { margin-bottom: 12px; }
+    & > section { margin-bottom: 32px; }
+  }
+
+  &__county-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      background: var(--seo-card-bg);
+      border: 1px solid var(--seo-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      a { font-weight: 600; }
+      .seo-page__county-meta {
+        display: block;
+        font-size: 13px;
+        color: var(--seo-fg-muted);
+      }
+    }
+  }
+}
+
+// ============== HERO ==============
+.seo-hero {
+  background: linear-gradient(135deg, var(--seo-card-bg) 0%, var(--seo-bg) 100%);
+  padding: 32px 24px;
+  border-radius: var(--seo-radius);
+  margin-bottom: 24px;
+
+  &__hook {
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--seo-fg-muted);
+    margin: 16px 0 0;
+    max-width: 70ch;
+  }
+}
+
+// ============== PACKAGE PRICE BLOCK ==============
+.seo-price {
+  background: var(--seo-card-bg);
+  border: 1px solid var(--seo-border);
+  border-radius: var(--seo-radius);
+  padding: 20px 24px;
+  margin: 24px 0;
+
+  &__headline {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  &__detail {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    color: var(--seo-fg-muted);
+  }
+}

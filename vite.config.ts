@@ -4,10 +4,16 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/", // ✅ ADD THIS LINE
+  base: "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  ssr: {
+    // Mark CSS-in-JS / browser-only deps as noExternal where needed.
+    // The SEO pages import only React + react-router-dom + the data layer,
+    // so the default external behavior works.
+    noExternal: [],
   },
 });

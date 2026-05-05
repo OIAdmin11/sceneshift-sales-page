@@ -1,4 +1,5 @@
 @use "../../public/assets/scss/style" as *;
+@use "./seo" as *;
 
 // Footer3: Contact phone/email live in .location-widget4; template only styles .nmbr/.gmail under .contact-widget4
 .footer-style4 .location-widget4 {
