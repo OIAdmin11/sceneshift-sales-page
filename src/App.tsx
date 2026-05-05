@@ -11,8 +11,9 @@ import Preloader from "@/components/common/Preloader";
 import InnerPagesLayout from "@/pages/layouts/inner-pages/InnerPagesLayout";
 import BlogLayout from "@/pages/layouts/blog/BlogLayout";
 import ShopLayout from "@/pages/layouts/shop/ShopLayout";
+import SeoShellLayout from "@/pages/layouts/SeoShellLayout";
 import ExternalRedirect from "@/components/common/ExternalRedirect";
-import { servicesSectionHref, siteConfig } from "@/data/site";
+import { siteConfig } from "@/data/site";
 
 const Home = lazy(() => import("@/pages"));
 const PricingPage = lazy(() => import("@/pages/inner-pages/pricing"));
@@ -57,6 +58,21 @@ const Index15Page = lazy(() => import("@/pages/homes/index15"));
 const Index16Page = lazy(() => import("@/pages/homes/index16"));
 const Index17Page = lazy(() => import("@/pages/homes/index17"));
 const NotFoundPage = lazy(() => import("@/pages/not-found"));
+
+// SEO/AIO content network — eager-imported (no `lazy`) so server-side rendering
+// in [src/entry-server.tsx] works synchronously without Suspense plumbing.
+import ServicesHub from "@/pages/seo/services/ServicesHub";
+import ServiceDetail from "@/pages/seo/services/ServiceDetail";
+import CrosshairDetail from "@/pages/seo/services/CrosshairDetail";
+import PackagesHub from "@/pages/seo/packages/PackagesHub";
+import PackageDetail from "@/pages/seo/packages/PackageDetail";
+import IndustriesHub from "@/pages/seo/industries/IndustriesHub";
+import IndustryDetail from "@/pages/seo/industries/IndustryDetail";
+import IowaHub from "@/pages/seo/iowa/IowaHub";
+import CountyDetail from "@/pages/seo/iowa/CountyDetail";
+import CityDetail from "@/pages/seo/iowa/CityDetail";
+import Founder from "@/pages/seo/about/Founder";
+import EditorialPolicy from "@/pages/seo/about/EditorialPolicy";
 
 import { LenisProvider } from "./context/LenisContext";
 import SmoothScroll from "./components/common/SmoothScroll";
@@ -136,18 +152,61 @@ function App() {
                             />
                           </Route>
 
+                          {/* Legacy guards: keep redirects for old template paths,
+                              but `/services` is now the real services hub. */}
                           <Route
                             path="service"
-                            element={<Navigate to={servicesSectionHref} replace />}
-                          />
-                          <Route
-                            path="services"
-                            element={<Navigate to={servicesSectionHref} replace />}
+                            element={<Navigate to="/services" replace />}
                           />
                           <Route
                             path="service-single"
-                            element={<Navigate to={servicesSectionHref} replace />}
+                            element={<Navigate to="/services" replace />}
                           />
+
+                          {/* SEO/AIO content network — phased rollout */}
+                          <Route element={<SeoShellLayout />}>
+                            {/* Phase 1: services / packages / industries hubs + detail */}
+                            <Route path="services" element={<ServicesHub />} />
+                            <Route
+                              path="services/:slug"
+                              element={<ServiceDetail />}
+                            />
+                            {/* Phase 2: service x industry crosshair pages */}
+                            <Route
+                              path="services/:slug/:crosshair"
+                              element={<CrosshairDetail />}
+                            />
+                            <Route path="packages" element={<PackagesHub />} />
+                            <Route
+                              path="packages/:slug"
+                              element={<PackageDetail />}
+                            />
+                            <Route
+                              path="industries"
+                              element={<IndustriesHub />}
+                            />
+                            <Route
+                              path="industries/:slug"
+                              element={<IndustryDetail />}
+                            />
+                            {/* Phase 3: Iowa hub + 99 counties */}
+                            <Route path="iowa" element={<IowaHub />} />
+                            <Route
+                              path="iowa/counties/:slug"
+                              element={<CountyDetail />}
+                            />
+                            {/* Phase 4: city pages (mostly noindex,follow at launch) */}
+                            <Route
+                              path="iowa/cities/:slug"
+                              element={<CityDetail />}
+                            />
+                            {/* E-E-A-T anchor pages */}
+                            <Route path="about/founder" element={<Founder />} />
+                            <Route
+                              path="about/editorial-policy"
+                              element={<EditorialPolicy />}
+                            />
+                          </Route>
 
                           <Route element={<ShopLayout />}>
                             <Route path="shop" element={<ShopPage />} />

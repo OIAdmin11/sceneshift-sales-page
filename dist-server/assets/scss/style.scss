@@ -1,0 +1,30 @@
+/**
+ * Template Name: Aiero | AI Agency & Technology HTML Template
+ * Description: AI Agency, tech startup, chat bot, data science, digital agency, consulting, IT solutions, voiceover, video voiceover, robotics, science, industry, machine learning, neural network or other modern technology business template.
+ * Version: 1.1.0
+ * Author: ib-thems
+ * Author https://themeforest.net/user/ib-themes
+ */
+
+/* Vendor / plugin CSS - load order matches original layout */
+
+@use "global";
+@use "utilities";
+@use "header";
+@use "elements";
+@use "sections";
+@import "../css/plugins/bootstrap.min.css";
+@import "../css/plugins/fontello-enqueue.css";
+@import "../css/plugins/fontello-icons.css";
+@import "../css/plugins/swiper-bundle.min.css";
+@import "../css/plugins/lightgallery-bundle.min.css";
+.swiper-navigation-icon {
+  display: none;
+}
+.image-auto {
+  width: auto;
+  height: auto;
+}
+.wrapper-clip {
+  overflow: clip;
+}
