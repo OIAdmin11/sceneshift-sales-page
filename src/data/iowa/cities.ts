@@ -11,8 +11,14 @@ import type { CityRecord } from "@/types/seo";
  *  - `featuredSmallTowns` ship `index, follow` because they carry a real
  *    E-E-A-T signal (founder local ties).
  *
- * To promote a city, flip its `indexable` flag to true and add to the
- * change log in [documentation/seo-kill-criteria.md].
+ * Promotion can be manual (`MANUALLY_PROMOTED_CITIES`) or automatic via env:
+ *
+ *   VITE_SEO_CITY_PROMOTION_START_DATE=2026-06-01
+ *   VITE_SEO_CITY_PROMOTION_BATCH_SIZE=3
+ *
+ * Starting on the configured date, the build promotes the next batch of
+ * population-ranked cities once per calendar month. Without the start date,
+ * no automatic promotion happens.
  */
 export const FEATURED_SMALL_TOWNS = ["huxley"] as const;
 
@@ -23,7 +29,64 @@ export const FEATURED_SMALL_TOWNS = ["huxley"] as const;
  * Search Console shows real impressions per the kill-criteria policy), add
  * its slug to `MANUALLY_PROMOTED_CITIES` below.
  */
-const MANUALLY_PROMOTED_CITIES: readonly string[] = [];
+const MANUALLY_PROMOTED_CITIES: readonly string[] = [
+  "des-moines",
+  "ames",
+  "ankeny",
+  "cedar-rapids",
+  "davenport",
+  "huxley",
+];
+
+const AUTO_PROMOTION_START_DATE =
+  import.meta.env.VITE_SEO_CITY_PROMOTION_START_DATE;
+const AUTO_PROMOTION_BATCH_SIZE = parsePositiveInt(
+  import.meta.env.VITE_SEO_CITY_PROMOTION_BATCH_SIZE,
+  3,
+);
+const AUTO_PROMOTION_AS_OF_DATE =
+  import.meta.env.VITE_SEO_CITY_PROMOTION_AS_OF_DATE;
+
+function parsePositiveInt(value: string | undefined, fallback: number): number {
+  if (!value) return fallback;
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+function parseDateOnly(value: string | undefined): Date | undefined {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return undefined;
+  const date = new Date(`${value}T00:00:00Z`);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+function monthsElapsedInclusive(
+  startDateValue: string | undefined,
+  asOfDateValue: string | undefined,
+): number {
+  const startDate = parseDateOnly(startDateValue);
+  if (!startDate) return 0;
+
+  const asOfDate = parseDateOnly(asOfDateValue) ?? new Date();
+  const asOfUtc = new Date(
+    Date.UTC(
+      asOfDate.getUTCFullYear(),
+      asOfDate.getUTCMonth(),
+      asOfDate.getUTCDate(),
+    ),
+  );
+
+  if (asOfUtc < startDate) return 0;
+
+  let months =
+    (asOfUtc.getUTCFullYear() - startDate.getUTCFullYear()) * 12 +
+    (asOfUtc.getUTCMonth() - startDate.getUTCMonth());
+
+  if (asOfUtc.getUTCDate() < startDate.getUTCDate()) {
+    months -= 1;
+  }
+
+  return Math.max(0, months + 1);
+}
 
 const RAW_CITIES: readonly CityRecord[] = [
   {
@@ -596,16 +659,36 @@ const RAW_CITIES: readonly CityRecord[] = [
   },
 ] as const;
 
+const automaticPromotionCount =
+  monthsElapsedInclusive(
+    AUTO_PROMOTION_START_DATE,
+    AUTO_PROMOTION_AS_OF_DATE,
+  ) * AUTO_PROMOTION_BATCH_SIZE;
+
+export const AUTO_PROMOTED_CITY_SLUGS: readonly string[] = RAW_CITIES.filter(
+  (c) => !(FEATURED_SMALL_TOWNS as readonly string[]).includes(c.slug),
+)
+  .slice(0, automaticPromotionCount)
+  .map((c) => c.slug);
+
+export const SEO_CITY_AUTO_PROMOTION_CONFIG = {
+  startDate: AUTO_PROMOTION_START_DATE,
+  batchSize: AUTO_PROMOTION_BATCH_SIZE,
+  asOfDate: AUTO_PROMOTION_AS_OF_DATE,
+  automaticPromotionCount,
+} as const;
+
 /**
  * Final exported city list with `indexable` derived from launch policy:
- * featuredSmallTowns + manually-promoted cities ship indexed; everything
- * else ships noindex,follow until promoted.
+ * featuredSmallTowns + manually-promoted cities + schedule-promoted cities
+ * ship indexed; everything else ships noindex,follow until promoted.
  */
 export const CITIES: readonly CityRecord[] = RAW_CITIES.map((c) => ({
   ...c,
   indexable:
     (FEATURED_SMALL_TOWNS as readonly string[]).includes(c.slug) ||
-    MANUALLY_PROMOTED_CITIES.includes(c.slug),
+    MANUALLY_PROMOTED_CITIES.includes(c.slug) ||
+    AUTO_PROMOTED_CITY_SLUGS.includes(c.slug),
 }));
 
 export const CITY_SLUGS = CITIES.map((c) => c.slug);
