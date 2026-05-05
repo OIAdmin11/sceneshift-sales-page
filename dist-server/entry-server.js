@@ -3928,8 +3928,14 @@ var IOWA_REGIONS = [
 *  - `featuredSmallTowns` ship `index, follow` because they carry a real
 *    E-E-A-T signal (founder local ties).
 *
-* To promote a city, flip its `indexable` flag to true and add to the
-* change log in [documentation/seo-kill-criteria.md].
+* Promotion can be manual (`MANUALLY_PROMOTED_CITIES`) or automatic via env:
+*
+*   VITE_SEO_CITY_PROMOTION_START_DATE=2026-06-01
+*   VITE_SEO_CITY_PROMOTION_BATCH_SIZE=3
+*
+* Starting on the configured date, the build promotes the next batch of
+* population-ranked cities once per calendar month. Without the start date,
+* no automatic promotion happens.
 */
 var FEATURED_SMALL_TOWNS = ["huxley"];
 /**
@@ -3940,12 +3946,30 @@ var FEATURED_SMALL_TOWNS = ["huxley"];
 * its slug to `MANUALLY_PROMOTED_CITIES` below.
 */
 var MANUALLY_PROMOTED_CITIES = [];
-/**
-* Final exported city list with `indexable` derived from launch policy:
-* featuredSmallTowns + manually-promoted cities ship indexed; everything
-* else ships noindex,follow until promoted.
-*/
-var CITIES = [
+var AUTO_PROMOTION_START_DATE = void 0;
+var AUTO_PROMOTION_BATCH_SIZE = parsePositiveInt(void 0, 3);
+var AUTO_PROMOTION_AS_OF_DATE = void 0;
+function parsePositiveInt(value, fallback) {
+	if (!value) return fallback;
+	const parsed = Number.parseInt(value, 10);
+	return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
+}
+function parseDateOnly(value) {
+	if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return void 0;
+	const date = /* @__PURE__ */ new Date(`${value}T00:00:00Z`);
+	return Number.isNaN(date.getTime()) ? void 0 : date;
+}
+function monthsElapsedInclusive(startDateValue, asOfDateValue) {
+	const startDate = parseDateOnly(startDateValue);
+	if (!startDate) return 0;
+	const asOfDate = parseDateOnly(asOfDateValue) ?? /* @__PURE__ */ new Date();
+	const asOfUtc = new Date(Date.UTC(asOfDate.getUTCFullYear(), asOfDate.getUTCMonth(), asOfDate.getUTCDate()));
+	if (asOfUtc < startDate) return 0;
+	let months = (asOfUtc.getUTCFullYear() - startDate.getUTCFullYear()) * 12 + (asOfUtc.getUTCMonth() - startDate.getUTCMonth());
+	if (asOfUtc.getUTCDate() < startDate.getUTCDate()) months -= 1;
+	return Math.max(0, months + 1);
+}
+var RAW_CITIES = [
 	{
 		slug: "des-moines",
 		name: "Des Moines",
@@ -4480,9 +4504,17 @@ var CITIES = [
 		],
 		indexable: true
 	}
-].map((c) => ({
+];
+var automaticPromotionCount = monthsElapsedInclusive(AUTO_PROMOTION_START_DATE, AUTO_PROMOTION_AS_OF_DATE) * AUTO_PROMOTION_BATCH_SIZE;
+var AUTO_PROMOTED_CITY_SLUGS = RAW_CITIES.filter((c) => !FEATURED_SMALL_TOWNS.includes(c.slug)).slice(0, automaticPromotionCount).map((c) => c.slug);
+/**
+* Final exported city list with `indexable` derived from launch policy:
+* featuredSmallTowns + manually-promoted cities + schedule-promoted cities
+* ship indexed; everything else ships noindex,follow until promoted.
+*/
+var CITIES = RAW_CITIES.map((c) => ({
 	...c,
-	indexable: FEATURED_SMALL_TOWNS.includes(c.slug) || MANUALLY_PROMOTED_CITIES.includes(c.slug)
+	indexable: FEATURED_SMALL_TOWNS.includes(c.slug) || MANUALLY_PROMOTED_CITIES.includes(c.slug) || AUTO_PROMOTED_CITY_SLUGS.includes(c.slug)
 }));
 CITIES.map((c) => c.slug);
 function getCityBySlug(slug) {

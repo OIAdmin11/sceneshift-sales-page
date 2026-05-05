@@ -40,6 +40,35 @@ This kill-criteria policy addresses (2) over time.
 - **Day 90**: Decision point. Apply the table below.
 - **Day 180**: Final review for pages that were demoted at Day 90.
 
+## Automatic monthly city promotion
+
+City pages can promote automatically at build time using environment variables:
+
+```bash
+VITE_SEO_CITY_PROMOTION_START_DATE=2026-06-01
+VITE_SEO_CITY_PROMOTION_BATCH_SIZE=3
+```
+
+When `VITE_SEO_CITY_PROMOTION_START_DATE` is set, each monthly build promotes
+the next batch of population-ranked city pages from `noindex, follow` to
+`index, follow`. With the example above, the first build on or after
+2026-06-01 promotes the first 3 cities; the first build on or after
+2026-07-01 promotes the first 6; and so on.
+
+Important: this is deterministic build-time code, not a background worker.
+The promotion only takes effect when a new build/deploy runs. Use an Amplify
+scheduled build, a monthly push, or a manual Amplify build trigger if you want
+the schedule to advance without code changes.
+
+For local testing only, set:
+
+```bash
+VITE_SEO_CITY_PROMOTION_AS_OF_DATE=2026-08-01
+```
+
+Do not set `VITE_SEO_CITY_PROMOTION_AS_OF_DATE` in production unless you want
+the promotion schedule pinned to that fixed date.
+
 ## Kill / Keep table
 
 | Status at Day 90 | Action |
