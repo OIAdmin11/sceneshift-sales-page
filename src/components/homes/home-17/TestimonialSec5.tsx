@@ -42,8 +42,8 @@ export default function TestimonialSec5() {
           modules={[Autoplay]}
           loop
           autoplay={{ delay: 3000, disableOnInteraction: false }}
-          slidesPerView={4}
-          spaceBetween={20}
+          slidesPerView={1}
+          spaceBetween={16}
           breakpoints={{
             1440: { slidesPerView: 4, spaceBetween: 20 },
             1366: { slidesPerView: 4, spaceBetween: 20 },
