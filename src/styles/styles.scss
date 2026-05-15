@@ -517,3 +517,224 @@
 .contact-form-feedback.success {
   color: #1b8a5a;
 }
+
+// Mobile hardening across public template pages. The source theme uses many
+// desktop-sized panels/cards; these overrides keep shared surfaces inside the
+// viewport without changing desktop layouts.
+@media (max-width: 767px) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  img,
+  svg,
+  video,
+  iframe {
+    max-width: 100%;
+  }
+
+  .container,
+  .container2,
+  .container-fluid {
+    --bs-gutter-x: 1.5rem;
+  }
+
+  .ibt-section-gap {
+    padding-top: clamp(64px, 14vw, 90px);
+    padding-bottom: clamp(64px, 14vw, 90px);
+  }
+
+  .sec-title {
+    margin-bottom: 32px;
+  }
+
+  .sec-title .title,
+  .page-content .title,
+  .page-content10 .title,
+  .hero-content18 .title,
+  .funfact-content .title,
+  .newsletter-content .title {
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
+  .page-banner,
+  .page-banner2,
+  .page-banner3,
+  .page-banner4,
+  .page-banner5,
+  .page-banner6,
+  .page-banner7,
+  .page-banner8,
+  .page-banner9,
+  .page-banner10,
+  .page-banner11 {
+    margin-inline: 10px;
+    padding-block: clamp(96px, 26vw, 132px);
+  }
+
+  .breadcrumbs {
+    max-width: calc(100% - 20px);
+    padding: 18px 22px 14px;
+    flex-wrap: wrap;
+    gap: 0 4px;
+  }
+
+  .main-sec9 .hero-content18 p.hero-content18__lede {
+    font-size: clamp(1.125rem, 4.7vw, 1.55rem);
+    line-height: 1.45;
+  }
+
+  .main-sec9 .hero-btn18 {
+    gap: 12px;
+
+    .ibt-btn {
+      width: min(100%, 320px);
+      justify-content: center;
+    }
+  }
+
+  .funfact-content.funfact-content--iowa-video,
+  .feature-sec16 .feature-block16--cao,
+  .about-history-card,
+  .about-local-figure,
+  .about-story-panel,
+  .about-detail-card,
+  .contact-form,
+  .contact-form2,
+  .contact-form3,
+  .contact-form4,
+  .contact-form5,
+  .cart-table2,
+  .cart-widget3 {
+    padding: clamp(22px, 7vw, 32px);
+    border-radius: 18px;
+  }
+
+  .about-us-sec9 .about-content9 .title {
+    font-size: clamp(3.25rem, 18vw, 6rem);
+    line-height: 0.95;
+  }
+
+  .about-us-sec9 .about-content9 p,
+  .about-story-panel p,
+  .about-detail-card p {
+    max-width: 100%;
+  }
+
+  .about-history-card__badge,
+  .about-local-figure__badge {
+    max-width: calc(100% - 32px);
+    white-space: normal;
+  }
+
+  .side-menu2,
+  .side-bar2,
+  .side-bar3 {
+    width: min(100vw - 24px, 349px);
+    max-width: calc(100vw - 24px);
+  }
+
+  .side-menu2 {
+    right: calc(-100vw - 24px);
+    padding-inline: clamp(22px, 8vw, 40px);
+  }
+
+  .side-bar2,
+  .side-bar3 {
+    right: calc(-100vw - 24px);
+  }
+
+  .side-bar3 table {
+    width: 100%;
+  }
+
+  .order-widget .price-data {
+    display: none;
+  }
+
+  .recent-post3 {
+    padding-left: 72px;
+
+    img {
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+    }
+  }
+
+  .cart-table-wrapper {
+    margin-inline: -12px;
+    padding-inline: 12px;
+  }
+
+  .cart-table-wrapper .cart-table {
+    min-width: 640px;
+  }
+
+  .product-block {
+    width: auto;
+    min-width: 0;
+    padding-left: 104px;
+
+    img {
+      width: 84px;
+      height: 84px;
+    }
+  }
+
+  .cart-footer {
+    gap: 16px;
+    margin-bottom: 64px;
+
+    .footer-left,
+    .footer-right,
+    .footer-left input,
+    .footer-left button,
+    .footer-right .ibt-btn {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .footer-left {
+      flex-direction: column;
+    }
+  }
+
+  .custom-form5 {
+    .row {
+      row-gap: 0;
+    }
+
+    textarea {
+      min-height: 160px;
+    }
+  }
+
+  .payment-widget form .ibt-btn,
+  .custom-form .ibt-btn,
+  .custom-form5 .ibt-btn {
+    width: min(100%, 320px);
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .header-logo img,
+  .seo-header__logo img {
+    max-width: 104px;
+    height: auto;
+  }
+
+  .footer-style4 .location-widget4 .nmbr,
+  .menu-contact .nmbr,
+  .menu-contact .gmail {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .cart-table-wrapper .cart-table {
+    min-width: 560px;
+  }
+}

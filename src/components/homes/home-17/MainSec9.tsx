@@ -16,10 +16,7 @@ export default function MainSec9() {
             <h1 className="title main-sec9__hero-title">
               Intelligent CRM and AI for small businesses.
             </h1>
-            <p
-              className="hero-content18__lede"
-              style={{ fontSize: "2em", lineHeight: 1.35 }}
-            >
+            <p className="hero-content18__lede">
               We’ll automate your business with AI. If it doesn’t save you 10+
               hours a week or make you money in 30 days, you don’t pay.
             </p>
