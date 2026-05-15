@@ -7,7 +7,6 @@ import {
   aboutMarqueePhrases,
   aboutOperatingPrinciples,
   aboutWhyItMattersHighlights,
-  siteConfig,
 } from "@/data/site";
 
 export default function Page() {
@@ -48,14 +47,6 @@ export default function Page() {
               <TitleSplitWrapper tag="h2" className="title animated-heading">
                 Helping small businesses keep up with how customers buy now
               </TitleSplitWrapper>
-            </div>
-            <div className="anim-img2">
-              <img
-                alt={`${siteConfig.name} decorative accent`}
-                src="/assets/images/event/cross1-1.png"
-                width={143}
-                height={49}
-              />
             </div>
           </div>
           <div className="row g-4 align-items-start">
