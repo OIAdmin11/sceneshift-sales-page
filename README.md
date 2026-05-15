@@ -4,14 +4,21 @@ Marketing site for SceneShift, built with React, TypeScript, and Vite. The site 
 
 ## Local development
 
-Install dependencies and start the site:
+Use Node.js 22 (or any version supported by `package.json`), install the locked
+dependencies, and start the site:
 
 ```bash
-npm install
+nvm use
+npm ci
 npm run dev
 ```
 
-The contact form can call a locally supplied API URL by creating a `.env.local` file from `.env.example`:
+The contact form can call a locally supplied API URL by creating a `.env.local`
+file from `.env.example`:
+
+```bash
+cp .env.example .env.local
+```
 
 ```bash
 VITE_CONTACT_FORM_API_URL=https://your-api-id.execute-api.us-east-1.amazonaws.com/contact
