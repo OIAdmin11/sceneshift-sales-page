@@ -84,6 +84,15 @@
   line-height: 1.22;
 }
 
+.feature-sec16 .feature-block16 img {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  width: auto !important;
+  max-width: min(72px, 100%);
+  height: auto;
+  object-fit: contain;
+}
+
 .feature-block16--cao .title {
   font-size: clamp(1.85rem, 2.5vw + 0.95rem, 2.85rem);
   line-height: 1.1;
