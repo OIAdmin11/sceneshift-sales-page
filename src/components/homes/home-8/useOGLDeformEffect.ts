@@ -216,6 +216,8 @@ export function useOGLDeformEffect({
     return () => {
       cancelledRef.current = true;
       cancelAnimationFrame(initRafId);
+      // The OGL cleanup is registered asynchronously after the dynamic import resolves.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       const cleanup = cleanupRef.current;
       cleanup?.();
     };

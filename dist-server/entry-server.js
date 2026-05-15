@@ -30,6 +30,32 @@ siteConfig.legalTermsUrl, siteConfig.legalPrivacyUrl;
 * Lite header for SEO pages. No scroll listeners, no Lenis hooks, no GSAP.
 * Pure SSR-safe markup for fast first paint and Core Web Vitals.
 */
+var seoNavItems = [
+	{
+		label: "Services",
+		to: "/services"
+	},
+	{
+		label: "Packages",
+		to: "/packages"
+	},
+	{
+		label: "Industries",
+		to: "/industries"
+	},
+	{
+		label: "Iowa",
+		to: "/iowa"
+	},
+	{
+		label: "About",
+		to: "/about-us"
+	},
+	{
+		label: "Contact",
+		to: "/contact"
+	}
+];
 function SeoHeader() {
 	return /* @__PURE__ */ jsxs("header", {
 		className: "seo-header",
@@ -81,32 +107,20 @@ function SeoHeader() {
 						/* @__PURE__ */ jsx("nav", {
 							className: "seo-header__nav",
 							"aria-label": "Primary",
-							children: /* @__PURE__ */ jsxs("ul", { children: [
-								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/services",
-									children: "Services"
-								}) }),
-								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/packages",
-									children: "Packages"
-								}) }),
-								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/industries",
-									children: "Industries"
-								}) }),
-								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/iowa",
-									children: "Iowa"
-								}) }),
-								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/about-us",
-									children: "About"
-								}) }),
-								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/contact",
-									children: "Contact"
-								}) })
-							] })
+							children: /* @__PURE__ */ jsx("ul", { children: seoNavItems.map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
+								to: item.to,
+								children: item.label
+							}) }, item.to)) })
+						}),
+						/* @__PURE__ */ jsxs("details", {
+							className: "seo-header__mobile-nav",
+							children: [/* @__PURE__ */ jsx("summary", { children: "Menu" }), /* @__PURE__ */ jsx("nav", {
+								"aria-label": "Mobile primary",
+								children: /* @__PURE__ */ jsx("ul", { children: seoNavItems.map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
+									to: item.to,
+									children: item.label
+								}) }, item.to)) })
+							})]
 						}),
 						/* @__PURE__ */ jsx("a", {
 							href: siteConfig.loginUrl,
