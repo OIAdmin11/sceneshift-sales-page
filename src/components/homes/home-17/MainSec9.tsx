@@ -1,10 +1,5 @@
 import { Link } from "react-router-dom";
-import { servicesSectionHref } from "@/data/site";
 import { trackConversionEvent } from "@/utils/analytics";
-
-/** Homepage hero video section (YouTube embed). */
-const IOWA_SUPPORT_VIDEO_EMBED =
-  "https://www.youtube.com/embed/WUfJUGK9q9Q";
 
 export default function MainSec9() {
   return (
@@ -14,11 +9,13 @@ export default function MainSec9() {
         <div className="container">
           <div className="hero-content18">
             <h1 className="title main-sec9__hero-title">
-              Intelligent CRM and AI for small businesses.
+              Stop Bleeding Revenue to Missed Calls.
             </h1>
             <p className="hero-content18__lede">
-              We’ll automate your business with AI. If it doesn’t save you 10+
-              hours a week or make you money in 30 days, you don’t pay.
+              62% of calls to home service businesses go unanswered.
+              SceneShift installs on your website in 5 minutes, answers your
+              phones 24/7, qualifies the lead, and books the job directly into
+              your calendar.
             </p>
             <div className="hero-btn18">
               <Link
@@ -30,11 +27,11 @@ export default function MainSec9() {
                   })
                 }
               >
-                <span>Book a 15-minute call</span>
+                <span>Test the Voice Assistant</span>
                 <i className="icon-arrow-top" />
               </Link>
-              <Link
-                to={servicesSectionHref}
+              <a
+                href="#five-minute-upgrade"
                 className="ibt-btn ibt-btn-outline"
                 onClick={() =>
                   trackConversionEvent("services_cta_click", {
@@ -42,26 +39,32 @@ export default function MainSec9() {
                   })
                 }
               >
-                <span>View our services</span>
+                <span>See How It Works</span>
                 <i className="icon-arrow-top" />
-              </Link>
+              </a>
             </div>
           </div>
         </div>
       </div>
       {/* End hero-style18 */}
-      {/* Former service-sec27 cards replaced with Iowa / marketing video */}
       <div className="service-sec27 main-sec9-after-hero-video">
         <div className="container">
           <div className="funfact-content funfact-content--iowa-video">
-            <h4 className="title">Supporting Iowa Small Businesses</h4>
-            <div className="funfact-video-embed">
-              <iframe
-                src={IOWA_SUPPORT_VIDEO_EMBED}
-                title="Supporting Iowa small businesses — SceneShift"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+            <h4 className="title">See how one missed call becomes a booked job</h4>
+            <div className="contractor-demo-card" aria-label="Video demo placeholder">
+              <div className="contractor-demo-card__phone">
+                <span>9:47 PM</span>
+                <strong>New roofing lead answered</strong>
+                <p>Emergency leak. Qualified and booked for 8:30 AM.</p>
+              </div>
+              <div className="contractor-demo-card__details">
+                <span className="contractor-demo-card__eyebrow">Demo placeholder</span>
+                <h5>Contractor truck or voice demo goes here.</h5>
+                <p>
+                  Use this space for a short phone-call demo or a simple crew
+                  photo. No abstract tech graphics needed.
+                </p>
+              </div>
             </div>
           </div>
         </div>

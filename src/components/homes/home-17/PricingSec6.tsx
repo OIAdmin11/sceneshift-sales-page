@@ -6,70 +6,78 @@ import { trackConversionEvent } from "@/utils/analytics";
 
 const pricedOfferCards = [
   {
-    id: "main-street-startup",
+    id: "owner-operator",
     cardClassName: "price-card3",
-    title: "The Main Street Startup",
+    title: "The Owner-Operator",
     subtitle:
-      "The starter AI front office for small businesses that need every web chat, call, appointment, and customer update handled without extra payroll.",
+      "For solo owners and small crews that need nights and weekends covered without hiring another person.",
     features: [
-      "24/7 Web Concierge: AI webchat on your current site answers FAQs, captures contact info, and helps set appointments.",
-      "The Always on Receptionist: inbound AI phone support intercepts missed calls, pre-qualifies buyers, answers FAQs, and books appointments.",
-      "The Invisible Admin: CRM updates, phone/email alerts, appointment reminders, and prep details are sent automatically.",
-      "The Invisible Personal Assistant: our AI agent fills your calendar with appointments on your calendar of choice.",
-      "Easy CRM: a complementary web portal to track customers and revenue with ease.",
+      "24/7 Virtual Receptionist for missed and after-hours calls.",
+      "24/7 Live Web Chat for late-night website visitors.",
+      "Instant Form Follow-Up within 60 seconds.",
+      "Books qualified jobs directly into your calendar.",
+      "Includes 300 phone minutes/mo.",
+      "Transparent overages at cost.",
     ],
     priceHeadline: "$299",
-    priceDetailLines: ["/month", "+ $500 one-time setup"],
+    priceDetailLines: ["/month", "No setup fee"],
     buttonClassName: "ibt-btn ibt-btn-outline",
   },
   {
-    id: "always-on-capture",
+    id: "growing-crew",
     cardClassName: "price-card3 v2",
     badge: "Most Popular",
-    title: "Always on Capture",
+    title: "The Growing Crew",
     subtitle:
-      "Adds instant outbound follow-up and automated review collection to everything in The Main Street Startup package.",
+      "For teams running multiple trucks that need more call coverage and faster lead booking.",
     features: [
-      "All services in Package 1: web concierge, always-on receptionist, invisible admin, personal assistant, and Easy CRM.",
-      "Speed-to-Lead Outbound: when a customer fills out a website form, the Lead Qualification AI Agent immediately calls while they are still hot.",
-      "Hands-Off Reviews: after service completion, an AI agent calls your client and captures an explicit review.",
+      "Everything in The Owner-Operator.",
+      "After-Hours Voice Dispatcher for urgent calls.",
+      "Priority lead alerts by text and email.",
+      "Job-type questions customized for your trade.",
+      "Includes 800 phone minutes/mo.",
+      "Transparent overages at cost.",
     ],
     priceHeadline: "$599",
-    priceDetailLines: ["/month", "+ $1,000 one-time setup"],
+    priceDetailLines: ["/month", "No setup fee"],
     buttonClassName: "ibt-btn ibt-btn-dark",
   },
   {
-    id: "autonomous-sales-floor",
+    id: "full-dispatch-desk",
     cardClassName: "price-card3 v3",
-    title: "The Autonomous Sales Floor",
+    title: "The Full Dispatch Desk",
     subtitle:
-      "The complete AI sales package for teams that want outbound lead qualification, follow-up, and booking handled automatically.",
+      "For higher-volume shops that want every website lead, after-hours call, and overflow call handled fast.",
     features: [
-      "All services in Package 2: everything from Package 1 plus Speed-to-Lead Outbound and Hands-Off Reviews.",
-      "The Autonomous Salesman: give the AI Lead Qualifier a list of phone numbers and client context, and it reaches out, follows up, and books appointments for you.",
+      "Everything in The Growing Crew.",
+      "Higher call volume coverage for busy seasons.",
+      "Multi-location or multi-trade call routing.",
+      "Weekly missed-call and booked-job summary.",
+      "Includes 1,500 phone minutes/mo.",
+      "Transparent overages at cost.",
     ],
     priceHeadline: "$999",
-    priceDetailLines: ["/month", "+ $1,500 one-time setup"],
+    priceDetailLines: ["/month", "No setup fee"],
     buttonClassName: "ibt-btn ibt-btn-outline",
   },
 ];
 
 const customOfferCard = {
-  id: "chief-ai-officers",
+  id: "zero-disruption-guarantee",
   cardClassName: "price-card3 v2 price-card3--no-tab",
-  title: "Chief AI Officers",
+  title: "Zero-Disruption Guarantee",
   subtitle:
-    "Perfect for enterprise, high-margin, or complex businesses needing custom AI automation tailored to the way their team actually works.",
+    "Works alongside your existing CRM and phone systems without changing your workflow.",
   features: [
-    "Bespoke AI & Tooling: custom workflows and complex handoffs built to match your exact day-to-day process.",
-    "AI-Optimized Conversion Sites: fast, search-friendly websites built to feed your AI and help prospects find who to call.",
-    "On-Demand Priority Support: skip the queue for fixes, tuning, or the next automation you need shipped.",
-    "Your Automation Roadmap: a strategic blueprint for what to automate next so you can scale revenue without scaling payroll.",
+    "Keep your current phone number.",
+    "Keep your current calendar.",
+    "Keep your current office workflow.",
+    "Turn it off any time if it does not fit.",
   ],
-  priceHeadline: "Custom",
+  priceHeadline: "Included",
   priceDetailLines: [
-    "scope & pricing",
-    "Requires discovery call, written terms, and a build plan",
+    "with every plan",
+    "No forced system replacement",
   ],
   buttonClassName: "ibt-btn ibt-btn-dark",
 };
@@ -79,14 +87,14 @@ export default function PricingSec6() {
     <section className="pricing-sec6 ibt-section-gap">
       <div className="container">
         <div className="sec-title white">
-          <SubTitleWrapper>services</SubTitleWrapper>
+          <SubTitleWrapper>pricing</SubTitleWrapper>
           <TitleSplitWrapper tag="h2" className="title animated-heading">
-            Stop Bleeding Leads. Start Scaling Effortlessly.
+            Flat-Rate Professional Pricing. No Hidden Setup Fees.
           </TitleSplitWrapper>
           <p>
-            Choose the AI growth package that fits your business today, from a
-            complete front-office starter system to an autonomous sales floor
-            that follows up, books appointments, and keeps revenue moving.
+            Pick the level of coverage that matches your call volume. Every
+            plan is built to save missed calls, qualify real jobs, and book work
+            without surprising you later.
           </p>
         </div>
         <div className="row g-4">
@@ -124,7 +132,7 @@ export default function PricingSec6() {
                       })
                     }
                   >
-                      <span>Book a call</span>
+                      <span>Protect My Calls</span>
                       <i className="icon-arrow-top" />
                     </Link>
                   </div>
@@ -164,7 +172,7 @@ export default function PricingSec6() {
                       })
                     }
                   >
-                    <span>Book a call</span>
+                    <span>Get the Guarantee</span>
                     <i className="icon-arrow-top" />
                   </Link>
                 </div>

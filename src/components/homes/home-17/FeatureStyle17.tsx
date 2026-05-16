@@ -3,34 +3,34 @@ import SubTitleWrapper from "@/components/common/SubTitleWrapper";
 
 const businessCases = [
   {
-    title: "No Sleep Receptionist",
+    title: "HVAC & Plumbing Shops",
     description:
-      "Best when missed calls are missed money and you need AI phone tied to your real stack.",
+      "Best when emergency calls come in after hours and the first company to answer usually wins the job.",
   },
   {
-    title: "24/7 Web Concierge",
+    title: "Roofers & Electricians",
     description:
-      "Best when your current site gets traffic but chat and forms are where leads go to die.",
+      "Best when storm damage, panel issues, or urgent repairs need fast triage before the homeowner calls someone else.",
   },
   {
-    title: "The Invisible Admin",
+    title: "Owner-Operators",
     description:
-      "Best when you need automated text and email reminders in the CRM and inbox tools you already use—not another manual follow-up list.",
+      "Best when you are in the truck, on a ladder, or with a customer and cannot answer every ring.",
   },
   {
-    title: "Speed-to-Lead Outbound Engine",
+    title: "Busy Office Teams",
     description:
-      "Best when form fills cool off in minutes and the first dial wins the job.",
+      "Best when the phone rings while your dispatcher is already handling another customer.",
   },
   {
-    title: "AI-Optimized Conversion",
+    title: "Website Form Leads",
     description:
-      "Best when you need a fast site that feeds your AI and outranks competitors—not a pretty brochure.",
+      "Best when forms sit in an inbox and nobody follows up until the homeowner has moved on.",
   },
   {
-    title: "The Surveyor",
+    title: "After-Hours Emergencies",
     description:
-      "Best when you need honest feedback at scale without burning payroll on manual calls.",
+      "Best when a late-night call needs to be sorted, qualified, and booked before morning.",
   },
 ];
 
@@ -39,13 +39,13 @@ export default function FeatureStyle17() {
     <section className="feature-sec17 ibt-section-gap">
       <div className="container">
         <div className="sec-title white">
-          <SubTitleWrapper>proof</SubTitleWrapper>
+          <SubTitleWrapper>built for the trades</SubTitleWrapper>
           <TitleSplitWrapper tag="h2" className="title animated-heading">
-            Here is when these jobs usually make sense
+            When answering first decides who gets paid
           </TitleSplitWrapper>
           <p>
-            If the problem is small, leave it alone. If it keeps costing you
-            time, jobs, or cash flow, it is probably worth fixing.
+            If one missed call can cost more than a month of coverage, your
+            phone deserves a backup plan.
           </p>
         </div>
         <div className="row g-4">
