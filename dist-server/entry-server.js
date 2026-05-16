@@ -45,7 +45,7 @@ var seoNavItems = [
 	},
 	{
 		label: "Iowa",
-		to: "/iowa"
+		to: "/iowa/"
 	},
 	{
 		label: "About",
@@ -253,23 +253,23 @@ function SeoFooter() {
 							className: "seo-footer__column",
 							children: [/* @__PURE__ */ jsx("h3", { children: "Iowa" }), /* @__PURE__ */ jsxs("ul", { children: [
 								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/iowa",
+									to: "/iowa/",
 									children: "All 99 counties"
 								}) }),
 								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/iowa/cities/des-moines",
+									to: "/iowa/cities/des-moines/",
 									children: "Des Moines"
 								}) }),
 								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/iowa/cities/cedar-rapids",
+									to: "/iowa/cities/cedar-rapids/",
 									children: "Cedar Rapids"
 								}) }),
 								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/iowa/cities/ames",
+									to: "/iowa/cities/ames/",
 									children: "Ames"
 								}) }),
 								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-									to: "/iowa/cities/iowa-city",
+									to: "/iowa/cities/iowa-city/",
 									children: "Iowa City"
 								}) })
 							] })]
@@ -4587,8 +4587,12 @@ var ORG_ID = `${siteConfig.url}/#organization`;
 var WEBSITE_ID = `${siteConfig.url}/#website`;
 var PERSON_ID = `${siteConfig.url}/#founder`;
 var LOCAL_BUSINESS_ID = `${siteConfig.url}/#localbusiness`;
+function canonicalPath$1(path) {
+	if (path === "/") return path;
+	return path.endsWith("/") ? path : `${path}/`;
+}
 function absoluteUrl$1(path) {
-	return new URL(path, siteConfig.url).toString();
+	return new URL(canonicalPath$1(path), siteConfig.url).toString();
 }
 function organizationNode() {
 	return {
@@ -5444,8 +5448,12 @@ function setJsonLd(value) {
 	}
 	el.text = JSON.stringify(value);
 }
+function canonicalPath(path) {
+	if (path === "/") return path;
+	return path.endsWith("/") ? path : `${path}/`;
+}
 function absoluteUrl(path) {
-	return new URL(path, siteConfig.url).toString();
+	return new URL(canonicalPath(path), siteConfig.url).toString();
 }
 function applySeoMetadata(meta) {
 	if (typeof document === "undefined") return;
@@ -5513,7 +5521,7 @@ function countyItem(slug) {
 	const co = getCountyBySlug(slug);
 	if (!co) return void 0;
 	return {
-		href: `/iowa/counties/${co.slug}`,
+		href: `/iowa/counties/${co.slug}/`,
 		label: `${co.name} County`,
 		hook: `Seat: ${co.seatCity}`
 	};
@@ -5522,7 +5530,7 @@ function cityItem(slug) {
 	const c = getCityBySlug(slug);
 	if (!c) return void 0;
 	return {
-		href: `/iowa/cities/${c.slug}`,
+		href: `/iowa/cities/${c.slug}/`,
 		label: c.name,
 		hook: `Pop. ${c.population.toLocaleString()}`
 	};
@@ -5614,7 +5622,7 @@ function industryDetailRails(industrySlug) {
 		{
 			heading: "Iowa coverage",
 			items: [{
-				href: "/iowa",
+				href: "/iowa/",
 				label: "Where we work in Iowa"
 			}]
 		}
@@ -5683,7 +5691,7 @@ function cityDetailRails(citySlug) {
 		...co ? [{
 			heading: "County",
 			items: [{
-				href: `/iowa/counties/${co.slug}`,
+				href: `/iowa/counties/${co.slug}/`,
 				label: `${co.name} County`,
 				hook: `Seat: ${co.seatCity}`
 			}]
@@ -5758,7 +5766,7 @@ function iowaHubRails() {
 		{
 			heading: "Featured Iowa cities",
 			items: CITIES.filter((c) => c.indexable).slice(0, 6).map((c) => ({
-				href: `/iowa/cities/${c.slug}`,
+				href: `/iowa/cities/${c.slug}/`,
 				label: c.name,
 				hook: `Pop. ${c.population.toLocaleString()}`
 			}))
@@ -5766,7 +5774,7 @@ function iowaHubRails() {
 		{
 			heading: "All 99 counties",
 			items: COUNTIES.slice(0, 6).map((co) => ({
-				href: `/iowa/counties/${co.slug}`,
+				href: `/iowa/counties/${co.slug}/`,
 				label: `${co.name} County`,
 				hook: co.seatCity
 			}))
@@ -5967,7 +5975,7 @@ function NotFound({ title = "Page not found" }) {
 				" ",
 				"or ",
 				/* @__PURE__ */ jsx(Link, {
-					to: "/iowa",
+					to: "/iowa/",
 					children: "see Iowa coverage"
 				}),
 				"."
@@ -6308,7 +6316,7 @@ function IndustryDetail() {
 				const city = getCityBySlug(s);
 				if (!city) return null;
 				return /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
-					to: `/iowa/cities/${city.slug}`,
+					to: `/iowa/cities/${city.slug}/`,
 					children: city.name
 				}) }, s);
 			}) })] }),
@@ -6356,7 +6364,7 @@ function IowaHub() {
 						/* @__PURE__ */ jsx("h3", { children: c.name }),
 						/* @__PURE__ */ jsx("p", { children: c.intro }),
 						/* @__PURE__ */ jsxs(Link, {
-							to: `/iowa/cities/${c.slug}`,
+							to: `/iowa/cities/${c.slug}/`,
 							children: [
 								"See ",
 								c.name,
@@ -6375,7 +6383,7 @@ function IowaHub() {
 					return /* @__PURE__ */ jsxs("section", { children: [/* @__PURE__ */ jsx("h3", { children: REGION_LABELS[region] ?? region }), /* @__PURE__ */ jsx("ul", {
 						className: "seo-page__county-grid",
 						children: counties.map((co) => /* @__PURE__ */ jsxs("li", { children: [/* @__PURE__ */ jsxs(Link, {
-							to: `/iowa/counties/${co.slug}`,
+							to: `/iowa/counties/${co.slug}/`,
 							children: [co.name, " County"]
 						}), /* @__PURE__ */ jsxs("span", {
 							className: "seo-page__county-meta",
@@ -6420,7 +6428,7 @@ function CountyDetail() {
 				},
 				{
 					label: "Iowa",
-					href: "/iowa"
+					href: "/iowa/"
 				},
 				{ label: `${county.name} County` }
 			] }),
@@ -6459,7 +6467,7 @@ function CountyDetail() {
 			] }), /* @__PURE__ */ jsx("ul", {
 				className: "seo-page__county-grid",
 				children: cities.map((c) => /* @__PURE__ */ jsxs("li", { children: [/* @__PURE__ */ jsx(Link, {
-					to: `/iowa/cities/${c.slug}`,
+					to: `/iowa/cities/${c.slug}/`,
 					children: c.name
 				}), /* @__PURE__ */ jsxs("span", {
 					className: "seo-page__county-meta",
@@ -6503,11 +6511,11 @@ function CityDetail() {
 				},
 				{
 					label: "Iowa",
-					href: "/iowa"
+					href: "/iowa/"
 				},
 				...county ? [{
 					label: `${county.name} County`,
-					href: `/iowa/counties/${county.slug}`
+					href: `/iowa/counties/${county.slug}/`
 				}] : [],
 				{ label: city.name }
 			] }),
@@ -6533,7 +6541,7 @@ function CityDetail() {
 					/* @__PURE__ */ jsx("strong", { children: "County:" }),
 					" ",
 					/* @__PURE__ */ jsxs(Link, {
-						to: `/iowa/counties/${county.slug}`,
+						to: `/iowa/counties/${county.slug}/`,
 						children: [county.name, " County"]
 					})
 				] })
@@ -6640,7 +6648,7 @@ function Founder() {
 				{
 					heading: "Where we work",
 					items: [{
-						href: "/iowa",
+						href: "/iowa/",
 						label: "Iowa coverage",
 						hook: "All 99 counties"
 					}]
@@ -6717,7 +6725,7 @@ function EditorialPolicy() {
 						label: "Packages"
 					},
 					{
-						href: "/iowa",
+						href: "/iowa/",
 						label: "Iowa coverage"
 					}
 				]

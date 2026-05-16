@@ -9,7 +9,7 @@ const seoNavItems = [
   { label: "Services", to: "/services" },
   { label: "Packages", to: "/packages" },
   { label: "Industries", to: "/industries" },
-  { label: "Iowa", to: "/iowa" },
+  { label: "Iowa", to: "/iowa/" },
   { label: "About", to: "/about-us" },
   { label: "Contact", to: "/contact" },
 ] as const;

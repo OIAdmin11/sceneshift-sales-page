@@ -82,7 +82,7 @@ export function countyItem(slug: string): InterlinkItem | undefined {
   const co = getCountyBySlug(slug);
   if (!co) return undefined;
   return {
-    href: `/iowa/counties/${co.slug}`,
+    href: `/iowa/counties/${co.slug}/`,
     label: `${co.name} County`,
     hook: `Seat: ${co.seatCity}`,
   };
@@ -92,7 +92,7 @@ export function cityItem(slug: string): InterlinkItem | undefined {
   const c = getCityBySlug(slug);
   if (!c) return undefined;
   return {
-    href: `/iowa/cities/${c.slug}`,
+    href: `/iowa/cities/${c.slug}/`,
     label: c.name,
     hook: `Pop. ${c.population.toLocaleString()}`,
   };
@@ -189,7 +189,7 @@ export function industryDetailRails(industrySlug: string): InterlinkRail[] {
       : []),
     {
       heading: "Iowa coverage",
-      items: [{ href: "/iowa", label: "Where we work in Iowa" }],
+      items: [{ href: "/iowa/", label: "Where we work in Iowa" }],
     },
   ];
 }
@@ -277,7 +277,7 @@ export function cityDetailRails(citySlug: string): InterlinkRail[] {
             heading: "County",
             items: [
               {
-                href: `/iowa/counties/${co.slug}`,
+                href: `/iowa/counties/${co.slug}/`,
                 label: `${co.name} County`,
                 hook: `Seat: ${co.seatCity}`,
               },
@@ -369,7 +369,7 @@ export function iowaHubRails(): InterlinkRail[] {
   const featuredCities = CITIES.filter((c) => c.indexable)
     .slice(0, 6)
     .map((c) => ({
-      href: `/iowa/cities/${c.slug}`,
+      href: `/iowa/cities/${c.slug}/`,
       label: c.name,
       hook: `Pop. ${c.population.toLocaleString()}`,
     }));
@@ -378,7 +378,7 @@ export function iowaHubRails(): InterlinkRail[] {
     {
       heading: "All 99 counties",
       items: COUNTIES.slice(0, 6).map((co) => ({
-        href: `/iowa/counties/${co.slug}`,
+        href: `/iowa/counties/${co.slug}/`,
         label: `${co.name} County`,
         hook: co.seatCity,
       })),

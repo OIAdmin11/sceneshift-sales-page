@@ -35,7 +35,7 @@ export default function CountyDetail() {
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
-          { label: "Iowa", href: "/iowa" },
+          { label: "Iowa", href: "/iowa/" },
           { label: `${county.name} County` },
         ]}
       />
@@ -80,7 +80,7 @@ export default function CountyDetail() {
           <ul className="seo-page__county-grid">
             {cities.map((c) => (
               <li key={c.slug}>
-                <Link to={`/iowa/cities/${c.slug}`}>{c.name}</Link>
+                <Link to={`/iowa/cities/${c.slug}/`}>{c.name}</Link>
                 <span className="seo-page__county-meta">
                   Pop. {c.population.toLocaleString()}
                 </span>

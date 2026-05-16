@@ -54,7 +54,7 @@ export default function IowaHub() {
           <article key={c.slug} className="seo-page__card">
             <h3>{c.name}</h3>
             <p>{c.intro}</p>
-            <Link to={`/iowa/cities/${c.slug}`}>
+            <Link to={`/iowa/cities/${c.slug}/`}>
               See {c.name} businesses we serve →
             </Link>
           </article>
@@ -72,7 +72,7 @@ export default function IowaHub() {
               <ul className="seo-page__county-grid">
                 {counties.map((co) => (
                   <li key={co.slug}>
-                    <Link to={`/iowa/counties/${co.slug}`}>
+                    <Link to={`/iowa/counties/${co.slug}/`}>
                       {co.name} County
                     </Link>
                     <span className="seo-page__county-meta">
