@@ -252,9 +252,9 @@ const pageMetaMap: Record<PageMetaKey, PageMeta> = {
     },
     ...homepageMetaMap,
     home17: {
-      title: `AI CRM Automation for Small Businesses | ${BASE_TITLE}`,
+      title: `24/7 Virtual Receptionist for Contractors | ${BASE_TITLE}`,
       description:
-        "SceneShift helps Iowa small businesses capture more leads, answer faster, automate follow-up, and build practical AI-powered CRM workflows.",
+        "SceneShift helps HVAC, plumbing, roofing, and electrical businesses answer missed calls, qualify leads, and book jobs after hours.",
       path: "/",
       index: true,
       changefreq: "weekly",
@@ -349,10 +349,10 @@ function buildJsonLd(meta: PageMeta, canonicalUrl: string): unknown {
         telephone: siteConfig.primaryPhoneHref,
         areaServed: siteConfig.areaServed,
         serviceType: [
-          "AI CRM automation",
-          "Lead response automation",
-          "Sales follow-up systems",
-          "Small business workflow automation",
+          "24/7 virtual receptionist",
+          "Missed call capture",
+          "Instant lead booking",
+          "After-hours answering",
         ],
       },
       {
