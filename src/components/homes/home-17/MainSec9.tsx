@@ -12,10 +12,9 @@ export default function MainSec9() {
               Stop Bleeding Revenue to Missed Calls.
             </h1>
             <p className="hero-content18__lede">
-              62% of calls to home service businesses go unanswered.
-              SceneShift installs on your website in 5 minutes, answers your
-              phones 24/7, qualifies the lead, and books the job directly into
-              your calendar.
+              Every unanswered call is a homeowner who can book with the next
+              contractor who picks up. SceneShift answers your phones 24/7,
+              qualifies the lead, and books the job directly into your calendar.
             </p>
             <div className="hero-btn18">
               <Link
