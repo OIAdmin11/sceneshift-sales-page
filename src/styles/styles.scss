@@ -93,6 +93,10 @@
   object-fit: contain;
 }
 
+.testimonial-sec5__mobile-list {
+  display: none;
+}
+
 .feature-block16--cao .title {
   font-size: clamp(1.85rem, 2.5vw + 0.95rem, 2.85rem);
   line-height: 1.1;
@@ -773,6 +777,60 @@
 
     .sec-title {
       margin-bottom: 22px;
+    }
+  }
+
+  .testimonial-sec5 .swiper-wrapper-parent {
+    display: none;
+  }
+
+  .testimonial-sec5__mobile-list {
+    display: grid;
+    gap: 14px;
+  }
+
+  .testimonial-sec5__mobile-card {
+    padding: 22px 20px;
+    border: 1px solid #313131;
+    border-radius: 18px;
+    color: var(--color-content-white);
+    background: rgba(255, 255, 255, 0.025);
+
+    .name {
+      margin-bottom: 2px;
+      color: var(--color-content-white);
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .designation {
+      display: block;
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .rating {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+
+      li {
+        margin: 0;
+        color: #ffc247;
+        line-height: 1;
+      }
+    }
+
+    p {
+      margin: 0;
+      color: var(--color-content-white);
+      font-size: 15px;
+      line-height: 1.65;
+      overflow-wrap: anywhere;
     }
   }
 

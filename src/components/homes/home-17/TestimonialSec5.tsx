@@ -35,6 +35,24 @@ export default function TestimonialSec5() {
             What Our Clients Say
           </TitleSplitWrapper>
         </div>
+        <div className="testimonial-sec5__mobile-list" aria-label="Client reviews">
+          {testimonials.slice(0, 3).map((t) => (
+            <article className="testimonial-sec5__mobile-card" key={t.name}>
+              <div>
+                <h4 className="name">{t.name}</h4>
+                <span className="designation">{t.designation}</span>
+              </div>
+              <ul className="rating" aria-label="5 out of 5 stars">
+                {[1, 2, 3, 4, 5].map((j) => (
+                  <li key={j}>
+                    <i className="fa fa-star" />
+                  </li>
+                ))}
+              </ul>
+              <p>{t.text}</p>
+            </article>
+          ))}
+        </div>
       </div>
       <div className="swiper-wrapper-parent">
         <Swiper
