@@ -18,6 +18,10 @@
     "amplify:generate-outputs": "npx ampx generate outputs",
     "amplify:pipeline-deploy": "npx ampx pipeline-deploy"
   },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0",
+    "npm": ">=10"
+  },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.1033.0",
     "@fortawesome/fontawesome-free": "^7.2.0",

@@ -50,7 +50,6 @@ function runTimeline(
 }
 
 // Wrapper sub-components that register their root element for animation
-// eslint-disable-next-line react-refresh/only-export-components
 function SlidePart({
   part,
   children,
