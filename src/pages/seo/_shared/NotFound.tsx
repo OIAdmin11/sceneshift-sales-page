@@ -12,7 +12,7 @@ export default function NotFound({
       <p>That page does not exist or has moved.</p>
       <p>
         <Link to="/services">Browse our services</Link>{" "}
-        or <Link to="/iowa">see Iowa coverage</Link>.
+        or <Link to="/iowa/">see Iowa coverage</Link>.
       </p>
     </div>
   );

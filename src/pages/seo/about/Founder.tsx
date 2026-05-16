@@ -48,7 +48,7 @@ export default function Founder() {
     {
       heading: "Where we work",
       items: [
-        { href: "/iowa", label: "Iowa coverage", hook: "All 99 counties" },
+        { href: "/iowa/", label: "Iowa coverage", hook: "All 99 counties" },
       ],
     },
   ];

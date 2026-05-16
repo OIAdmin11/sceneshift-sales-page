@@ -46,8 +46,13 @@ export interface RouteMetadata {
   jsonLd: unknown;
 }
 
+function canonicalPath(path: string): string {
+  if (path === "/") return path;
+  return path.endsWith("/") ? path : `${path}/`;
+}
+
 function absoluteUrl(path: string): string {
-  return new URL(path, siteConfig.url).toString();
+  return new URL(canonicalPath(path), siteConfig.url).toString();
 }
 
 // ============================================================================
@@ -852,10 +857,10 @@ export function buildAllSeoRoutes(): RouteMetadata[] {
     ...CITIES.map(buildCityMeta),
     buildFounderMeta(),
     buildEditorialPolicyMeta(),
-  ];
+  ].map((route) => ({ ...route, path: canonicalPath(route.path) }));
 }
 
 /** Lookup metadata for a given path — used at runtime by SEO pages. */
 export function getSeoMetadataForPath(path: string): RouteMetadata | undefined {
-  return buildAllSeoRoutes().find((r) => r.path === path);
+  return buildAllSeoRoutes().find((r) => r.path === canonicalPath(path));
 }

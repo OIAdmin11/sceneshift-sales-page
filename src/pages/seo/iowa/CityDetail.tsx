@@ -29,12 +29,12 @@ export default function CityDetail() {
       <Breadcrumbs
         items={[
           { label: "Home", href: "/" },
-          { label: "Iowa", href: "/iowa" },
+          { label: "Iowa", href: "/iowa/" },
           ...(county
             ? [
                 {
                   label: `${county.name} County`,
-                  href: `/iowa/counties/${county.slug}`,
+                  href: `/iowa/counties/${county.slug}/`,
                 },
               ]
             : []),
@@ -62,7 +62,7 @@ export default function CityDetail() {
           <>
             {" · "}
             <strong>County:</strong>{" "}
-            <Link to={`/iowa/counties/${county.slug}`}>
+            <Link to={`/iowa/counties/${county.slug}/`}>
               {county.name} County
             </Link>
           </>

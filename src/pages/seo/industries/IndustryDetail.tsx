@@ -93,7 +93,7 @@ export default function IndustryDetail() {
               if (!city) return null;
               return (
                 <li key={s}>
-                  <Link to={`/iowa/cities/${city.slug}`}>{city.name}</Link>
+                  <Link to={`/iowa/cities/${city.slug}/`}>{city.name}</Link>
                 </li>
               );
             })}

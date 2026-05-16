@@ -28,7 +28,7 @@ export default function EditorialPolicy() {
       items: [
         { href: "/services", label: "All services" },
         { href: "/packages", label: "Packages" },
-        { href: "/iowa", label: "Iowa coverage" },
+        { href: "/iowa/", label: "Iowa coverage" },
       ],
     },
   ];
