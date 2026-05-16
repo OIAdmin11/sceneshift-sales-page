@@ -67,10 +67,10 @@ function legacyJsonLd(route) {
         telephone: site.phone,
         areaServed: ["Ames, Iowa", "Iowa", "United States"],
         serviceType: [
-          "AI CRM automation",
-          "Lead response automation",
-          "Sales follow-up systems",
-          "Small business workflow automation",
+          "24/7 virtual receptionist",
+          "Missed call capture",
+          "Instant lead booking",
+          "After-hours answering",
         ],
       },
       {

@@ -25,14 +25,16 @@ export default function Page() {
           stickyClass="sticky-active v3 is-sticky"
           className="vs-header2 v15"
         />
-        <MainSec9 />
-        <TestimonialSec5 />
-        <FeatureSec16 />
-        <MarqueeSec />
-        <FeatureSec14 />
-        <FeatureStyle17 />
-        <FunfactSec5 />
-        <PricingSec6 />
+        <main id="main-content">
+          <MainSec9 />
+          <TestimonialSec5 />
+          <FeatureSec16 />
+          <MarqueeSec />
+          <FeatureSec14 />
+          <FeatureStyle17 />
+          <FunfactSec5 />
+          <PricingSec6 />
+        </main>
         {/* <PartnersSec /> */}
         <Footer3 parentClass="footer-style4 v17" />
       </div>
