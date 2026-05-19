@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import { servicesSectionHref } from "@/data/site";
+import { SCENESHIFT_DEMO_VIDEO_EMBED } from "@/data/video";
 import { trackConversionEvent } from "@/utils/analytics";
-
-/** Homepage hero video section (YouTube embed). */
-const IOWA_SUPPORT_VIDEO_EMBED =
-  "https://www.youtube.com/embed/WUfJUGK9q9Q";
 
 export default function MainSec9() {
   return (
@@ -60,7 +57,7 @@ export default function MainSec9() {
             <h4 className="title">Supporting Iowa Small Businesses</h4>
             <div className="funfact-video-embed">
               <iframe
-                src={IOWA_SUPPORT_VIDEO_EMBED}
+                src={SCENESHIFT_DEMO_VIDEO_EMBED}
                 title="Supporting Iowa small businesses — SceneShift"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen

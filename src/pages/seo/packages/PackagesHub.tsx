@@ -21,11 +21,11 @@ export default function PackagesHub() {
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Packages" }]} />
       <AnswerFirstBlock
         question="Which SceneShift package is right for my Iowa business?"
-        answer="If you have 1-5 employees and miss calls while on jobs, start with The Main Street Startup ($299/mo). 5-20 employees losing leads to slow response time should choose Always-On Capture ($599/mo). 20+ employees running outbound sales should run The Autonomous Sales Floor ($999/mo)."
+        answer="Need only reception and CRM? Start with Reception & CRM Starter ($99/mo). 1-5 employees missing calls on jobs should choose The Main Street Startup ($299/mo). 5-20 employees losing leads to slow response time should choose Always on Capture ($599/mo). 20+ employees running outbound sales should run The Autonomous Sales Floor ($999/mo)."
       />
       <Byline lastReviewed="2026-05-04" />
       <p className="seo-page__intro">
-        Three packages, each building on the last. Pick the one that matches
+        Four packages, each building on the last. Pick the one that matches
         where your business is bleeding time and money today.
       </p>
 

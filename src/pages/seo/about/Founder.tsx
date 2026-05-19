@@ -41,7 +41,7 @@ export default function Founder() {
         {
           href: "/packages",
           label: "Packages",
-          hook: "Three bundles starting at $299/mo",
+          hook: "Four bundles starting at $99/mo",
         },
       ],
     },

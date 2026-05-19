@@ -13,6 +13,61 @@ frontend:
       commands:
         - npm run build
         - npm run seo:indexnow
+  redirects:
+    - source: /index
+      target: /
+      status: "301"
+    - source: /index1
+      target: /
+      status: "301"
+    - source: /index2
+      target: /
+      status: "301"
+    - source: /index3
+      target: /
+      status: "301"
+    - source: /index4
+      target: /
+      status: "301"
+    - source: /index5
+      target: /
+      status: "301"
+    - source: /index6
+      target: /
+      status: "301"
+    - source: /index7
+      target: /
+      status: "301"
+    - source: /index8
+      target: /
+      status: "301"
+    - source: /index9
+      target: /
+      status: "301"
+    - source: /index10
+      target: /
+      status: "301"
+    - source: /index11
+      target: /
+      status: "301"
+    - source: /index12
+      target: /
+      status: "301"
+    - source: /index13
+      target: /
+      status: "301"
+    - source: /index14
+      target: /
+      status: "301"
+    - source: /index15
+      target: /
+      status: "301"
+    - source: /index16
+      target: /
+      status: "301"
+    - source: /index17
+      target: /
+      status: "301"
   artifacts:
     baseDirectory: dist
     files:

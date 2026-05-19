@@ -393,7 +393,11 @@ export function getPageMetadata(key: PageMetaKey): void {
   const ogImageUrl = absoluteUrl(siteConfig.ogImagePath);
   const currentPath = normalizePath(window.location.pathname);
   const canonicalPath = normalizePath(new URL(canonicalUrl).pathname);
-  const shouldIndex = meta.index === true && currentPath === canonicalPath;
+  const hasStrayQuery =
+    window.location.search.length > 0 &&
+    new URLSearchParams(window.location.search).has("q");
+  const shouldIndex =
+    meta.index === true && currentPath === canonicalPath && !hasStrayQuery;
 
   document.title = meta.title;
   setMetaName("description", meta.description);

@@ -647,7 +647,7 @@ export function buildPackagesHubMeta(): RouteMetadata {
   const url = absoluteUrl(path);
   const title = "AI Automation Packages for Iowa Small Businesses | SceneShift";
   const description =
-    "Compare SceneShift packages: Main Street Startup ($299/mo), Always-On Capture ($599/mo), and Autonomous Sales Floor ($999/mo). Built for Iowa small businesses.";
+    "Compare SceneShift packages from $99/mo: Reception & CRM Starter, Main Street Startup ($299/mo), Always on Capture ($599/mo), and Autonomous Sales Floor ($999/mo). Built for Iowa small businesses.";
 
   return {
     path,

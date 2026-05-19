@@ -79,11 +79,8 @@ for (const route of prerenderRoutes) {
     continue;
   }
 
-  // Body checks only matter for SEO snapshot routes (not the legacy 4 base routes
-  // which intentionally ship as head-only / SPA shells).
-  const isSeoRoute = !["/", "/about-us", "/pricing", "/contact"].includes(
-    route.path,
-  );
+  // Body checks apply to all prerendered routes except home (head-only SPA shell).
+  const isSeoRoute = route.path !== "/";
 
   if (isSeoRoute) {
     const rootMatch = html.match(/<div id="root">([\s\S]*?)<\/div>\s*<\/body>/i);

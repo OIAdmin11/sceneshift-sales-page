@@ -1,7 +1,472 @@
-import { StrictMode, useEffect } from "react";
+import { StrictMode, createContext, createElement, forwardRef, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { renderToString } from "react-dom/server";
-import { Link, Outlet, Route, Routes, StaticRouter, useParams } from "react-router-dom";
+import { Link, Outlet, Route, Routes, StaticRouter, useLocation, useParams } from "react-router-dom";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "split-type";
+//#region src/context/UiContext.tsx
+var UiContext = createContext(null);
+var initialState = {
+	searchOpen: false,
+	sideNavOpen: false,
+	mobileMenuOpen: false,
+	videoModalOpen: false,
+	videoModalUrl: null,
+	sideMenu3Open: false,
+	showModeSwitcher: true
+};
+function UiProvider({ children }) {
+	const [searchOpen, setSearchOpen] = useState(initialState.searchOpen);
+	const [sideNavOpen, setSideNavOpen] = useState(initialState.sideNavOpen);
+	const [mobileMenuOpen, setMobileMenuOpen] = useState(initialState.mobileMenuOpen);
+	const [videoModalOpen, setVideoModalOpen] = useState(initialState.videoModalOpen);
+	const [videoModalUrl, setVideoModalUrl] = useState(initialState.videoModalUrl);
+	const [showModeSwitcher, setShowModeSwitcher] = useState(initialState.showModeSwitcher);
+	const [sideMenu3Open, setSideMenu3Open] = useState(initialState.sideMenu3Open);
+	const openSearch = useCallback(() => setSearchOpen(true), []);
+	const closeSearch = useCallback(() => setSearchOpen(false), []);
+	const toggleSearch = useCallback(() => setSearchOpen((v) => !v), []);
+	const openSideNav = useCallback(() => setSideNavOpen(true), []);
+	const closeSideNav = useCallback(() => setSideNavOpen(false), []);
+	const toggleSideNav = useCallback(() => setSideNavOpen((v) => !v), []);
+	const openMobileMenu = useCallback(() => setMobileMenuOpen(true), []);
+	const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), []);
+	const toggleMobileMenu = useCallback(() => setMobileMenuOpen((v) => !v), []);
+	const openSideMenu3 = useCallback(() => setSideMenu3Open(true), []);
+	const closeSideMenu3 = useCallback(() => setSideMenu3Open(false), []);
+	const toggleSideMenu3 = useCallback(() => setSideMenu3Open((v) => !v), []);
+	const openVideoModal = useCallback((url) => {
+		if (url != null) setVideoModalUrl(url);
+		setVideoModalOpen(true);
+	}, []);
+	const closeVideoModal = useCallback(() => {
+		setVideoModalOpen(false);
+		setVideoModalUrl(null);
+	}, []);
+	const toggleVideoModal = useCallback((url) => {
+		setVideoModalOpen((open) => {
+			const next = !open;
+			if (next && url != null) setVideoModalUrl(url);
+			if (!next) setVideoModalUrl(null);
+			return next;
+		});
+	}, []);
+	const { pathname } = useLocation();
+	useEffect(() => {
+		const closeAll = () => {
+			closeSearch();
+			closeSideNav();
+			closeMobileMenu();
+			closeVideoModal();
+			closeSideMenu3();
+		};
+		queueMicrotask(closeAll);
+	}, [
+		pathname,
+		closeSearch,
+		closeSideNav,
+		closeMobileMenu,
+		closeVideoModal,
+		closeSideMenu3
+	]);
+	const value = {
+		searchOpen,
+		setSearchOpen,
+		openSearch,
+		closeSearch,
+		toggleSearch,
+		sideNavOpen,
+		setSideNavOpen,
+		openSideNav,
+		closeSideNav,
+		toggleSideNav,
+		mobileMenuOpen,
+		setMobileMenuOpen,
+		openMobileMenu,
+		closeMobileMenu,
+		toggleMobileMenu,
+		videoModalOpen,
+		videoModalUrl,
+		setVideoModalOpen,
+		openVideoModal,
+		closeVideoModal,
+		toggleVideoModal,
+		sideMenu3Open,
+		setSideMenu3Open,
+		openSideMenu3,
+		closeSideMenu3,
+		toggleSideMenu3,
+		showModeSwitcher,
+		setShowModeSwitcher
+	};
+	return /* @__PURE__ */ jsx(UiContext.Provider, {
+		value,
+		children
+	});
+}
+function useUi() {
+	const ctx = useContext(UiContext);
+	if (ctx == null) throw new Error("useUi must be used within a UiProvider");
+	return ctx;
+}
+//#endregion
+//#region src/components/common/TitleSplitProvider.tsx
+if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
+var TitleSplitContext = createContext(null);
+function useTitleSplitContext() {
+	return useContext(TitleSplitContext) || {
+		registerElement: () => {},
+		unregisterElement: () => {}
+	};
+}
+//#endregion
+//#region src/components/common/TitleSplitWrapper.tsx
+var TitleSplitWrapper = forwardRef(function TitleSplitWrapper({ children, tag = "div", className = "", style = {} }, ref) {
+	const elementRef = useRef(null);
+	const { registerElement, unregisterElement } = useTitleSplitContext();
+	useLayoutEffect(() => {
+		const el = elementRef.current;
+		if (!el) return;
+		registerElement(el);
+		if (ref) if (typeof ref === "function") ref(el);
+		else ref.current = el;
+		return () => {
+			unregisterElement(el);
+			if (ref) if (typeof ref === "function") ref(null);
+			else ref.current = null;
+		};
+	}, [
+		ref,
+		registerElement,
+		unregisterElement
+	]);
+	const props = {
+		className: className.includes("tmp-title-split") ? className : `${className} tmp-title-split`.trim(),
+		style
+	};
+	Object.defineProperty(props, "ref", {
+		get: () => elementRef,
+		enumerable: true
+	});
+	return createElement(tag, props, children);
+});
+//#endregion
+//#region src/components/common/SubTitleSplitProvider.tsx
+if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
+var SubTitleSplitContext = createContext(null);
+function useSubTitleSplitContext() {
+	return useContext(SubTitleSplitContext) || {
+		registerSubTitle: () => {},
+		unregisterSubTitle: () => {}
+	};
+}
+//#endregion
+//#region src/components/common/SubTitleWrapper.tsx
+function SubTitleWrapper({ children, className = "" }) {
+	const outerRef = useRef(null);
+	const innerRef = useRef(null);
+	const { registerSubTitle, unregisterSubTitle } = useSubTitleSplitContext();
+	useEffect(() => {
+		const outer = outerRef.current;
+		const inner = innerRef.current;
+		if (outer && inner) {
+			registerSubTitle(outer, inner);
+			return () => unregisterSubTitle(outer);
+		}
+	}, [registerSubTitle, unregisterSubTitle]);
+	return /* @__PURE__ */ jsx("span", {
+		ref: outerRef,
+		className: ["sub-title", className].filter(Boolean).join(" "),
+		children: /* @__PURE__ */ jsx("span", {
+			ref: innerRef,
+			className: "sub-text",
+			children
+		})
+	});
+}
+//#endregion
+//#region src/utils/contactForm.ts
+var endpointPromise = null;
+async function loadContactFormEndpoint() {
+	if (!endpointPromise) endpointPromise = fetch("/amplify_outputs.json", { cache: "no-store" }).then(async (response) => {
+		if (!response.ok) return null;
+		return (await response.json()).custom?.contactForm?.endpoint?.trim() || null;
+	}).catch(() => null);
+	return endpointPromise;
+}
+async function submitContactForm(payload) {
+	const endpoint = await loadContactFormEndpoint();
+	if (!endpoint) throw new Error("The contact form is not configured yet. Set VITE_CONTACT_FORM_API_URL locally or deploy the Amplify backend first.");
+	const response = await fetch(endpoint, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(payload)
+	});
+	let body = null;
+	try {
+		body = await response.json();
+	} catch {
+		body = null;
+	}
+	if (!response.ok) throw new Error(body?.message || "We could not send your message.");
+	return body?.message || "Message sent.";
+}
+//#endregion
+//#region src/utils/analytics.ts
+function trackConversionEvent(eventName, params = {}) {
+	if (typeof window === "undefined") return;
+	window.gtag?.("event", eventName, params);
+	window.plausible?.(eventName, { props: params });
+}
+//#endregion
+//#region src/components/contact/ContactForm.tsx
+var CONTACT_SUBJECT_OPTIONS = [
+	"Reception & CRM Starter",
+	"The Main Street Startup",
+	"Always on Capture",
+	"The Autonomous Sales Floor",
+	"Chief AI Officers",
+	"Customer Support",
+	"Other"
+];
+var initialFormState = {
+	name: "",
+	email: "",
+	phone: "",
+	subject: "",
+	message: "",
+	turnstileToken: ""
+};
+var turnstileScriptId = "cloudflare-turnstile-script";
+var turnstileScriptSrc = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+var turnstileSiteKey = (void 0)?.trim() ?? "";
+var turnstileScriptPromise = null;
+async function loadTurnstileScript() {
+	if (window.turnstile) return;
+	if (!turnstileScriptPromise) turnstileScriptPromise = new Promise((resolve, reject) => {
+		const existingScript = document.getElementById(turnstileScriptId);
+		const handleLoad = () => resolve();
+		const handleError = () => {
+			reject(/* @__PURE__ */ new Error("Spam protection could not be loaded."));
+		};
+		if (existingScript) {
+			existingScript.addEventListener("load", handleLoad, { once: true });
+			existingScript.addEventListener("error", handleError, { once: true });
+			return;
+		}
+		const script = document.createElement("script");
+		script.id = turnstileScriptId;
+		script.src = turnstileScriptSrc;
+		script.addEventListener("load", handleLoad, { once: true });
+		script.addEventListener("error", handleError, { once: true });
+		document.head.appendChild(script);
+	}).catch((error) => {
+		turnstileScriptPromise = null;
+		throw error;
+	});
+	return turnstileScriptPromise;
+}
+function ContactForm() {
+	const [formData, setFormData] = useState(initialFormState);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [turnstileToken, setTurnstileToken] = useState("");
+	const [turnstileError, setTurnstileError] = useState("");
+	const [submitState, setSubmitState] = useState({
+		kind: "idle",
+		message: ""
+	});
+	const turnstileContainerRef = useRef(null);
+	const turnstileWidgetIdRef = useRef(null);
+	const turnstileStatusMessage = turnstileError || (!turnstileSiteKey ? "Spam protection is not configured yet." : "");
+	useEffect(() => {
+		trackConversionEvent("contact_form_view", { page: window.location.pathname });
+	}, []);
+	useEffect(() => {
+		if (!turnstileSiteKey) return;
+		let isCancelled = false;
+		loadTurnstileScript().then(() => {
+			if (isCancelled || !window.turnstile || !turnstileContainerRef.current || turnstileWidgetIdRef.current) return;
+			turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
+				sitekey: turnstileSiteKey,
+				action: "contact_form",
+				theme: "auto",
+				callback: (token) => {
+					setTurnstileToken(token);
+					setTurnstileError("");
+				},
+				"expired-callback": () => {
+					setTurnstileToken("");
+					setTurnstileError("Spam protection expired. Please confirm again.");
+				},
+				"timeout-callback": () => {
+					setTurnstileToken("");
+					setTurnstileError("Spam protection timed out. Please confirm again.");
+				},
+				"error-callback": () => {
+					setTurnstileToken("");
+					setTurnstileError("Spam protection failed to load. Please refresh and try again.");
+				}
+			});
+		}).catch((error) => {
+			if (!isCancelled) setTurnstileError(error instanceof Error ? error.message : "Spam protection could not be loaded.");
+		});
+		return () => {
+			isCancelled = true;
+			if (turnstileWidgetIdRef.current && window.turnstile) {
+				window.turnstile.remove(turnstileWidgetIdRef.current);
+				turnstileWidgetIdRef.current = null;
+			}
+		};
+	}, []);
+	const resetTurnstile = () => {
+		setTurnstileToken("");
+		setTurnstileError("");
+		if (turnstileWidgetIdRef.current && window.turnstile) window.turnstile.reset(turnstileWidgetIdRef.current);
+	};
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+		setFormData((current) => ({
+			...current,
+			[name]: value
+		}));
+	};
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		if (!turnstileSiteKey) {
+			setSubmitState({
+				kind: "error",
+				message: "Spam protection is not configured yet. Please contact us by phone or email for now."
+			});
+			return;
+		}
+		if (!turnstileToken) {
+			setSubmitState({
+				kind: "error",
+				message: turnstileError || "Please complete the spam check before submitting."
+			});
+			return;
+		}
+		setIsSubmitting(true);
+		setSubmitState({
+			kind: "idle",
+			message: ""
+		});
+		try {
+			const message = await submitContactForm({
+				...formData,
+				turnstileToken
+			});
+			setFormData(initialFormState);
+			resetTurnstile();
+			setSubmitState({
+				kind: "success",
+				message
+			});
+			trackConversionEvent("contact_form_submit", {
+				page: window.location.pathname,
+				subject: formData.subject
+			});
+		} catch (error) {
+			resetTurnstile();
+			setSubmitState({
+				kind: "error",
+				message: error instanceof Error ? error.message : "We could not send your message."
+			});
+		} finally {
+			setIsSubmitting(false);
+		}
+	};
+	return /* @__PURE__ */ jsxs("form", {
+		className: "custom-form",
+		onSubmit: handleSubmit,
+		children: [
+			/* @__PURE__ */ jsx("h2", { children: "Get in Touch" }),
+			/* @__PURE__ */ jsx("p", {
+				className: "contact-form-note",
+				children: "Include your email and phone number so we can follow up and send you a confirmation copy of your message."
+			}),
+			/* @__PURE__ */ jsx("input", {
+				type: "text",
+				id: "name",
+				name: "name",
+				placeholder: "Full name",
+				autoComplete: "name",
+				value: formData.name,
+				onChange: handleChange,
+				required: true
+			}),
+			/* @__PURE__ */ jsx("input", {
+				type: "email",
+				id: "email",
+				name: "email",
+				placeholder: "Email address",
+				autoComplete: "email",
+				value: formData.email,
+				onChange: handleChange,
+				required: true
+			}),
+			/* @__PURE__ */ jsx("input", {
+				type: "tel",
+				id: "phone",
+				name: "phone",
+				placeholder: "Phone number",
+				autoComplete: "tel",
+				value: formData.phone,
+				onChange: handleChange,
+				required: true
+			}),
+			/* @__PURE__ */ jsxs("select", {
+				id: "subject",
+				name: "subject",
+				value: formData.subject,
+				onChange: handleChange,
+				required: true,
+				"aria-label": "Topic",
+				children: [/* @__PURE__ */ jsx("option", {
+					value: "",
+					disabled: true,
+					children: "Select a topic…"
+				}), CONTACT_SUBJECT_OPTIONS.map((label) => /* @__PURE__ */ jsx("option", {
+					value: label,
+					children: label
+				}, label))]
+			}),
+			/* @__PURE__ */ jsx("textarea", {
+				id: "message",
+				name: "message",
+				rows: 5,
+				placeholder: "Write your message...",
+				value: formData.message,
+				onChange: handleChange,
+				required: true
+			}),
+			/* @__PURE__ */ jsxs("div", {
+				className: "contact-form-turnstile",
+				children: [/* @__PURE__ */ jsx("div", { ref: turnstileContainerRef }), turnstileStatusMessage ? /* @__PURE__ */ jsx("p", {
+					className: "contact-form-turnstile__feedback error",
+					role: "status",
+					children: turnstileStatusMessage
+				}) : null]
+			}),
+			/* @__PURE__ */ jsxs("button", {
+				type: "submit",
+				className: "ibt-btn ibt-btn-outline",
+				disabled: isSubmitting || !turnstileSiteKey,
+				children: [/* @__PURE__ */ jsx("span", { children: isSubmitting ? "Sending..." : "Send message" }), /* @__PURE__ */ jsx("i", {
+					className: "icon-arrow-top",
+					"aria-hidden": true
+				})]
+			}),
+			submitState.kind !== "idle" ? /* @__PURE__ */ jsx("p", {
+				className: `contact-form-feedback ${submitState.kind}`,
+				role: "status",
+				children: submitState.message
+			}) : null
+		]
+	});
+}
+//#endregion
 //#region src/data/site.ts
 var siteConfig = {
 	name: "SceneShift",
@@ -23,7 +488,482 @@ var siteConfig = {
 	indexNowKey: "b44f0c99429d41d9896cfd3cfc07933e",
 	ogImagePath: "/assets/images/page-title/des-moines-iowa-usa-capitol-building-on-a-misty-2026-03-24-11-27-15-utc.jpg"
 };
-siteConfig.legalTermsUrl, siteConfig.legalPrivacyUrl;
+var primaryNavItems = [
+	{
+		label: "Home",
+		href: "/"
+	},
+	{
+		label: "About Us",
+		href: "/about-us"
+	},
+	{
+		label: "Contact",
+		href: "/contact"
+	}
+];
+var footerNavItems = [
+	{
+		label: "Home",
+		href: "/"
+	},
+	{
+		label: "About Us",
+		href: "/about-us"
+	},
+	{
+		label: "Contact",
+		href: "/contact"
+	}
+];
+var legalNavItems = [{
+	label: "Terms of Service",
+	href: siteConfig.legalTermsUrl
+}, {
+	label: "Privacy Policy",
+	href: siteConfig.legalPrivacyUrl
+}];
+function isExternalNavHref(href) {
+	return href != null && /^https?:\/\//i.test(href);
+}
+var aboutMarqueePhrases = [
+	"Ames, Iowa roots",
+	"Downtowns evolve",
+	"Independent business focus",
+	"Faster first response",
+	"Cleaner follow-up"
+];
+var aboutOperatingPrinciples = [
+	{
+		title: "Built for real schedules",
+		description: "We plan around field crews, busy phones, and owners who cannot spend all day inside software."
+	},
+	{
+		title: "Local context matters",
+		description: "Downtowns evolve, tools change, and customers still choose the business that feels trustworthy and responsive. We build with that local reality in view."
+	},
+	{
+		title: "Practical over performative",
+		description: "The goal is fewer dropped leads, clearer handoffs, and a customer experience that feels dependable from first contact onward."
+	}
+];
+var aboutWhyItMattersHighlights = [
+	{
+		title: "Answer faster",
+		description: "When buyers compare options, response time shapes trust before the quality of the work ever gets a chance to speak for itself."
+	},
+	{
+		title: "Follow up consistently",
+		description: "Calls, forms, and inbox threads should not depend on whoever happens to remember them. We care about systems that keep the next step moving."
+	},
+	{
+		title: "Stay easy to choose",
+		description: "Independent businesses win when they feel organized, responsive, and clear about what happens next for the customer."
+	}
+];
+//#endregion
+//#region src/components/contact/Contact.tsx
+function Contact() {
+	return /* @__PURE__ */ jsx("div", {
+		className: "contact-sec ibt-section-gap",
+		children: /* @__PURE__ */ jsx("div", {
+			className: "container",
+			children: /* @__PURE__ */ jsxs("div", {
+				className: "row align-items-center",
+				children: [/* @__PURE__ */ jsx("div", {
+					className: "col-lg-6",
+					children: /* @__PURE__ */ jsxs("div", {
+						className: "contact-content",
+						children: [/* @__PURE__ */ jsxs("div", {
+							className: "sec-title white",
+							children: [
+								/* @__PURE__ */ jsx(SubTitleWrapper, { children: "get in touch" }),
+								/* @__PURE__ */ jsx(TitleSplitWrapper, {
+									tag: "h2",
+									className: "title animated-heading",
+									children: "Tell us what you are trying to fix—calls, follow-up, or how leads move through your team"
+								}),
+								/* @__PURE__ */ jsx("p", { children: "Share a bit about your business and what a better first response would look like. We read every message, reply with clear next steps, and route you to the right person when it makes sense." })
+							]
+						}), /* @__PURE__ */ jsxs("div", {
+							className: "row",
+							children: [/* @__PURE__ */ jsx("div", {
+								className: "col-lg-6 col-md-6 col-sm-6",
+								children: /* @__PURE__ */ jsxs("div", {
+									className: "contact-info",
+									children: [/* @__PURE__ */ jsxs("div", {
+										className: "call-center",
+										children: [/* @__PURE__ */ jsx("h4", {
+											className: "title",
+											children: "Call"
+										}), /* @__PURE__ */ jsx("a", {
+											href: `tel:${siteConfig.primaryPhoneHref}`,
+											className: "nmbr",
+											children: siteConfig.primaryPhoneLabel
+										})]
+									}), /* @__PURE__ */ jsxs("div", {
+										className: "call-center mb-0",
+										children: [/* @__PURE__ */ jsx("h4", {
+											className: "title",
+											children: "Email"
+										}), /* @__PURE__ */ jsx("a", {
+											href: `mailto:${siteConfig.primaryEmail}`,
+											className: "gmail",
+											children: siteConfig.primaryEmail
+										})]
+									})]
+								})
+							}), /* @__PURE__ */ jsx("div", {
+								className: "col-lg-6 col-md-6 col-sm-6",
+								children: /* @__PURE__ */ jsx("div", {
+									className: "contact-info",
+									children: /* @__PURE__ */ jsxs("div", {
+										className: "call-center",
+										children: [/* @__PURE__ */ jsx("h4", {
+											className: "title",
+											children: "Website"
+										}), /* @__PURE__ */ jsx("a", {
+											href: siteConfig.url,
+											className: "gmail",
+											target: "_blank",
+											rel: "noopener noreferrer",
+											children: siteConfig.domain
+										})]
+									})
+								})
+							})]
+						})]
+					})
+				}), /* @__PURE__ */ jsx("div", {
+					className: "col-lg-6",
+					children: /* @__PURE__ */ jsx("div", {
+						className: "contact-form",
+						children: /* @__PURE__ */ jsx(ContactForm, {})
+					})
+				})]
+			})
+		})
+	});
+}
+//#endregion
+//#region src/components/footers/Footer1.tsx
+function Footer1() {
+	return /* @__PURE__ */ jsxs("footer", {
+		className: "footer-style1",
+		children: [
+			/* @__PURE__ */ jsx("div", {
+				className: "footer-top",
+				children: /* @__PURE__ */ jsx("div", {
+					className: "container",
+					children: /* @__PURE__ */ jsx("div", {
+						className: "footer-content",
+						children: /* @__PURE__ */ jsx("h2", {
+							className: "title",
+							children: "The future of small business is here. Don't get left behind."
+						})
+					})
+				})
+			}),
+			/* @__PURE__ */ jsx("div", {
+				className: "widget-area ibt-section-gapTop",
+				children: /* @__PURE__ */ jsx("div", {
+					className: "container",
+					children: /* @__PURE__ */ jsxs("div", {
+						className: "row",
+						children: [/* @__PURE__ */ jsx("div", {
+							className: "col-xl-8 col-lg-6",
+							children: /* @__PURE__ */ jsxs("div", {
+								className: "about-widget footer-widget",
+								children: [
+									/* @__PURE__ */ jsx("div", {
+										className: "footer-logo",
+										children: /* @__PURE__ */ jsx("img", {
+											alt: `${siteConfig.name} logo`,
+											src: "/assets/images/logo.svg",
+											width: 110,
+											height: 20
+										})
+									}),
+									/* @__PURE__ */ jsxs("p", { children: [
+										/* @__PURE__ */ jsx("a", {
+											href: `mailto:${siteConfig.primaryEmail}`,
+											children: siteConfig.primaryEmail
+										}),
+										/* @__PURE__ */ jsx("br", {}),
+										/* @__PURE__ */ jsx("a", {
+											href: `tel:${siteConfig.primaryPhoneHref}`,
+											children: siteConfig.primaryPhoneLabel
+										})
+									] }),
+									/* @__PURE__ */ jsx("h2", {
+										className: "title footer-domain-heading",
+										children: siteConfig.domain
+									})
+								]
+							})
+						}), /* @__PURE__ */ jsx("div", {
+							className: "col-xl-4 col-lg-6",
+							children: /* @__PURE__ */ jsxs("div", {
+								className: "footer-menu",
+								children: [/* @__PURE__ */ jsxs("div", {
+									className: "footer-links footer-widget",
+									children: [/* @__PURE__ */ jsx("h4", {
+										className: "widget-title",
+										children: "Explore"
+									}), /* @__PURE__ */ jsx("ul", { children: footerNavItems.map((item) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
+										to: item.href ?? "/",
+										title: "",
+										children: item.label
+									}) }, item.label)) })]
+								}), /* @__PURE__ */ jsxs("div", {
+									className: "footer-links footer-widget",
+									children: [/* @__PURE__ */ jsx("h4", {
+										className: "widget-title",
+										children: "Legal"
+									}), /* @__PURE__ */ jsx("ul", { children: legalNavItems.map((item) => /* @__PURE__ */ jsx("li", { children: isExternalNavHref(item.href) ? /* @__PURE__ */ jsx("a", {
+										href: item.href,
+										rel: "noopener noreferrer",
+										children: item.label
+									}) : /* @__PURE__ */ jsx(Link, {
+										to: item.href ?? "/",
+										title: "",
+										children: item.label
+									}) }, item.label)) })]
+								})]
+							})
+						})]
+					})
+				})
+			}),
+			/* @__PURE__ */ jsx("div", {
+				className: "footer-botom",
+				children: /* @__PURE__ */ jsx("div", {
+					className: "container",
+					children: /* @__PURE__ */ jsxs("div", {
+						className: "footer-box",
+						children: [/* @__PURE__ */ jsxs("p", { children: [
+							/* @__PURE__ */ jsx("a", {
+								href: siteConfig.url,
+								children: siteConfig.name
+							}),
+							" ",
+							(/* @__PURE__ */ new Date()).getFullYear(),
+							". All rights reserved."
+						] }), /* @__PURE__ */ jsxs("span", { children: [
+							/* @__PURE__ */ jsx("a", {
+								href: siteConfig.legalTermsUrl,
+								rel: "noopener noreferrer",
+								children: "Terms of Service"
+							}),
+							" ",
+							/* @__PURE__ */ jsx("a", {
+								href: siteConfig.legalPrivacyUrl,
+								rel: "noopener noreferrer",
+								children: "Privacy Policy"
+							})
+						] })]
+					})
+				})
+			})
+		]
+	});
+}
+//#endregion
+//#region src/data/mobileMenu.ts
+var mobileMenuItems = primaryNavItems;
+//#endregion
+//#region src/utils/menuActive.ts
+function isLinkActive(pathname, href) {
+	if (!href || href === "#") return false;
+	if (href === "/index") return pathname === "/" || pathname === "/index";
+	return pathname === href;
+}
+function itemHasActiveDescendant(pathname, item) {
+	if (isLinkActive(pathname, item.href)) return true;
+	return (item.children ?? []).some((child) => itemHasActiveDescendant(pathname, child));
+}
+//#endregion
+//#region src/components/headers/Nav.tsx
+function renderDesktopItems(pathname, items) {
+	return items.map((item) => {
+		const href = item.href ?? "#";
+		const hasChildren = Boolean(item.children?.length);
+		const isActive = itemHasActiveDescendant(pathname, item);
+		const isInternalLink = href.startsWith("/");
+		const label = /* @__PURE__ */ jsxs(Fragment, { children: [/* @__PURE__ */ jsx("span", {
+			className: "menu-item",
+			children: item.label
+		}), /* @__PURE__ */ jsx("span", {
+			className: "menu-item2",
+			children: item.label
+		})] });
+		return /* @__PURE__ */ jsxs("li", {
+			className: hasChildren ? isActive ? "menu-has-items menu-item-has-children active" : "menu-has-items menu-item-has-children" : isActive ? "active" : void 0,
+			children: [isInternalLink ? /* @__PURE__ */ jsx(Link, {
+				to: href,
+				className: isActive ? "active" : void 0,
+				children: label
+			}) : /* @__PURE__ */ jsx("a", {
+				href,
+				className: isActive ? "active" : void 0,
+				target: "_blank",
+				rel: "noopener noreferrer",
+				children: label
+			}), hasChildren && /* @__PURE__ */ jsx("ul", {
+				className: "sub-menu",
+				children: item.children?.map((child) => {
+					const childHref = child.href ?? "#";
+					const childIsInternal = childHref.startsWith("/");
+					const childIsActive = itemHasActiveDescendant(pathname, child);
+					return /* @__PURE__ */ jsx("li", {
+						className: childIsActive ? "active" : void 0,
+						children: childIsInternal ? /* @__PURE__ */ jsx(Link, {
+							to: childHref,
+							className: childIsActive ? "active" : void 0,
+							children: child.label
+						}) : /* @__PURE__ */ jsx("a", {
+							href: childHref,
+							className: childIsActive ? "active" : void 0,
+							target: "_blank",
+							rel: "noopener noreferrer",
+							children: child.label
+						})
+					}, child.label);
+				})
+			})]
+		}, item.label);
+	});
+}
+function Nav() {
+	const { pathname } = useLocation();
+	return /* @__PURE__ */ jsx(Fragment, { children: renderDesktopItems(pathname, mobileMenuItems) });
+}
+//#endregion
+//#region src/components/common/MobileMenuToggler.tsx
+function MobileMenuToggler() {
+	const { openMobileMenu } = useUi();
+	return /* @__PURE__ */ jsxs("button", {
+		className: "hamburger popup-menu",
+		"data-menu": "mobileMenu",
+		onClick: openMobileMenu,
+		children: [
+			/* @__PURE__ */ jsx("span", {}),
+			/* @__PURE__ */ jsx("span", {}),
+			/* @__PURE__ */ jsx("span", {})
+		]
+	});
+}
+//#endregion
+//#region src/components/headers/Header4.tsx
+function Header4({ className = "vs-header4", menuClass = "header-menu-area", headerBottomClass = "header-bottom", navClass = "menu-style1 v4" }) {
+	const [isSticky, setIsSticky] = useState(false);
+	useEffect(() => {
+		window.addEventListener("scroll", () => {
+			setIsSticky(window.scrollY > 100);
+		});
+		return () => {
+			window.removeEventListener("scroll", () => {
+				setIsSticky(window.scrollY > 100);
+			});
+		};
+	}, []);
+	return /* @__PURE__ */ jsxs("header", {
+		className: ` ${isSticky ? "" : className}`,
+		children: [/* @__PURE__ */ jsx("div", {
+			className: "header-top4",
+			children: /* @__PURE__ */ jsx("div", {
+				className: "container-fluid",
+				children: /* @__PURE__ */ jsx("div", {
+					className: "header-top-content4",
+					children: /* @__PURE__ */ jsxs("ul", {
+						className: "top-bar-contacts",
+						children: [/* @__PURE__ */ jsxs("li", { children: [/* @__PURE__ */ jsx("span", {
+							className: "contact-item-title",
+							children: "Call us:"
+						}), /* @__PURE__ */ jsx("a", {
+							href: `tel:${siteConfig.primaryPhoneHref}`,
+							children: siteConfig.primaryPhoneLabel
+						})] }), /* @__PURE__ */ jsxs("li", { children: [/* @__PURE__ */ jsx("span", {
+							className: "contact-item-title",
+							children: "Email:"
+						}), /* @__PURE__ */ jsx("a", {
+							href: `mailto:${siteConfig.primaryEmail}`,
+							children: siteConfig.primaryEmail
+						})] })]
+					})
+				})
+			})
+		}), /* @__PURE__ */ jsx("div", {
+			className: headerBottomClass,
+			children: /* @__PURE__ */ jsx("div", {
+				className: isSticky ? "sticky-active is-sticky" : "container2 position-relative",
+				children: /* @__PURE__ */ jsxs("div", {
+					className: menuClass,
+					children: [/* @__PURE__ */ jsxs("div", {
+						className: "row gx-20 align-items-center justify-content-between",
+						children: [
+							/* @__PURE__ */ jsx("div", {
+								className: "col-auto",
+								children: /* @__PURE__ */ jsx("div", {
+									className: "header-logo",
+									children: /* @__PURE__ */ jsx(Link, {
+										to: `/`,
+										children: /* @__PURE__ */ jsx("img", {
+											alt: `${siteConfig.name} logo`,
+											src: "/assets/images/logo.svg",
+											width: 110,
+											height: 20
+										})
+									})
+								})
+							}),
+							/* @__PURE__ */ jsx("div", {
+								className: "col-auto",
+								children: /* @__PURE__ */ jsx("nav", {
+									className: `main-menu ${navClass}`,
+									children: /* @__PURE__ */ jsx("ul", { children: /* @__PURE__ */ jsx(Nav, {}) })
+								})
+							}),
+							/* @__PURE__ */ jsx("div", {
+								className: "col-auto d-none d-xl-block",
+								children: /* @__PURE__ */ jsx("div", {
+									className: "btn-box",
+									children: /* @__PURE__ */ jsxs("a", {
+										href: siteConfig.loginUrl,
+										title: "",
+										className: "login-btn",
+										target: "_blank",
+										rel: "noopener noreferrer",
+										children: [/* @__PURE__ */ jsx("i", { className: "fa fa-user" }), "Login"]
+									})
+								})
+							})
+						]
+					}), /* @__PURE__ */ jsx(MobileMenuToggler, {})]
+				})
+			})
+		})]
+	});
+}
+//#endregion
+//#region src/pages/layouts/ShellLayout.tsx
+/** Shared shell: header + routed page + contact + footer (matches Next.js `(inner-pages)` layout). */
+function ShellLayout() {
+	const { pathname } = useLocation();
+	return /* @__PURE__ */ jsxs(Fragment, { children: [
+		/* @__PURE__ */ jsx(Header4, {
+			className: "vs-header15",
+			menuClass: "header-menu-area",
+			headerBottomClass: "header-bottom15",
+			navClass: "main-menu menu-style1"
+		}),
+		/* @__PURE__ */ jsx(Outlet, {}),
+		/* @__PURE__ */ jsxs("section", {
+			className: "main-sec",
+			children: [!(pathname === "/contact") && /* @__PURE__ */ jsx(Contact, {}), /* @__PURE__ */ jsx(Footer1, {})]
+		})
+	] });
+}
 //#endregion
 //#region src/components/seo/SeoHeader.tsx
 /**
@@ -214,12 +1154,16 @@ function SeoFooter() {
 							className: "seo-footer__column",
 							children: [/* @__PURE__ */ jsx("h3", { children: "Packages" }), /* @__PURE__ */ jsxs("ul", { children: [
 								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
+									to: "/packages/reception-crm-starter",
+									children: "Reception & CRM Starter"
+								}) }),
+								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
 									to: "/packages/main-street-startup",
 									children: "Main Street Startup"
 								}) }),
 								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
 									to: "/packages/always-on-capture",
-									children: "Always-On Capture"
+									children: "Always on Capture"
 								}) }),
 								/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
 									to: "/packages/autonomous-sales-floor",
@@ -338,6 +1282,858 @@ function SeoShellLayout() {
 			/* @__PURE__ */ jsx(SeoFooter, {})
 		]
 	});
+}
+//#endregion
+//#region src/data/demo.ts
+var demoCards = [
+	{
+		id: 1,
+		href: "/index1",
+		imageSrc: "/assets/images/event/demo1-2.png",
+		imageWidth: 801,
+		imageHeight: 658,
+		demoNum: "01.Home",
+		demoTitle: "AI Consulting"
+	},
+	{
+		id: 2,
+		href: "/index2",
+		imageSrc: "/assets/images/event/demo1-1.png",
+		imageWidth: 791,
+		imageHeight: 658,
+		demoNum: "02.Home",
+		demoTitle: "Modern technology"
+	},
+	{
+		id: 3,
+		href: "/index3",
+		imageSrc: "/assets/images/event/demo1-4.png",
+		imageWidth: 801,
+		imageHeight: 658,
+		demoNum: "03.Home",
+		demoTitle: "AI Agency"
+	},
+	{
+		id: 4,
+		href: "/index4",
+		imageSrc: "/assets/images/event/demo1-5.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "04.Home",
+		demoTitle: "Chatbot"
+	},
+	{
+		id: 5,
+		href: "/index5",
+		imageSrc: "/assets/images/event/demo1-6.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "05.Home",
+		demoTitle: "Startup"
+	},
+	{
+		id: 6,
+		href: "/index6",
+		imageSrc: "/assets/images/event/demo1-15.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "06.Home",
+		demoTitle: "AI Consulting"
+	},
+	{
+		id: 7,
+		href: "/index7",
+		imageSrc: "/assets/images/event/demo1-7.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "07.Home",
+		demoTitle: "Futursim"
+	},
+	{
+		id: 8,
+		href: "/index8",
+		imageSrc: "/assets/images/event/demo1-3.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "08.Home",
+		demoTitle: "AI Solutions"
+	},
+	{
+		id: 9,
+		href: "/index9",
+		imageSrc: "/assets/images/event/demo1-10.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "09.Home",
+		demoTitle: "Voiceover"
+	},
+	{
+		id: 10,
+		href: "/index10",
+		imageSrc: "/assets/images/event/demo1-9.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "10.Home",
+		demoTitle: "Science"
+	},
+	{
+		id: 11,
+		href: "/index11",
+		imageSrc: "/assets/images/event/demo1-8.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "11.Home",
+		demoTitle: "Creative bureau"
+	},
+	{
+		id: 12,
+		href: "/index12",
+		imageSrc: "/assets/images/event/demo1-13.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "12.Home",
+		demoTitle: "Video voiceover"
+	},
+	{
+		id: 13,
+		href: "/index13",
+		imageSrc: "/assets/images/event/demo1-11.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "13.Home",
+		demoTitle: "IT services",
+		cardClassName: "demo-img v2"
+	},
+	{
+		id: 14,
+		href: "/index14",
+		imageSrc: "/assets/images/event/demo1-12.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "14.Home",
+		demoTitle: "AI devices"
+	},
+	{
+		id: 15,
+		href: "/index15",
+		imageSrc: "/assets/images/event/demo1-14.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "15.Home",
+		demoTitle: "AI Solutions"
+	},
+	{
+		id: 16,
+		href: "/index16",
+		imageSrc: "/assets/images/event/demo1-16.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "16.Home",
+		demoTitle: "Image generator"
+	},
+	{
+		id: 17,
+		href: "/index17",
+		imageSrc: "/assets/images/event/demo1-17.png",
+		imageWidth: 798,
+		imageHeight: 658,
+		demoNum: "17.Home",
+		demoTitle: "Content generator",
+		cardClassName: "demo-img mb-0"
+	}
+];
+//#endregion
+//#region src/data/pages.ts
+var BASE_TITLE = "SceneShift";
+var homepageMetaMap = demoCards.reduce((acc, card) => {
+	const key = `home${card.id}`;
+	acc[key] = {
+		title: `${card.demoTitle} ${card.demoNum} | ${BASE_TITLE}`,
+		description: "Template demonstration route retained for internal design comparison. This route is not intended for search indexing.",
+		path: `/index${card.id}`,
+		index: false,
+		schemaType: "WebPage"
+	};
+	return acc;
+}, {});
+var pageMetaMap = {
+	preview: {
+		title: `SceneShift Preview | ${BASE_TITLE}`,
+		description: "Internal preview route for the SceneShift placeholder website.",
+		path: "/preview",
+		index: false
+	},
+	"about-us": {
+		title: `About SceneShift | Small Business AI Automation in Iowa`,
+		description: "Learn how SceneShift helps independent businesses in Ames and across Iowa respond faster, follow up consistently, and stay easy to choose.",
+		path: "/about-us",
+		index: true,
+		changefreq: "monthly",
+		priority: .8,
+		schemaType: "AboutPage"
+	},
+	team: {
+		title: `Team | ${BASE_TITLE}`,
+		description: "Internal team template route retained for design reference.",
+		path: "/team",
+		index: false
+	},
+	"team-single": {
+		title: `Team Member Details | ${BASE_TITLE}`,
+		description: "Internal team detail template route retained for design reference.",
+		path: "/team-single",
+		index: false
+	},
+	project: {
+		title: `Projects Grid | ${BASE_TITLE}`,
+		description: "Internal project grid template route retained for design reference.",
+		path: "/project",
+		index: false
+	},
+	project2: {
+		title: `Projects List | ${BASE_TITLE}`,
+		description: "Internal project list template route retained for design reference.",
+		path: "/project2",
+		index: false
+	},
+	"project-single": {
+		title: `Project Details | ${BASE_TITLE}`,
+		description: "Internal project detail template route retained for design reference.",
+		path: "/project-single",
+		index: false
+	},
+	"gallery-grid": {
+		title: `Gallery Grid | ${BASE_TITLE}`,
+		description: "Internal gallery template route retained for design reference.",
+		path: "/gallery-grid",
+		index: false
+	},
+	"gallery-masonry": {
+		title: `Gallery Masonry | ${BASE_TITLE}`,
+		description: "Internal gallery template route retained for design reference.",
+		path: "/gallery-masonry",
+		index: false
+	},
+	faq: {
+		title: `Small Business AI Automation FAQ | ${BASE_TITLE}`,
+		description: "Frequently asked questions about SceneShift lead response, CRM follow-up, AI reception, and small business automation.",
+		path: "/faq",
+		index: false,
+		schemaType: "FAQPage"
+	},
+	pricing: {
+		title: `AI Automation Pricing for Small Businesses | ${BASE_TITLE}`,
+		description: "Compare SceneShift packages for AI web chat, AI reception, CRM updates, calendar booking, Easy CRM, review generation, and autonomous sales follow-up.",
+		path: "/pricing",
+		index: true,
+		changefreq: "weekly",
+		priority: .8,
+		schemaType: "Service"
+	},
+	typography: {
+		title: `Typography | ${BASE_TITLE}`,
+		description: "Internal typography template route retained for design reference.",
+		path: "/typography",
+		index: false
+	},
+	contact: {
+		title: `Contact SceneShift | Book an AI Automation Call`,
+		description: "Contact SceneShift to discuss lead capture, AI reception, CRM follow-up, missed-call text back, review generation, and growth automation.",
+		path: "/contact",
+		index: true,
+		changefreq: "monthly",
+		priority: .7,
+		schemaType: "ContactPage"
+	},
+	shop: {
+		title: `Shop | ${BASE_TITLE}`,
+		description: "Internal shop template route retained for design reference.",
+		path: "/shop",
+		index: false
+	},
+	"shop-single": {
+		title: `Product Details | ${BASE_TITLE}`,
+		description: "Internal product template route retained for design reference.",
+		path: "/shop-single",
+		index: false
+	},
+	cart: {
+		title: `Shopping Cart | ${BASE_TITLE}`,
+		description: "Cart route for active customer sessions.",
+		path: "/cart",
+		index: false
+	},
+	checkout: {
+		title: `Checkout | ${BASE_TITLE}`,
+		description: "Checkout route for active customer sessions.",
+		path: "/checkout",
+		index: false
+	},
+	account: {
+		title: `My Account | ${BASE_TITLE}`,
+		description: "Account route for active customer sessions.",
+		path: "/account",
+		index: false
+	},
+	blog: {
+		title: `Blog | ${BASE_TITLE}`,
+		description: "Internal blog template route retained until SceneShift publishes original articles.",
+		path: "/blog",
+		index: false
+	},
+	blog2: {
+		title: `Blog Classic | ${BASE_TITLE}`,
+		description: "Internal blog template route retained until SceneShift publishes original articles.",
+		path: "/blog2",
+		index: false
+	},
+	"blog-single": {
+		title: `Blog Details | ${BASE_TITLE}`,
+		description: "Internal blog detail template route retained until SceneShift publishes original articles.",
+		path: "/blog-single",
+		index: false
+	},
+	"not-found": {
+		title: `404 | ${BASE_TITLE}`,
+		description: "The page you requested does not exist or has been moved.",
+		path: "/404",
+		index: false
+	},
+	...homepageMetaMap,
+	home17: {
+		title: `AI CRM Automation for Small Businesses | ${BASE_TITLE}`,
+		description: "SceneShift helps Iowa small businesses capture more leads, answer faster, automate follow-up, and build practical AI-powered CRM workflows.",
+		path: "/",
+		index: true,
+		changefreq: "weekly",
+		priority: 1,
+		schemaType: "ProfessionalService"
+	}
+};
+function upsertMetaElement(selector, create, content) {
+	let el = document.head.querySelector(selector);
+	if (!el) {
+		el = create();
+		document.head.appendChild(el);
+	}
+	el.content = content;
+}
+function setMetaName(name, content) {
+	upsertMetaElement(`meta[name="${name}"]`, () => {
+		const meta = document.createElement("meta");
+		meta.name = name;
+		return meta;
+	}, content);
+}
+function setMetaProperty(property, content) {
+	upsertMetaElement(`meta[property="${property}"]`, () => {
+		const meta = document.createElement("meta");
+		meta.setAttribute("property", property);
+		return meta;
+	}, content);
+}
+function setLinkRel(rel, href) {
+	let el = document.head.querySelector(`link[rel="${rel}"]`);
+	if (!el) {
+		el = document.createElement("link");
+		el.rel = rel;
+		document.head.appendChild(el);
+	}
+	el.href = href;
+}
+function setJsonLd$1(id, value) {
+	let el = document.getElementById(id);
+	if (!el) {
+		el = document.createElement("script");
+		el.type = "application/ld+json";
+		el.id = id;
+		document.head.appendChild(el);
+	}
+	el.text = JSON.stringify(value);
+}
+function absoluteUrl$2(path) {
+	return new URL(path, siteConfig.url).toString();
+}
+function normalizePath(pathname) {
+	if (pathname === "") return "/";
+	if (pathname !== "/" && pathname.endsWith("/")) return pathname.slice(0, -1);
+	return pathname;
+}
+function buildJsonLd(meta, canonicalUrl) {
+	const organizationId = `${siteConfig.url}/#organization`;
+	const websiteId = `${siteConfig.url}/#website`;
+	return {
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": ["Organization", "ProfessionalService"],
+				"@id": organizationId,
+				name: siteConfig.name,
+				url: siteConfig.url,
+				email: siteConfig.primaryEmail,
+				telephone: siteConfig.primaryPhoneHref,
+				areaServed: siteConfig.areaServed,
+				serviceType: [
+					"AI CRM automation",
+					"Lead response automation",
+					"Sales follow-up systems",
+					"Small business workflow automation"
+				]
+			},
+			{
+				"@type": "WebSite",
+				"@id": websiteId,
+				name: siteConfig.name,
+				url: siteConfig.url,
+				publisher: { "@id": organizationId }
+			},
+			{
+				"@type": meta.schemaType ?? "WebPage",
+				"@id": `${canonicalUrl}#webpage`,
+				url: canonicalUrl,
+				name: meta.title,
+				description: meta.description,
+				isPartOf: { "@id": websiteId },
+				about: { "@id": organizationId },
+				provider: { "@id": organizationId }
+			}
+		]
+	};
+}
+Object.values(pageMetaMap).filter((meta) => meta.index === true);
+/** Applies page title, canonical, robots, social meta tags, and JSON-LD in the document head (SPA). */
+function getPageMetadata(key) {
+	if (typeof document === "undefined") return;
+	const meta = pageMetaMap[key];
+	const canonicalUrl = absoluteUrl$2(meta.path);
+	const ogImageUrl = absoluteUrl$2(siteConfig.ogImagePath);
+	const currentPath = normalizePath(window.location.pathname);
+	const canonicalPath = normalizePath(new URL(canonicalUrl).pathname);
+	const hasStrayQuery = window.location.search.length > 0 && new URLSearchParams(window.location.search).has("q");
+	const shouldIndex = meta.index === true && currentPath === canonicalPath && !hasStrayQuery;
+	document.title = meta.title;
+	setMetaName("description", meta.description);
+	setMetaName("robots", shouldIndex ? "index, follow, max-image-preview:large" : "noindex, nofollow");
+	setLinkRel("canonical", canonicalUrl);
+	setMetaProperty("og:type", "website");
+	setMetaProperty("og:site_name", siteConfig.name);
+	setMetaProperty("og:title", meta.title);
+	setMetaProperty("og:description", meta.description);
+	setMetaProperty("og:url", canonicalUrl);
+	setMetaProperty("og:image", ogImageUrl);
+	setMetaName("twitter:card", "summary_large_image");
+	setMetaName("twitter:title", meta.title);
+	setMetaName("twitter:description", meta.description);
+	if (shouldIndex) setJsonLd$1("seo-json-ld", buildJsonLd(meta, canonicalUrl));
+}
+//#endregion
+//#region src/pages/inner-pages/about-us/index.tsx
+function Page$1() {
+	getPageMetadata("about-us");
+	const aboutMarqueeText = `/ ${aboutMarqueePhrases.join(" / ")} /`;
+	return /* @__PURE__ */ jsxs(Fragment, { children: [
+		/* @__PURE__ */ jsxs("section", {
+			className: "page-banner11 about-page-banner",
+			children: [
+				/* @__PURE__ */ jsx("div", { className: "shape" }),
+				/* @__PURE__ */ jsx("div", { className: "shape3" }),
+				/* @__PURE__ */ jsx("div", {
+					className: "staff-text",
+					children: "Ames"
+				}),
+				/* @__PURE__ */ jsx("div", {
+					className: "container",
+					children: /* @__PURE__ */ jsxs("div", {
+						className: "page-content",
+						children: [/* @__PURE__ */ jsx("h1", {
+							className: "title",
+							children: "/ About SceneShift /"
+						}), /* @__PURE__ */ jsx("p", {
+							className: "about-banner-lede",
+							children: "Rooted in Ames, Iowa, SceneShift exists so independent businesses do not get quietly outpaced by larger competitors."
+						})]
+					})
+				}),
+				/* @__PURE__ */ jsxs("ul", {
+					className: "breadcrumbs",
+					children: [
+						/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
+							to: "/",
+							title: "",
+							children: "Home"
+						}) }),
+						/* @__PURE__ */ jsx("li", { children: "/" }),
+						/* @__PURE__ */ jsx("li", { children: "About us" })
+					]
+				})
+			]
+		}),
+		/* @__PURE__ */ jsx("section", {
+			className: "about-us-sec9 ibt-section-gap",
+			children: /* @__PURE__ */ jsxs("div", {
+				className: "container",
+				children: [/* @__PURE__ */ jsxs("div", {
+					className: "title-area",
+					children: [/* @__PURE__ */ jsxs("div", {
+						className: "sec-title",
+						children: [/* @__PURE__ */ jsx(SubTitleWrapper, { children: "rooted in ames, built for independent businesses" }), /* @__PURE__ */ jsx(TitleSplitWrapper, {
+							tag: "h2",
+							className: "title animated-heading",
+							children: "Helping small businesses keep up with how customers buy now"
+						})]
+					}), /* @__PURE__ */ jsx("div", {
+						className: "anim-img2",
+						children: /* @__PURE__ */ jsx("img", {
+							alt: `${siteConfig.name} decorative accent`,
+							src: "/assets/images/event/cross1-1.png",
+							width: 143,
+							height: 49
+						})
+					})]
+				}), /* @__PURE__ */ jsxs("div", {
+					className: "row g-4 align-items-start",
+					children: [/* @__PURE__ */ jsx("div", {
+						className: "col-lg-7",
+						children: /* @__PURE__ */ jsxs("div", {
+							className: "about-content9",
+							children: [
+								/* @__PURE__ */ jsx("h4", {
+									className: "title",
+									children: "Ames"
+								}),
+								/* @__PURE__ */ jsx("p", { children: "Buyers still choose businesses they trust, but the way they shop has changed. People expect quick answers, clear next steps, and follow-up that does not fall apart. If your business is slower to respond than the next option on the list, great work can lose before you ever get the chance to prove it." }),
+								/* @__PURE__ */ jsx("p", { children: "Most owners are not losing because they care less or work less. They lose when calls go unanswered, details get trapped in inboxes, and follow-up depends on whoever happens to remember it. Faster first response and a cleaner handoff usually matter more than big promises about transformation." }),
+								/* @__PURE__ */ jsx("p", {
+									className: "mb-0",
+									children: "That is why we focus on practical systems for small businesses: faster answers, clearer follow-up, and less work getting lost between the phone, the website, and the office."
+								})
+							]
+						})
+					}), /* @__PURE__ */ jsx("div", {
+						className: "col-lg-5",
+						children: /* @__PURE__ */ jsxs("figure", {
+							className: "about-history-card",
+							children: [
+								/* @__PURE__ */ jsx("span", {
+									className: "about-history-card__badge",
+									children: "Feb 1940"
+								}),
+								/* @__PURE__ */ jsx("div", {
+									className: "about-history-card__frame",
+									children: /* @__PURE__ */ jsx("img", {
+										alt: "1940 black-and-white photograph of Main Street in Winchester, Virginia with storefronts, vintage cars, and pedestrians",
+										className: "about-history-card__img",
+										src: "/assets/images/about/main-street-winchester-1940.jpg",
+										width: 1400,
+										height: 930,
+										loading: "lazy"
+									})
+								}),
+								/* @__PURE__ */ jsxs("figcaption", {
+									className: "about-history-card__caption",
+									children: [
+										/* @__PURE__ */ jsx("p", {
+											className: "about-history-card__kicker",
+											children: "Main Street, Winchester, Virginia"
+										}),
+										/* @__PURE__ */ jsx("p", {
+											className: "about-history-card__note",
+											children: "Same downtown then and now. You still have a street, a storefront, and customers choosing someone they trust. What keeps changing is the technology behind that handshake: dispatch, billing, follow-up, and the systems that carry a job from first call to paid invoice."
+										}),
+										/* @__PURE__ */ jsxs("p", {
+											className: "about-history-card__credit",
+											children: [
+												"Photograph by Arthur Rothstein, February 1940, via the",
+												" ",
+												/* @__PURE__ */ jsx("a", {
+													href: "https://www.loc.gov/resource/fsa.8a12870/",
+													rel: "noopener noreferrer",
+													target: "_blank",
+													children: "Library of Congress"
+												}),
+												" ",
+												"and",
+												" ",
+												/* @__PURE__ */ jsx("a", {
+													href: "https://unsplash.com/photos/main-street-winchester-virginia-SsINuH7W-8o?utm_source=sceneshift&utm_medium=referral",
+													rel: "noopener noreferrer",
+													target: "_blank",
+													children: "Unsplash"
+												}),
+												"."
+											]
+										})
+									]
+								})
+							]
+						})
+					})]
+				})]
+			})
+		}),
+		/* @__PURE__ */ jsx("section", {
+			className: "about-local-story ibt-section-gapBottom",
+			children: /* @__PURE__ */ jsxs("div", {
+				className: "container",
+				children: [/* @__PURE__ */ jsxs("div", {
+					className: "row g-4 align-items-stretch",
+					children: [/* @__PURE__ */ jsx("div", {
+						className: "col-lg-5",
+						children: /* @__PURE__ */ jsxs("figure", {
+							className: "about-local-figure",
+							children: [
+								/* @__PURE__ */ jsx("span", {
+									className: "about-local-figure__badge",
+									children: "Ames landmark"
+								}),
+								/* @__PURE__ */ jsx("div", {
+									className: "about-local-figure__frame",
+									children: /* @__PURE__ */ jsx("img", {
+										alt: "Campanile clock tower at Iowa State University in Ames against the sky",
+										className: "about-local-figure__img",
+										src: "/assets/images/about/ames-campanile-clock-tower.jpg",
+										width: 933,
+										height: 1400,
+										loading: "lazy"
+									})
+								}),
+								/* @__PURE__ */ jsxs("figcaption", {
+									className: "about-local-figure__caption",
+									children: ["The ISU Campanile reflects the Ames roots behind the way we work.", /* @__PURE__ */ jsxs("span", {
+										className: "about-local-figure__credit",
+										children: [
+											"Photo by",
+											" ",
+											/* @__PURE__ */ jsx("a", {
+												href: "https://unsplash.com/@james300402?utm_source=sceneshift&utm_medium=referral",
+												rel: "noopener noreferrer",
+												target: "_blank",
+												children: "James Hartono"
+											}),
+											" ",
+											"on",
+											" ",
+											/* @__PURE__ */ jsx("a", {
+												href: "https://unsplash.com/photos/PfvRo7iTolw?utm_source=sceneshift&utm_medium=referral",
+												rel: "noopener noreferrer",
+												target: "_blank",
+												children: "Unsplash"
+											}),
+											"."
+										]
+									})]
+								})
+							]
+						})
+					}), /* @__PURE__ */ jsx("div", {
+						className: "col-lg-7",
+						children: /* @__PURE__ */ jsxs("div", {
+							className: "about-story-panel",
+							children: [
+								/* @__PURE__ */ jsx("span", {
+									className: "about-story-panel__eyebrow",
+									children: "Local understanding, practical help"
+								}),
+								/* @__PURE__ */ jsx("h2", {
+									className: "about-story-panel__title",
+									children: "The businesses that anchor a downtown should still feel easy to choose."
+								}),
+								/* @__PURE__ */ jsx("p", { children: "SceneShift started in Ames because local businesses should not need a giant budget or an internal tech team to give customers a better experience. We build for field schedules, crews already stretched thin, and owners who cannot live inside software all day." }),
+								/* @__PURE__ */ jsx("p", {
+									className: "mb-0",
+									children: "Bigger competitors are getting faster at answering, following up, and keeping customers informed. SceneShift focuses on the operational details underneath that customer experience: first response, cleaner handoff, and the consistency that helps a small team stay responsive, organized, and easy to choose across Ames, Central Iowa, and the broader Midwest."
+								})
+							]
+						})
+					})]
+				}), /* @__PURE__ */ jsx("div", {
+					className: "row g-4 about-local-story__principles",
+					children: aboutOperatingPrinciples.map((item) => /* @__PURE__ */ jsx("div", {
+						className: "col-lg-4 col-md-6",
+						children: /* @__PURE__ */ jsx("div", {
+							className: "price-content3",
+							children: /* @__PURE__ */ jsxs("div", {
+								className: "about-detail-card",
+								children: [/* @__PURE__ */ jsx("h4", {
+									className: "title",
+									children: item.title
+								}), /* @__PURE__ */ jsx("p", { children: item.description })]
+							})
+						})
+					}, item.title))
+				})]
+			})
+		}),
+		/* @__PURE__ */ jsxs("section", {
+			className: "marquee-sec ibt-section-gapBottom",
+			children: [/* @__PURE__ */ jsx("h2", {
+				style: { display: "none" },
+				children: "About marquee"
+			}), /* @__PURE__ */ jsx("div", {
+				className: "marquee",
+				children: /* @__PURE__ */ jsxs("div", {
+					className: "marquee-inner",
+					children: [/* @__PURE__ */ jsx("span", { children: aboutMarqueeText }), /* @__PURE__ */ jsx("span", { children: aboutMarqueeText })]
+				})
+			})]
+		}),
+		/* @__PURE__ */ jsx("section", {
+			className: "feature-sec10 ibt-section-gapBottom",
+			children: /* @__PURE__ */ jsxs("div", {
+				className: "container",
+				children: [/* @__PURE__ */ jsxs("div", {
+					className: "sec-title",
+					children: [
+						/* @__PURE__ */ jsx(SubTitleWrapper, { children: "why this matters now" }),
+						/* @__PURE__ */ jsx(TitleSplitWrapper, {
+							tag: "h2",
+							className: "title animated-heading",
+							children: "The work is operational before it is technical"
+						}),
+						/* @__PURE__ */ jsx("p", { children: "SceneShift is here to help businesses answer faster, follow up more consistently, and stay easier to choose when buyers compare options." })
+					]
+				}), /* @__PURE__ */ jsx("div", {
+					className: "row g-4",
+					children: aboutWhyItMattersHighlights.map((item) => /* @__PURE__ */ jsx("div", {
+						className: "col-lg-4 col-md-6",
+						children: /* @__PURE__ */ jsx("div", {
+							className: "price-content3",
+							children: /* @__PURE__ */ jsxs("div", {
+								className: "about-detail-card",
+								children: [/* @__PURE__ */ jsx("h4", {
+									className: "title",
+									children: item.title
+								}), /* @__PURE__ */ jsx("p", { children: item.description })]
+							})
+						})
+					}, item.title))
+				})]
+			})
+		})
+	] });
+}
+//#endregion
+//#region src/pages/inner-pages/contact/index.tsx
+function Page() {
+	getPageMetadata("contact");
+	return /* @__PURE__ */ jsxs(Fragment, { children: [/* @__PURE__ */ jsxs("section", {
+		className: "page-banner9 contact-page-banner",
+		children: [
+			/* @__PURE__ */ jsx("div", { className: "shape" }),
+			/* @__PURE__ */ jsx("div", { className: "shape3" }),
+			/* @__PURE__ */ jsx("div", {
+				className: "staff-text",
+				children: "Contact"
+			}),
+			/* @__PURE__ */ jsx("div", {
+				className: "container",
+				children: /* @__PURE__ */ jsx("div", {
+					className: "page-content",
+					children: /* @__PURE__ */ jsx("h1", {
+						className: "title",
+						children: "/ Contact /"
+					})
+				})
+			}),
+			/* @__PURE__ */ jsxs("ul", {
+				className: "breadcrumbs",
+				children: [
+					/* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, {
+						to: "/",
+						title: "",
+						children: "Home"
+					}) }),
+					/* @__PURE__ */ jsx("li", { children: "/" }),
+					/* @__PURE__ */ jsx("li", { children: "Contact" })
+				]
+			})
+		]
+	}), /* @__PURE__ */ jsx("section", {
+		className: "contact-sec2 ibt-section-gap",
+		children: /* @__PURE__ */ jsx("div", {
+			className: "container",
+			children: /* @__PURE__ */ jsxs("div", {
+				className: "row align-items-center",
+				children: [/* @__PURE__ */ jsx("div", {
+					className: "col-lg-6",
+					children: /* @__PURE__ */ jsxs("div", {
+						className: "contact-content2",
+						children: [/* @__PURE__ */ jsxs("div", {
+							className: "sec-title",
+							children: [
+								/* @__PURE__ */ jsx(SubTitleWrapper, { children: "get in touch" }),
+								/* @__PURE__ */ jsx(TitleSplitWrapper, {
+									tag: "h2",
+									className: "title animated-heading",
+									children: "Reach out to SceneShift for inquiries, sales questions, or launch coordination"
+								}),
+								/* @__PURE__ */ jsx("p", { children: "Reach us by phone, email, or the form below." })
+							]
+						}), /* @__PURE__ */ jsxs("div", {
+							className: "row",
+							children: [/* @__PURE__ */ jsx("div", {
+								className: "col-lg-6 col-md-6 col-sm-6",
+								children: /* @__PURE__ */ jsxs("div", {
+									className: "contact-info",
+									children: [/* @__PURE__ */ jsxs("div", {
+										className: "call-center2",
+										children: [/* @__PURE__ */ jsx("h4", {
+											className: "title",
+											children: "Phone"
+										}), /* @__PURE__ */ jsx("a", {
+											href: `tel:${siteConfig.primaryPhoneHref}`,
+											className: "nmbr",
+											onClick: () => trackConversionEvent("phone_click", { location: "contact_page" }),
+											children: siteConfig.primaryPhoneLabel
+										})]
+									}), /* @__PURE__ */ jsxs("div", {
+										className: "call-center2 mb-0",
+										children: [/* @__PURE__ */ jsx("h4", {
+											className: "title",
+											children: "Email"
+										}), /* @__PURE__ */ jsx("a", {
+											href: `mailto:${siteConfig.primaryEmail}`,
+											className: "gmail",
+											onClick: () => trackConversionEvent("email_click", { location: "contact_page" }),
+											children: siteConfig.primaryEmail
+										})]
+									})]
+								})
+							}), /* @__PURE__ */ jsx("div", {
+								className: "col-lg-6 col-md-6 col-sm-6",
+								children: /* @__PURE__ */ jsx("div", {
+									className: "contact-info",
+									children: /* @__PURE__ */ jsxs("div", {
+										className: "call-center2 mb-0",
+										children: [/* @__PURE__ */ jsx("h4", {
+											className: "title",
+											children: "Client access"
+										}), /* @__PURE__ */ jsxs("p", { children: [
+											"Existing customers can sign in through the dedicated portal at",
+											" ",
+											/* @__PURE__ */ jsx("a", {
+												href: siteConfig.loginUrl,
+												target: "_blank",
+												rel: "noopener noreferrer",
+												children: "login.sceneshift.org"
+											}),
+											"."
+										] })]
+									})
+								})
+							})]
+						})]
+					})
+				}), /* @__PURE__ */ jsx("div", {
+					className: "col-lg-6",
+					children: /* @__PURE__ */ jsx("div", {
+						className: "contact-form v2",
+						children: /* @__PURE__ */ jsx(ContactForm, {})
+					})
+				})]
+			})
+		})
+	})] });
 }
 //#endregion
 //#region src/components/seo/AnswerFirstBlock.tsx
@@ -702,6 +2498,7 @@ var SERVICES = [
 			}
 		],
 		includedInPackages: [
+			"reception-crm-starter",
 			"main-street-startup",
 			"always-on-capture",
 			"autonomous-sales-floor"
@@ -906,6 +2703,7 @@ var SERVICES = [
 			}
 		],
 		includedInPackages: [
+			"reception-crm-starter",
 			"main-street-startup",
 			"always-on-capture",
 			"autonomous-sales-floor"
@@ -1151,8 +2949,49 @@ function getServiceBySlug(slug) {
 	return SERVICES.find((s) => s.slug === slug);
 }
 //#endregion
+//#region src/data/package-pricing-features.ts
+/** Name + one-sentence descriptions for pricing cards and package listings. */
+var PACKAGE_SERVICE_FEATURES = {
+	webConcierge: "24/7 Web Concierge: An AI webchat on your current site that instantly answers FAQs, captures contact information, and sets up appointments — Gen Z would rather text than call, and this gives them a stress-free way to reach your business.",
+	alwaysOnReceptionist: "The Always on Receptionist: An AI phone system that answers when your team cannot — greets callers, pre-qualifies buyers, answers FAQs, and books appointments so missed calls stop costing you jobs.",
+	invisibleAdmin: "The Invisible Admin: Keeps your CRM updated the moment something happens — new leads, changed appointments, and customer reminders go out automatically without anyone touching a keyboard.",
+	invisiblePersonalAssistant: "The Invisible Personal Assistant: Turns lead activity from chat, phone, and forms into real appointments on your calendar — checking availability and only booking slots you would actually take.",
+	easyCrm: "Easy CRM: A simple web portal that tracks every customer, conversation, and appointment in one place — without the setup pain of enterprise CRM software.",
+	allPackage1: "All the services in Package 1: The full Main Street Startup stack — 24/7 Web Concierge, The Always on Receptionist, The Invisible Admin, The Invisible Personal Assistant, and Easy CRM.",
+	speedToLead: "Speed-to-Lead Outbound: When someone fills out a form on your site, an AI calls them within sixty seconds while they are still hot — qualifies the lead and books the appointment before they move on.",
+	handsOffReviews: "Hands-Off Reviews: After a job is done, an AI checks in with your customer and, when they had a great experience, sends a one-tap link to leave a Google review — no awkward asks from your team.",
+	allPackage2: "All the services in Package 2: Everything in Always on Capture — the full Package 1 stack plus Speed-to-Lead Outbound and Hands-Off Reviews.",
+	autonomousSalesman: "The Autonomous Salesman: Give the AI a list of phone numbers and context — it reaches out, qualifies, follows up across days and weeks, and books appointments so your reps spend the day closing, not dialing.",
+	websiteSeoAioGeo: "Full Website Development, SEO, AIO & GEO: A fast, conversion-built site from the ground up — optimized for Google search (SEO), AI Overviews (AIO), and generative engines like ChatGPT and Perplexity (GEO) — so prospects find you whether they search, browse, or ask an AI who to call."
+};
+//#endregion
 //#region src/data/packages-catalog.ts
 var PACKAGES = [
+	{
+		slug: "reception-crm-starter",
+		name: "Reception & CRM Starter",
+		tagline: "Easy CRM and The Always on Receptionist — stop losing calls and track every customer without the full front-office stack.",
+		idealFor: "Solo operators and very small teams that mainly need missed calls answered and a simple place to see every customer — before they are ready for web chat, admin automation, or outbound sales.",
+		pains: [
+			"Calls go to voicemail when you are on a job and you never call back the same day.",
+			"Customer details live in texts, notes apps, and memory instead of one place.",
+			"You are not ready to pay for the full Main Street Startup bundle yet."
+		],
+		heroFeature: "The Always on Receptionist plus Easy CRM — every missed call gets handled and every contact lands in one portal.",
+		includedServiceSlugs: ["always-on-receptionist", "easy-crm"],
+		priceHeadline: "$99",
+		priceDetailLines: ["/month", "+ $100 one-time setup"],
+		pricingFeatures: [PACKAGE_SERVICE_FEATURES.alwaysOnReceptionist, PACKAGE_SERVICE_FEATURES.easyCrm],
+		faqs: [{
+			question: "Can I upgrade to a larger package later?",
+			answer: "Yes. Most customers start here or on The Main Street Startup and move up when they want web chat, admin automation, outbound follow-up, or reviews."
+		}, {
+			question: "What is included in setup?",
+			answer: "We connect your business line, configure the receptionist greeting and FAQs, and stand up your Easy CRM portal."
+		}],
+		bestFitIndustries: ["home-services-iowa", "professional-services-iowa"],
+		lastReviewed: "2026-05-18"
+	},
 	{
 		slug: "main-street-startup",
 		name: "The Main Street Startup",
@@ -1173,6 +3012,13 @@ var PACKAGES = [
 		],
 		priceHeadline: "$299",
 		priceDetailLines: ["/month", "+ $500 one-time setup"],
+		pricingFeatures: [
+			PACKAGE_SERVICE_FEATURES.webConcierge,
+			PACKAGE_SERVICE_FEATURES.alwaysOnReceptionist,
+			PACKAGE_SERVICE_FEATURES.invisibleAdmin,
+			PACKAGE_SERVICE_FEATURES.invisiblePersonalAssistant,
+			PACKAGE_SERVICE_FEATURES.easyCrm
+		],
 		faqs: [
 			{
 				question: "What size business is this for?",
@@ -1192,8 +3038,8 @@ var PACKAGES = [
 	},
 	{
 		slug: "always-on-capture",
-		name: "Always-On Capture",
-		tagline: "Everything in The Main Street Startup, plus instant outbound follow-up and automated 5-star reviews.",
+		name: "Always on Capture",
+		tagline: "All services in Package 1, plus Speed-to-Lead Outbound and Hands-Off Reviews.",
 		idealFor: "Multi-truck and multi-location small businesses with 5 to 20 employees and $500k to $2.5M revenue — multi-truck HVAC, plumbing, cleaning, pest control, MedSpas, dental, chiropractic, automotive, and local retail. The fix is no longer just answering the phone: you need to outrun bigger competitors on response time and on review velocity.",
 		pains: [
 			"You spend on Google ads, but leads cool off before anyone calls them back.",
@@ -1212,6 +3058,11 @@ var PACKAGES = [
 		],
 		priceHeadline: "$599",
 		priceDetailLines: ["/month", "+ $1,000 one-time setup"],
+		pricingFeatures: [
+			PACKAGE_SERVICE_FEATURES.allPackage1,
+			PACKAGE_SERVICE_FEATURES.speedToLead,
+			PACKAGE_SERVICE_FEATURES.handsOffReviews
+		],
 		faqs: [
 			{
 				question: "How much faster will leads be contacted?",
@@ -1236,7 +3087,7 @@ var PACKAGES = [
 	{
 		slug: "autonomous-sales-floor",
 		name: "The Autonomous Sales Floor",
-		tagline: "Everything in Always-On Capture plus an autonomous AI sales rep working your call list — so your reps spend the day closing, not dialing.",
+		tagline: "All services in Package 2, plus The Autonomous Salesman — so your reps spend the day closing, not dialing.",
 		idealFor: "Companies with 20 to 100+ employees and $3M to $15M+ revenue running an actual outbound sales motion: advanced manufacturing, ag-tech, equipment dealers, finance, and insurance brokerages. You have lists, you have a sales team, and you are wasting expensive humans on dialing voicemails.",
 		pains: [
 			"Sales reps making $80k spend most of their day leaving voicemails and chasing dead numbers.",
@@ -1256,6 +3107,11 @@ var PACKAGES = [
 		],
 		priceHeadline: "$999",
 		priceDetailLines: ["/month", "+ $1,500 one-time setup"],
+		pricingFeatures: [
+			PACKAGE_SERVICE_FEATURES.allPackage2,
+			PACKAGE_SERVICE_FEATURES.autonomousSalesman,
+			PACKAGE_SERVICE_FEATURES.websiteSeoAioGeo
+		],
 		faqs: [
 			{
 				question: "Will my human sales reps lose their jobs?",
@@ -5184,7 +7040,7 @@ function buildPackagesHubMeta() {
 	const path = "/packages";
 	const url = absoluteUrl$1(path);
 	const title = "AI Automation Packages for Iowa Small Businesses | SceneShift";
-	const description = "Compare SceneShift packages: Main Street Startup ($299/mo), Always-On Capture ($599/mo), and Autonomous Sales Floor ($999/mo). Built for Iowa small businesses.";
+	const description = "Compare SceneShift packages from $99/mo: Reception & CRM Starter, Main Street Startup ($299/mo), Always on Capture ($599/mo), and Autonomous Sales Floor ($999/mo). Built for Iowa small businesses.";
 	return {
 		path,
 		title,
@@ -5385,6 +7241,14 @@ function buildEditorialPolicyMeta() {
 	};
 }
 //#endregion
+//#region src/utils/canonicalNavigation.ts
+/** Normalize pathname for canonical comparisons (no trailing slash except root). */
+function normalizePathname(pathname) {
+	if (pathname === "") return "/";
+	if (pathname !== "/" && pathname.endsWith("/")) return pathname.slice(0, -1);
+	return pathname;
+}
+//#endregion
 //#region src/utils/seoHead.ts
 /**
 * Runtime helper used by SEO page components to set <head> metadata when the
@@ -5437,9 +7301,13 @@ function applySeoMetadata(meta) {
 	if (typeof document === "undefined") return;
 	const canonicalUrl = absoluteUrl(meta.path);
 	const ogImageUrl = absoluteUrl(siteConfig.ogImagePath);
+	const currentPath = normalizePathname(window.location.pathname);
+	const canonicalPath = normalizePathname(new URL(canonicalUrl).pathname);
+	const hasStrayQuery = window.location.search.length > 0 && new URLSearchParams(window.location.search).has("q");
+	const shouldIndex = meta.index && currentPath === canonicalPath && !hasStrayQuery;
 	document.title = meta.title;
 	upsertMetaName("description", meta.description);
-	upsertMetaName("robots", meta.index ? "index, follow, max-image-preview:large" : "noindex, follow");
+	upsertMetaName("robots", shouldIndex ? "index, follow, max-image-preview:large" : "noindex, follow");
 	upsertLink("canonical", canonicalUrl);
 	upsertMetaProperty("og:type", "website");
 	upsertMetaProperty("og:site_name", siteConfig.name);
@@ -6078,12 +7946,12 @@ function PackagesHub() {
 			}, { label: "Packages" }] }),
 			/* @__PURE__ */ jsx(AnswerFirstBlock, {
 				question: "Which SceneShift package is right for my Iowa business?",
-				answer: "If you have 1-5 employees and miss calls while on jobs, start with The Main Street Startup ($299/mo). 5-20 employees losing leads to slow response time should choose Always-On Capture ($599/mo). 20+ employees running outbound sales should run The Autonomous Sales Floor ($999/mo)."
+				answer: "Need only reception and CRM? Start with Reception & CRM Starter ($99/mo). 1-5 employees missing calls on jobs should choose The Main Street Startup ($299/mo). 5-20 employees losing leads to slow response time should choose Always on Capture ($599/mo). 20+ employees running outbound sales should run The Autonomous Sales Floor ($999/mo)."
 			}),
 			/* @__PURE__ */ jsx(Byline, { lastReviewed: "2026-05-04" }),
 			/* @__PURE__ */ jsx("p", {
 				className: "seo-page__intro",
-				children: "Three packages, each building on the last. Pick the one that matches where your business is bleeding time and money today."
+				children: "Four packages, each building on the last. Pick the one that matches where your business is bleeding time and money today."
 			}),
 			/* @__PURE__ */ jsx("h2", { children: "Compare packages" }),
 			/* @__PURE__ */ jsx("div", {
@@ -6620,7 +8488,7 @@ function Founder() {
 					}, {
 						href: "/packages",
 						label: "Packages",
-						hook: "Three bundles starting at $299/mo"
+						hook: "Four bundles starting at $99/mo"
 					}]
 				},
 				{
@@ -6712,6 +8580,68 @@ function EditorialPolicy() {
 	});
 }
 //#endregion
+//#region src/pages/seo/base/PricingPrerender.tsx
+function PricingPrerender() {
+	useEffect(() => {
+		getPageMetadata("pricing");
+	}, []);
+	const rails = [{
+		heading: "Package details",
+		items: PACKAGES.map((pkg) => ({
+			href: `/packages/${pkg.slug}`,
+			label: pkg.name,
+			hook: pkg.tagline
+		}))
+	}, {
+		heading: "Talk with us",
+		items: [{
+			href: "/contact",
+			label: "Contact",
+			hook: "Book an automation working session"
+		}, {
+			href: "/services",
+			label: "Services",
+			hook: "Individual service breakdowns"
+		}]
+	}];
+	return /* @__PURE__ */ jsxs("div", {
+		className: "container seo-page",
+		children: [
+			/* @__PURE__ */ jsx(Breadcrumbs, { items: [{
+				label: "Home",
+				href: "/"
+			}, { label: "Pricing" }] }),
+			/* @__PURE__ */ jsxs("header", {
+				className: "seo-page__hero",
+				children: [/* @__PURE__ */ jsx("h1", { children: "AI automation pricing for small businesses" }), /* @__PURE__ */ jsx("p", {
+					className: "seo-lead",
+					children: "SceneShift packages are priced around recovered leads, saved admin time, and faster follow-up — not vague transformation promises. Compare web chat, AI reception, CRM updates, calendar booking, speed-to-lead, and review automation."
+				})]
+			}),
+			/* @__PURE__ */ jsxs("section", { children: [
+				/* @__PURE__ */ jsx("h2", { children: "Packages at a glance" }),
+				/* @__PURE__ */ jsx("ul", {
+					className: "seo-list",
+					children: PACKAGES.map((pkg) => /* @__PURE__ */ jsxs("li", { children: [
+						/* @__PURE__ */ jsx("strong", { children: /* @__PURE__ */ jsx(Link, {
+							to: `/packages/${pkg.slug}`,
+							children: pkg.name
+						}) }),
+						" ",
+						"— ",
+						pkg.priceHeadline,
+						pkg.priceDetailLines.join(" "),
+						". ",
+						pkg.tagline
+					] }, pkg.slug))
+				}),
+				/* @__PURE__ */ jsx("p", { children: "The right package depends on call volume, lead value, existing software, and how much of your sales floor should run automatically when your team is busy." })
+			] }),
+			/* @__PURE__ */ jsx(InterlinkGrid, { rails })
+		]
+	});
+}
+//#endregion
 //#region src/entry-server.tsx
 /**
 * Server entry for build-time prerendering.
@@ -6727,7 +8657,16 @@ function EditorialPolicy() {
 * paint is the SSR markup and then the client takes over.
 */
 function ServerRoutes() {
-	return /* @__PURE__ */ jsx(Routes, { children: /* @__PURE__ */ jsxs(Route, {
+	return /* @__PURE__ */ jsxs(Routes, { children: [/* @__PURE__ */ jsxs(Route, {
+		element: /* @__PURE__ */ jsx(ShellLayout, {}),
+		children: [/* @__PURE__ */ jsx(Route, {
+			path: "/about-us",
+			element: /* @__PURE__ */ jsx(Page$1, {})
+		}), /* @__PURE__ */ jsx(Route, {
+			path: "/contact",
+			element: /* @__PURE__ */ jsx(Page, {})
+		})]
+	}), /* @__PURE__ */ jsxs(Route, {
 		element: /* @__PURE__ */ jsx(SeoShellLayout, {}),
 		children: [
 			/* @__PURE__ */ jsx(Route, {
@@ -6777,9 +8716,13 @@ function ServerRoutes() {
 			/* @__PURE__ */ jsx(Route, {
 				path: "/about/editorial-policy",
 				element: /* @__PURE__ */ jsx(EditorialPolicy, {})
+			}),
+			/* @__PURE__ */ jsx(Route, {
+				path: "/pricing",
+				element: /* @__PURE__ */ jsx(PricingPrerender, {})
 			})
 		]
-	}) });
+	})] });
 }
 /**
 * Render the SEO tree for a given URL to a static HTML body string.
@@ -6789,7 +8732,7 @@ function ServerRoutes() {
 function render(url) {
 	return renderToString(/* @__PURE__ */ jsx(StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, {
 		location: url,
-		children: /* @__PURE__ */ jsx(ServerRoutes, {})
+		children: /* @__PURE__ */ jsx(UiProvider, { children: /* @__PURE__ */ jsx(ServerRoutes, {}) })
 	}) }));
 }
 //#endregion

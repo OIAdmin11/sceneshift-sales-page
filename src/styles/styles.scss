@@ -517,3 +517,166 @@
 .contact-form-feedback.success {
   color: #1b8a5a;
 }
+
+// Index17: ROI calculator above pricing
+.roi-calculator-sec {
+  position: relative;
+}
+
+.roi-calculator-sec__copy {
+  .sub-title {
+    margin-bottom: 18px;
+  }
+
+  .title {
+    margin-bottom: 20px;
+    color: var(--color-content-white);
+
+    strong {
+      font-weight: inherit;
+      color: var(--color-primary);
+    }
+  }
+
+  p {
+    margin: 0;
+    max-width: 34rem;
+    font-size: 18px;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.78);
+  }
+}
+
+.roi-calculator-sec__card {
+  padding: clamp(28px, 3.5vw, 40px);
+  border-radius: var(--radius-3xl);
+  background: var(--color-surface-light);
+  color: var(--color-heading);
+  box-shadow:
+    0 28px 60px -28px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(17, 17, 17, 0.06);
+}
+
+.roi-calculator-sec__field + .roi-calculator-sec__field {
+  margin-top: 28px;
+}
+
+.roi-calculator-sec__field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.roi-calculator-sec__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.55);
+}
+
+.roi-calculator-sec__value {
+  font-size: clamp(1.75rem, 2vw + 1rem, 2.35rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--color-heading);
+}
+
+.roi-calculator-sec__range {
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--color-primary) 0%,
+    var(--color-primary) var(--range-progress, 50%),
+    rgba(17, 17, 17, 0.12) var(--range-progress, 50%),
+    rgba(17, 17, 17, 0.12) 100%
+  );
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(17, 17, 17, 0.15);
+    border-radius: 50%;
+    background: var(--color-content-white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(17, 17, 17, 0.15);
+    border-radius: 50%;
+    background: var(--color-content-white);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.roi-calculator-sec__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.roi-calculator-sec__stat-value {
+  display: block;
+  margin-top: 10px;
+  font-size: clamp(1.65rem, 1.5vw + 1rem, 2.1rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--color-heading);
+}
+
+.roi-calculator-sec__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.roi-calculator-sec__footer-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.62);
+}
+
+.roi-calculator-sec__footer-value {
+  font-size: clamp(2.25rem, 3vw + 1rem, 3.25rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--color-primary);
+}
+
+@media (max-width: 991px) {
+  .roi-calculator-sec__copy {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 575px) {
+  .roi-calculator-sec__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .roi-calculator-sec__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -17,8 +17,12 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 
+import { UiProvider } from "@/context/UiContext";
+import InnerPagesLayout from "@/pages/layouts/inner-pages/InnerPagesLayout";
 import SeoShellLayout from "@/pages/layouts/SeoShellLayout";
 
+import AboutUsPage from "@/pages/inner-pages/about-us";
+import ContactPage from "@/pages/inner-pages/contact";
 import ServicesHub from "@/pages/seo/services/ServicesHub";
 import ServiceDetail from "@/pages/seo/services/ServiceDetail";
 import CrosshairDetail from "@/pages/seo/services/CrosshairDetail";
@@ -31,10 +35,15 @@ import CountyDetail from "@/pages/seo/iowa/CountyDetail";
 import CityDetail from "@/pages/seo/iowa/CityDetail";
 import Founder from "@/pages/seo/about/Founder";
 import EditorialPolicy from "@/pages/seo/about/EditorialPolicy";
+import PricingPrerender from "@/pages/seo/base/PricingPrerender";
 
 function ServerRoutes() {
   return (
     <Routes>
+      <Route element={<InnerPagesLayout />}>
+        <Route path="/about-us" element={<AboutUsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Route>
       <Route element={<SeoShellLayout />}>
         <Route path="/services" element={<ServicesHub />} />
         <Route path="/services/:slug" element={<ServiceDetail />} />
@@ -48,6 +57,7 @@ function ServerRoutes() {
         <Route path="/iowa/cities/:slug" element={<CityDetail />} />
         <Route path="/about/founder" element={<Founder />} />
         <Route path="/about/editorial-policy" element={<EditorialPolicy />} />
+        <Route path="/pricing" element={<PricingPrerender />} />
       </Route>
     </Routes>
   );
@@ -62,7 +72,9 @@ export function render(url: string): string {
   return renderToString(
     <StrictMode>
       <StaticRouter location={url}>
-        <ServerRoutes />
+        <UiProvider>
+          <ServerRoutes />
+        </UiProvider>
       </StaticRouter>
     </StrictMode>,
   );
