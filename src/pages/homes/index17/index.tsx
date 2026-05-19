@@ -11,6 +11,7 @@ import MainSec9 from "@/components/homes/home-17/MainSec9";
 import MarqueeSec from "@/components/homes/home-17/MarqueeSec";
 // import PartnersSec from "@/components/homes/home-17/PartnersSec";
 import PricingSec6 from "@/components/homes/home-17/PricingSec6";
+import RoiCalculatorSec from "@/components/homes/home-17/RoiCalculatorSec";
 import TestimonialSec5 from "@/components/homes/home-17/TestimonialSec5";
 
 export default function Page() {
@@ -25,16 +26,15 @@ export default function Page() {
           stickyClass="sticky-active v3 is-sticky"
           className="vs-header2 v15"
         />
-        <main id="main-content">
-          <MainSec9 />
-          <TestimonialSec5 />
-          <FeatureSec16 />
-          <MarqueeSec />
-          <FeatureSec14 />
-          <FeatureStyle17 />
-          <FunfactSec5 />
-          <PricingSec6 />
-        </main>
+        <MainSec9 />
+        <TestimonialSec5 />
+        <FeatureSec16 />
+        <MarqueeSec />
+        <FeatureSec14 />
+        <FeatureStyle17 />
+        <FunfactSec5 />
+        <RoiCalculatorSec />
+        <PricingSec6 />
         {/* <PartnersSec /> */}
         <Footer3 parentClass="footer-style4 v17" />
       </div>

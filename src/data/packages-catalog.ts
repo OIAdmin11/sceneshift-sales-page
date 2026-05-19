@@ -1,6 +1,40 @@
 import type { PackageRecord } from "@/types/seo";
+import { PACKAGE_SERVICE_FEATURES as S } from "@/data/package-pricing-features";
 
 export const PACKAGES: readonly PackageRecord[] = [
+  {
+    slug: "reception-crm-starter",
+    name: "Reception & CRM Starter",
+    tagline:
+      "Easy CRM and The Always on Receptionist — stop losing calls and track every customer without the full front-office stack.",
+    idealFor:
+      "Solo operators and very small teams that mainly need missed calls answered and a simple place to see every customer — before they are ready for web chat, admin automation, or outbound sales.",
+    pains: [
+      "Calls go to voicemail when you are on a job and you never call back the same day.",
+      "Customer details live in texts, notes apps, and memory instead of one place.",
+      "You are not ready to pay for the full Main Street Startup bundle yet.",
+    ],
+    heroFeature:
+      "The Always on Receptionist plus Easy CRM — every missed call gets handled and every contact lands in one portal.",
+    includedServiceSlugs: ["always-on-receptionist", "easy-crm"],
+    priceHeadline: "$99",
+    priceDetailLines: ["/month", "+ $100 one-time setup"],
+    pricingFeatures: [S.alwaysOnReceptionist, S.easyCrm],
+    faqs: [
+      {
+        question: "Can I upgrade to a larger package later?",
+        answer:
+          "Yes. Most customers start here or on The Main Street Startup and move up when they want web chat, admin automation, outbound follow-up, or reviews.",
+      },
+      {
+        question: "What is included in setup?",
+        answer:
+          "We connect your business line, configure the receptionist greeting and FAQs, and stand up your Easy CRM portal.",
+      },
+    ],
+    bestFitIndustries: ["home-services-iowa", "professional-services-iowa"],
+    lastReviewed: "2026-05-18",
+  },
   {
     slug: "main-street-startup",
     name: "The Main Street Startup",
@@ -24,6 +58,13 @@ export const PACKAGES: readonly PackageRecord[] = [
     ],
     priceHeadline: "$299",
     priceDetailLines: ["/month", "+ $500 one-time setup"],
+    pricingFeatures: [
+      S.webConcierge,
+      S.alwaysOnReceptionist,
+      S.invisibleAdmin,
+      S.invisiblePersonalAssistant,
+      S.easyCrm,
+    ],
     faqs: [
       {
         question: "What size business is this for?",
@@ -46,9 +87,9 @@ export const PACKAGES: readonly PackageRecord[] = [
   },
   {
     slug: "always-on-capture",
-    name: "Always-On Capture",
+    name: "Always on Capture",
     tagline:
-      "Everything in The Main Street Startup, plus instant outbound follow-up and automated 5-star reviews.",
+      "All services in Package 1, plus Speed-to-Lead Outbound and Hands-Off Reviews.",
     idealFor:
       "Multi-truck and multi-location small businesses with 5 to 20 employees and $500k to $2.5M revenue — multi-truck HVAC, plumbing, cleaning, pest control, MedSpas, dental, chiropractic, automotive, and local retail. The fix is no longer just answering the phone: you need to outrun bigger competitors on response time and on review velocity.",
     pains: [
@@ -69,6 +110,7 @@ export const PACKAGES: readonly PackageRecord[] = [
     ],
     priceHeadline: "$599",
     priceDetailLines: ["/month", "+ $1,000 one-time setup"],
+    pricingFeatures: [S.allPackage1, S.speedToLead, S.handsOffReviews],
     faqs: [
       {
         question: "How much faster will leads be contacted?",
@@ -97,7 +139,7 @@ export const PACKAGES: readonly PackageRecord[] = [
     slug: "autonomous-sales-floor",
     name: "The Autonomous Sales Floor",
     tagline:
-      "Everything in Always-On Capture plus an autonomous AI sales rep working your call list — so your reps spend the day closing, not dialing.",
+      "All services in Package 2, plus The Autonomous Salesman — so your reps spend the day closing, not dialing.",
     idealFor:
       "Companies with 20 to 100+ employees and $3M to $15M+ revenue running an actual outbound sales motion: advanced manufacturing, ag-tech, equipment dealers, finance, and insurance brokerages. You have lists, you have a sales team, and you are wasting expensive humans on dialing voicemails.",
     pains: [
@@ -119,6 +161,7 @@ export const PACKAGES: readonly PackageRecord[] = [
     ],
     priceHeadline: "$999",
     priceDetailLines: ["/month", "+ $1,500 one-time setup"],
+    pricingFeatures: [S.allPackage2, S.autonomousSalesman, S.websiteSeoAioGeo],
     faqs: [
       {
         question: "Will my human sales reps lose their jobs?",

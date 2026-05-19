@@ -16,7 +16,6 @@ import ExternalRedirect from "@/components/common/ExternalRedirect";
 import { siteConfig } from "@/data/site";
 
 const Home = lazy(() => import("@/pages"));
-const PricingPage = lazy(() => import("@/pages/inner-pages/pricing"));
 const ShopPage = lazy(() => import("@/pages/shop/shop"));
 const ShopSinglePage = lazy(() => import("@/pages/shop/shop-single"));
 const CartPage = lazy(() => import("@/pages/shop/cart"));
@@ -25,7 +24,6 @@ const AccountPage = lazy(() => import("@/pages/shop/account"));
 const BlogPage = lazy(() => import("@/pages/blog/blog"));
 const BlogGridPage = lazy(() => import("@/pages/blog/blog2"));
 const BlogSinglePage = lazy(() => import("@/pages/blog/blog-single"));
-const AboutPage = lazy(() => import("@/pages/inner-pages/about-us"));
 const TeamPage = lazy(() => import("@/pages/inner-pages/team"));
 const TeamSinglePage = lazy(() => import("@/pages/inner-pages/team-single"));
 const ProjectGridPage = lazy(() => import("@/pages/inner-pages/project"));
@@ -39,24 +37,8 @@ const GalleryMasonryPage = lazy(
 );
 const FaqPage = lazy(() => import("@/pages/inner-pages/faq"));
 const TypographyPage = lazy(() => import("@/pages/inner-pages/typography"));
+const AboutUsPage = lazy(() => import("@/pages/inner-pages/about-us"));
 const ContactPage = lazy(() => import("@/pages/inner-pages/contact"));
-const Index1Page = lazy(() => import("@/pages/homes/index1"));
-const Index2Page = lazy(() => import("@/pages/homes/index2"));
-const Index3Page = lazy(() => import("@/pages/homes/index3"));
-const Index4Page = lazy(() => import("@/pages/homes/index4"));
-const Index5Page = lazy(() => import("@/pages/homes/index5"));
-const Index6Page = lazy(() => import("@/pages/homes/index6"));
-const Index7Page = lazy(() => import("@/pages/homes/index7"));
-const Index8Page = lazy(() => import("@/pages/homes/index8"));
-const Index9Page = lazy(() => import("@/pages/homes/index9"));
-const Index10Page = lazy(() => import("@/pages/homes/index10"));
-const Index11Page = lazy(() => import("@/pages/homes/index11"));
-const Index12Page = lazy(() => import("@/pages/homes/index12"));
-const Index13Page = lazy(() => import("@/pages/homes/index13"));
-const Index14Page = lazy(() => import("@/pages/homes/index14"));
-const Index15Page = lazy(() => import("@/pages/homes/index15"));
-const Index16Page = lazy(() => import("@/pages/homes/index16"));
-const Index17Page = lazy(() => import("@/pages/homes/index17"));
 const NotFoundPage = lazy(() => import("@/pages/not-found"));
 
 // SEO/AIO content network — eager-imported (no `lazy`) so server-side rendering
@@ -73,6 +55,7 @@ import CountyDetail from "@/pages/seo/iowa/CountyDetail";
 import CityDetail from "@/pages/seo/iowa/CityDetail";
 import Founder from "@/pages/seo/about/Founder";
 import EditorialPolicy from "@/pages/seo/about/EditorialPolicy";
+import PricingPrerender from "@/pages/seo/base/PricingPrerender";
 
 import { LenisProvider } from "./context/LenisContext";
 import SmoothScroll from "./components/common/SmoothScroll";
@@ -81,6 +64,7 @@ import { VideoModalProvider } from "./context/VideoModalContext";
 import TitleSplitProvider from "./components/common/TitleSplitProvider";
 import SubTitleSplitProvider from "./components/common/SubTitleSplitProvider";
 import ScrollToTop from "./components/common/ScrollToTop";
+import CanonicalUrlGuard from "./components/common/CanonicalUrlGuard";
 import ThemeButton from "./components/common/ThemeButton";
 
 function App() {
@@ -102,12 +86,13 @@ function App() {
                       <Suspense fallback={suspenseFallback}>
                         <Routes>
                           <Route path="/" element={<Home />} />
-                          <Route path="/index" element={<Home />} />
+                          <Route
+                            path="/index"
+                            element={<Navigate to="/" replace />}
+                          />
 
                           {/* Route groups (Next.js-style layouts): shell = Header4 + page + Contact + Footer1 */}
                           <Route element={<InnerPagesLayout />}>
-                            <Route path="pricing" element={<PricingPage />} />
-                            <Route path="about-us" element={<AboutPage />} />
                             <Route path="team" element={<TeamPage />} />
                             <Route
                               path="team-single"
@@ -131,11 +116,12 @@ function App() {
                               element={<GalleryMasonryPage />}
                             />
                             <Route path="faq" element={<FaqPage />} />
+                            <Route path="about-us" element={<AboutUsPage />} />
+                            <Route path="contact" element={<ContactPage />} />
                             <Route
                               path="typography"
                               element={<TypographyPage />}
                             />
-                            <Route path="contact" element={<ContactPage />} />
                             <Route
                               path="terms-of-service"
                               element={
@@ -206,6 +192,7 @@ function App() {
                               path="about/editorial-policy"
                               element={<EditorialPolicy />}
                             />
+                            <Route path="pricing" element={<PricingPrerender />} />
                           </Route>
 
                           <Route element={<ShopLayout />}>
@@ -228,29 +215,20 @@ function App() {
                             />
                           </Route>
 
-                          <Route path="/index1" element={<Index1Page />} />
-                          <Route path="/index2" element={<Index2Page />} />
-                          <Route path="/index3" element={<Index3Page />} />
-                          <Route path="/index4" element={<Index4Page />} />
-                          <Route path="/index5" element={<Index5Page />} />
-                          <Route path="/index6" element={<Index6Page />} />
-                          <Route path="/index7" element={<Index7Page />} />
-                          <Route path="/index8" element={<Index8Page />} />
-                          <Route path="/index9" element={<Index9Page />} />
-                          <Route path="/index10" element={<Index10Page />} />
-                          <Route path="/index11" element={<Index11Page />} />
-                          <Route path="/index12" element={<Index12Page />} />
-                          <Route path="/index13" element={<Index13Page />} />
-                          <Route path="/index14" element={<Index14Page />} />
-                          <Route path="/index15" element={<Index15Page />} />
-                          <Route path="/index16" element={<Index16Page />} />
-                          <Route path="/index17" element={<Index17Page />} />
+                          {Array.from({ length: 17 }, (_, i) => (
+                            <Route
+                              key={i + 1}
+                              path={`/index${i + 1}`}
+                              element={<Navigate to="/" replace />}
+                            />
+                          ))}
                           <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                       </Suspense>
                       <SearchPopup />
                       <MobileMenu />
                       <ScrollToTop />
+                      <CanonicalUrlGuard />
                       <ThemeButton />
                     </SubTitleSplitProvider>
                   </TitleSplitProvider>

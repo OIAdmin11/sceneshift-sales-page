@@ -200,6 +200,7 @@ export const SERVICES: readonly ServiceRecord[] = [
       },
     ],
     includedInPackages: [
+      "reception-crm-starter",
       "main-street-startup",
       "always-on-capture",
       "autonomous-sales-floor",
@@ -422,6 +423,7 @@ export const SERVICES: readonly ServiceRecord[] = [
       },
     ],
     includedInPackages: [
+      "reception-crm-starter",
       "main-street-startup",
       "always-on-capture",
       "autonomous-sales-floor",

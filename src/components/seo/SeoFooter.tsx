@@ -59,8 +59,9 @@ export default function SeoFooter() {
           <div className="seo-footer__column">
             <h3>Packages</h3>
             <ul>
+              <li><Link to="/packages/reception-crm-starter">Reception & CRM Starter</Link></li>
               <li><Link to="/packages/main-street-startup">Main Street Startup</Link></li>
-              <li><Link to="/packages/always-on-capture">Always-On Capture</Link></li>
+              <li><Link to="/packages/always-on-capture">Always on Capture</Link></li>
               <li><Link to="/packages/autonomous-sales-floor">Autonomous Sales Floor</Link></li>
               <li><Link to="/packages">Compare packages</Link></li>
               <li><Link to="/pricing">Pricing</Link></li>

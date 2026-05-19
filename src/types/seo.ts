@@ -76,6 +76,8 @@ export interface PackageRecord {
   includedServiceSlugs: readonly string[];
   priceHeadline: string;
   priceDetailLines: readonly string[];
+  /** Short bullets for pricing cards and comparison tables. */
+  pricingFeatures: readonly string[];
   /** FAQs for this package. */
   faqs: readonly FaqEntry[];
   /** Industry slugs best matched to this package. */

@@ -12,9 +12,8 @@
  * entire SEO investment is invisible. The rewrite from head-only injection
  * to full body rendering is the foundation work called out in the plan.
  *
- * Existing 4 base routes (/, /about-us, /pricing, /contact) keep head-only
- * injection — they go through the heavy animation layout and would not
- * benefit from SSR (and SSR could conflict with the GSAP/Lenis layers).
+ * Home (/) keeps head-only injection (heavy animation layout). About, pricing,
+ * and contact use full SSR via [src/entry-server.tsx] base prerender pages.
  *
  * Source of truth: `scripts/data/route-snapshot.json`.
  */
@@ -39,8 +38,8 @@ const indexPath = join(distDir, "index.html");
 
 // Set of paths that come from the SEO snapshot — these get true SSR rendering.
 const seoPathSet = new Set(prerenderRoutes.map((r) => r.path));
-// The 4 base routes (home, about, pricing, contact) keep head-only injection.
-const headOnlyPaths = new Set(["/", "/about-us", "/pricing", "/contact"]);
+// Home keeps head-only injection; inner marketing pages use SSR body.
+const headOnlyPaths = new Set(["/"]);
 
 function scriptJson(value) {
   return JSON.stringify(value).replaceAll("</", "<\\/");
@@ -170,6 +169,13 @@ function injectHead(html, route, indexable) {
     '<meta\\s+name="twitter:description"[^>]*>',
     `<meta name="twitter:description" content="${escapeHtml(route.description)}" />`,
   );
+  if (route.path === "/") {
+    head = upsertTag(
+      head,
+      '<meta\\s+name="google"[^>]*>',
+      '<meta name="google" content="nositelinkssearchbox" />',
+    );
+  }
   head = upsertTag(
     head,
     '<script\\s+type="application\\/ld\\+json"\\s+id="seo-json-ld"[\\s\\S]*?<\\/script>',

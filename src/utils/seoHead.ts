@@ -7,6 +7,7 @@
  */
 import { siteConfig } from "@/data/site";
 import type { RouteMetadata } from "@/data/seoMetadata";
+import { normalizePathname } from "@/utils/canonicalNavigation";
 
 function upsertMetaName(name: string, content: string): void {
   let el = document.head.querySelector(
@@ -68,14 +69,19 @@ export function applySeoMetadata(meta: RouteMetadata): void {
   if (typeof document === "undefined") return;
   const canonicalUrl = absoluteUrl(meta.path);
   const ogImageUrl = absoluteUrl(siteConfig.ogImagePath);
+  const currentPath = normalizePathname(window.location.pathname);
+  const canonicalPath = normalizePathname(new URL(canonicalUrl).pathname);
+  const hasStrayQuery =
+    window.location.search.length > 0 &&
+    new URLSearchParams(window.location.search).has("q");
+  const shouldIndex =
+    meta.index && currentPath === canonicalPath && !hasStrayQuery;
 
   document.title = meta.title;
   upsertMetaName("description", meta.description);
   upsertMetaName(
     "robots",
-    meta.index
-      ? "index, follow, max-image-preview:large"
-      : "noindex, follow",
+    shouldIndex ? "index, follow, max-image-preview:large" : "noindex, follow",
   );
   upsertLink("canonical", canonicalUrl);
 
