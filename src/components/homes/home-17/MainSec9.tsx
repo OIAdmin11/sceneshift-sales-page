@@ -11,14 +11,12 @@ export default function MainSec9() {
         <div className="container">
           <div className="hero-content18">
             <h1 className="title main-sec9__hero-title">
-              Intelligent CRM and AI for small businesses.
+              Stop Bleeding Revenue to Missed Calls.
             </h1>
-            <p
-              className="hero-content18__lede"
-              style={{ fontSize: "2em", lineHeight: 1.35 }}
-            >
-              We’ll automate your business with AI. If it doesn’t save you 10+
-              hours a week or make you money in 30 days, you don’t pay.
+            <p className="hero-content18__lede">
+              Every unanswered call is a homeowner who can book with the next
+              contractor who picks up. SceneShift answers your phones 24/7,
+              qualifies the lead, and books the job directly into your calendar.
             </p>
             <div className="hero-btn18">
               <Link
@@ -30,11 +28,11 @@ export default function MainSec9() {
                   })
                 }
               >
-                <span>Book a 15-minute call</span>
+                <span>Test the Voice Assistant</span>
                 <i className="icon-arrow-top" />
               </Link>
-              <Link
-                to={servicesSectionHref}
+              <a
+                href="#five-minute-upgrade"
                 className="ibt-btn ibt-btn-outline"
                 onClick={() =>
                   trackConversionEvent("services_cta_click", {
@@ -42,15 +40,14 @@ export default function MainSec9() {
                   })
                 }
               >
-                <span>View our services</span>
+                <span>See How It Works</span>
                 <i className="icon-arrow-top" />
-              </Link>
+              </a>
             </div>
           </div>
         </div>
       </div>
       {/* End hero-style18 */}
-      {/* Former service-sec27 cards replaced with Iowa / marketing video */}
       <div className="service-sec27 main-sec9-after-hero-video">
         <div className="container">
           <div className="funfact-content funfact-content--iowa-video">

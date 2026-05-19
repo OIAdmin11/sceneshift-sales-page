@@ -161,9 +161,9 @@ const pageMetaMap: Record<PageMetaKey, PageMeta> = {
       schemaType: "FAQPage",
     },
     pricing: {
-      title: `AI Automation Pricing for Small Businesses | ${BASE_TITLE}`,
+      title: `Virtual Receptionist Pricing for Contractors | ${BASE_TITLE}`,
       description:
-        "Compare SceneShift packages for AI web chat, AI reception, CRM updates, calendar booking, Easy CRM, review generation, and autonomous sales follow-up.",
+        "Compare SceneShift flat-rate plans for missed call capture, after-hours answering, live web chat, and instant form follow-up.",
       path: "/pricing",
       index: true,
       changefreq: "weekly",
@@ -178,9 +178,9 @@ const pageMetaMap: Record<PageMetaKey, PageMeta> = {
       index: false,
     },
     contact: {
-      title: `Contact SceneShift | Book an AI Automation Call`,
+      title: `Contact SceneShift | Stop Missing Calls`,
       description:
-        "Contact SceneShift to discuss lead capture, AI reception, CRM follow-up, missed-call text back, review generation, and growth automation.",
+        "Contact SceneShift to test missed call capture, after-hours answering, live web chat, and instant lead booking for your home-service business.",
       path: "/contact",
       index: true,
       changefreq: "monthly",
@@ -252,9 +252,9 @@ const pageMetaMap: Record<PageMetaKey, PageMeta> = {
     },
     ...homepageMetaMap,
     home17: {
-      title: `AI CRM Automation for Small Businesses | ${BASE_TITLE}`,
+      title: `24/7 Virtual Receptionist for Contractors | ${BASE_TITLE}`,
       description:
-        "SceneShift helps Iowa small businesses capture more leads, answer faster, automate follow-up, and build practical AI-powered CRM workflows.",
+        "SceneShift helps HVAC, plumbing, roofing, and electrical businesses answer missed calls, qualify leads, and book jobs after hours.",
       path: "/",
       index: true,
       changefreq: "weekly",
@@ -333,9 +333,117 @@ function normalizePath(pathname: string): string {
   return pathname;
 }
 
+function homepageStructuredData(canonicalUrl: string): unknown[] {
+  const offerCatalogId = `${canonicalUrl}#contractor-offers`;
+  const faqId = `${canonicalUrl}#faq`;
+  const products = [
+    {
+      "@type": "Product",
+      "@id": `${canonicalUrl}#owner-operator`,
+      name: "The Owner-Operator",
+      description:
+        "Flat-rate missed call capture, 24/7 live web chat, instant form follow-up, and appointment booking for solo contractors and small crews.",
+      brand: { "@id": `${siteConfig.url}/#organization` },
+      offers: {
+        "@type": "Offer",
+        price: "299",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: canonicalUrl,
+      },
+    },
+    {
+      "@type": "Product",
+      "@id": `${canonicalUrl}#growing-crew`,
+      name: "The Growing Crew",
+      description:
+        "After-hours voice dispatch, priority lead alerts, and custom job questions for home-service teams running multiple trucks.",
+      brand: { "@id": `${siteConfig.url}/#organization` },
+      offers: {
+        "@type": "Offer",
+        price: "599",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: canonicalUrl,
+      },
+    },
+    {
+      "@type": "Product",
+      "@id": `${canonicalUrl}#full-dispatch-desk`,
+      name: "The Full Dispatch Desk",
+      description:
+        "Higher-volume missed call capture, form follow-up, and dispatch support for busy home-service shops.",
+      brand: { "@id": `${siteConfig.url}/#organization` },
+      offers: {
+        "@type": "Offer",
+        price: "999",
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: canonicalUrl,
+      },
+    },
+  ];
+
+  return [
+    {
+      "@type": "Service",
+      "@id": `${canonicalUrl}#virtual-receptionist-service`,
+      name: "24/7 Virtual Receptionist",
+      description:
+        "SceneShift answers missed calls and after-hours calls, qualifies home-service leads, and books qualified jobs into the business calendar.",
+      provider: { "@id": `${siteConfig.url}/#organization` },
+      serviceType: "Missed call capture and after-hours answering",
+      areaServed: siteConfig.areaServed,
+      hasOfferCatalog: { "@id": offerCatalogId },
+    },
+    {
+      "@type": "OfferCatalog",
+      "@id": offerCatalogId,
+      name: "SceneShift contractor plans",
+      itemListElement: products.map((product, index) => ({
+        "@type": "OfferCatalog",
+        position: index + 1,
+        itemOffered: { "@id": product["@id"] },
+      })),
+    },
+    ...products,
+    {
+      "@type": "FAQPage",
+      "@id": faqId,
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What does SceneShift do for contractors?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "SceneShift answers missed calls, captures late-night website leads, qualifies the job, alerts the business, and books qualified appointments.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does SceneShift replace an existing phone system?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "SceneShift works alongside the existing phone system and calendar so contractors do not need to change the daily office workflow.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Who is SceneShift built for?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "SceneShift is built for HVAC companies, plumbers, roofers, electricians, owner-operators, dispatchers, and other home-service businesses.",
+          },
+        },
+      ],
+    },
+  ];
+}
+
 function buildJsonLd(meta: PageMeta, canonicalUrl: string): unknown {
   const organizationId = `${siteConfig.url}/#organization`;
   const websiteId = `${siteConfig.url}/#website`;
+  const homepageExtras = meta.path === "/" ? homepageStructuredData(canonicalUrl) : [];
 
   return {
     "@context": "https://schema.org",
@@ -349,10 +457,10 @@ function buildJsonLd(meta: PageMeta, canonicalUrl: string): unknown {
         telephone: siteConfig.primaryPhoneHref,
         areaServed: siteConfig.areaServed,
         serviceType: [
-          "AI CRM automation",
-          "Lead response automation",
-          "Sales follow-up systems",
-          "Small business workflow automation",
+          "24/7 virtual receptionist",
+          "Missed call capture",
+          "Instant lead booking",
+          "After-hours answering",
         ],
       },
       {
@@ -372,6 +480,7 @@ function buildJsonLd(meta: PageMeta, canonicalUrl: string): unknown {
         about: { "@id": organizationId },
         provider: { "@id": organizationId },
       },
+      ...homepageExtras,
     ],
   };
 }

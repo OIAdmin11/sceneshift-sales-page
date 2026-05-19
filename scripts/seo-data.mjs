@@ -34,9 +34,9 @@ const baseCanonicalRoutes = [
   {
     path: "/",
     key: "home17",
-    title: "AI CRM Automation for Small Businesses | SceneShift",
+    title: "24/7 Virtual Receptionist for Contractors | SceneShift",
     description:
-      "SceneShift helps Iowa small businesses capture more leads, answer faster, automate follow-up, and build practical AI-powered CRM workflows.",
+      "SceneShift helps HVAC, plumbing, roofing, and electrical businesses answer missed calls, qualify leads, and book jobs after hours.",
     priority: "1.0",
     changefreq: "weekly",
     schemaType: "ProfessionalService",
@@ -54,9 +54,9 @@ const baseCanonicalRoutes = [
   {
     path: "/pricing",
     key: "pricing",
-    title: "AI Automation Pricing for Small Businesses | SceneShift",
+    title: "Virtual Receptionist Pricing for Contractors | SceneShift",
     description:
-      "Compare SceneShift packages for missed-call text back, unified inboxes, AI reception, web chat, review generation, and sales follow-up automation.",
+      "Compare SceneShift flat-rate plans for missed call capture, after-hours answering, live web chat, and instant form follow-up.",
     priority: "0.8",
     changefreq: "weekly",
     schemaType: "Service",
@@ -64,9 +64,9 @@ const baseCanonicalRoutes = [
   {
     path: "/contact",
     key: "contact",
-    title: "Contact SceneShift | Book an AI Automation Call",
+    title: "Contact SceneShift | Stop Missing Calls",
     description:
-      "Contact SceneShift to discuss lead capture, AI reception, CRM follow-up, missed-call text back, review generation, and growth automation.",
+      "Contact SceneShift to test missed call capture, after-hours answering, live web chat, and instant lead booking for your home-service business.",
     priority: "0.7",
     changefreq: "monthly",
     schemaType: "ContactPage",

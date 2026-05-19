@@ -8,22 +8,21 @@ export default function FunfactSec5() {
           <div className="funfact-content5">
             <div className="funfact-count5">
               <div className="counter-box17">
-                <Counter max={35} />
-                <span className="counter-text">%</span>
+                <Counter max={24} />
+                <span className="counter-text">/7</span>
               </div>
-              <span className="user3">Inbound calls often missed</span>
+              <span className="user3">Virtual Receptionist coverage</span>
             </div>
             <div className="funfact-count5 v2">
               <div className="counter-box17">
-                <Counter max={15} />
-                <span className="counter-text">m</span>
+                <Counter max={60} />
+                <span className="counter-text">s</span>
               </div>
-              <span className="user3">Discovery call length</span>
+              <span className="user3">target response for new form leads</span>
             </div>
           </div>
           <h4 className="title">
-            Most teams do not have an effort problem; they have a first-response
-            speed problem.
+            One missed emergency job can pay for the whole system.
           </h4>
         </div>
       </div>

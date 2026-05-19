@@ -70,11 +70,11 @@ export default function SeoFooter() {
           <div className="seo-footer__column">
             <h3>Iowa</h3>
             <ul>
-              <li><Link to="/iowa">All 99 counties</Link></li>
-              <li><Link to="/iowa/cities/des-moines">Des Moines</Link></li>
-              <li><Link to="/iowa/cities/cedar-rapids">Cedar Rapids</Link></li>
-              <li><Link to="/iowa/cities/ames">Ames</Link></li>
-              <li><Link to="/iowa/cities/iowa-city">Iowa City</Link></li>
+              <li><Link to="/iowa/">All 99 counties</Link></li>
+              <li><Link to="/iowa/cities/des-moines/">Des Moines</Link></li>
+              <li><Link to="/iowa/cities/cedar-rapids/">Cedar Rapids</Link></li>
+              <li><Link to="/iowa/cities/ames/">Ames</Link></li>
+              <li><Link to="/iowa/cities/iowa-city/">Iowa City</Link></li>
             </ul>
           </div>
           <div className="seo-footer__column">

@@ -186,7 +186,6 @@ export function UiProvider({ children }: UiProviderProps) {
 
 // --- Hook ---------------------------------------------------------------------
 
-// eslint-disable-next-line react-refresh/only-export-components
 export function useUi(): UiContextValue {
   const ctx = useContext(UiContext);
   if (ctx == null) {

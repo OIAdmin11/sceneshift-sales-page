@@ -56,8 +56,13 @@ function setJsonLd(value: unknown): void {
   el.text = JSON.stringify(value);
 }
 
+function canonicalPath(path: string): string {
+  if (path === "/") return path;
+  return path.endsWith("/") ? path : `${path}/`;
+}
+
 function absoluteUrl(path: string): string {
-  return new URL(path, siteConfig.url).toString();
+  return new URL(canonicalPath(path), siteConfig.url).toString();
 }
 
 export function applySeoMetadata(meta: RouteMetadata): void {

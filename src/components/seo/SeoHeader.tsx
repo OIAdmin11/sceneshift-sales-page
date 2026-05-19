@@ -5,6 +5,15 @@
 import { Link } from "react-router-dom";
 import { siteConfig } from "@/data/site";
 
+const seoNavItems = [
+  { label: "Services", to: "/services" },
+  { label: "Packages", to: "/packages" },
+  { label: "Industries", to: "/industries" },
+  { label: "Iowa", to: "/iowa/" },
+  { label: "About", to: "/about-us" },
+  { label: "Contact", to: "/contact" },
+] as const;
+
 export default function SeoHeader() {
   return (
     <header className="seo-header">
@@ -43,26 +52,25 @@ export default function SeoHeader() {
             </Link>
             <nav className="seo-header__nav" aria-label="Primary">
               <ul>
-                <li>
-                  <Link to="/services">Services</Link>
-                </li>
-                <li>
-                  <Link to="/packages">Packages</Link>
-                </li>
-                <li>
-                  <Link to="/industries">Industries</Link>
-                </li>
-                <li>
-                  <Link to="/iowa">Iowa</Link>
-                </li>
-                <li>
-                  <Link to="/about-us">About</Link>
-                </li>
-                <li>
-                  <Link to="/contact">Contact</Link>
-                </li>
+                {seoNavItems.map((item) => (
+                  <li key={item.to}>
+                    <Link to={item.to}>{item.label}</Link>
+                  </li>
+                ))}
               </ul>
             </nav>
+            <details className="seo-header__mobile-nav">
+              <summary>Menu</summary>
+              <nav aria-label="Mobile primary">
+                <ul>
+                  {seoNavItems.map((item) => (
+                    <li key={item.to}>
+                      <Link to={item.to}>{item.label}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </details>
             <a
               href={siteConfig.loginUrl}
               className="seo-header__login"
